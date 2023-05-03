@@ -53,6 +53,11 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+
+            'phone' => 'required|string|max:255',
+
         ]);
     }
 
@@ -64,10 +69,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // dd($data);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'middle_name' => $data['middle_name'],
+            'last_name' => $data['last_name'],
+            'location' => $data['location'] ?? 'India', // provide a default value of '' if $data['location'] is null
+            'phone' => $data['phone'],
+            'country_code' => $data['country_code'] ?? "+91",
+            'role_id' => $data['role_id']
         ]);
     }
 }

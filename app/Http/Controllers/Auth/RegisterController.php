@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use PragmaRX\Countries\Package\Countries;
 
 class RegisterController extends Controller
 {
@@ -41,6 +44,16 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $countries = Country::get();
+        return view('auth.register', compact('countries'));
+    }
+    public function getPhoneCode($id)
+    {
+        $country = Country::where('id', $id)->first();
+        return response()->json(['phone_code' => $country->phonecode]);
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,6 +62,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

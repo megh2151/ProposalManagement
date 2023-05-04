@@ -111,10 +111,16 @@
                                         <label for="location" class="col-md-4 col-form-label ">{{ __('Location') }}</label>
 
                                         <div class="col-md-7">
-
-                                            <input id="location" type="text"
-                                                class="form-control @error('location') is-invalid @enderror" name="location"
-                                                value="{{ old('location') }}" autocomplete="location">
+                                            <select id="location" name="location"
+                                                class="form-control @error('location') is-invalid @enderror"
+                                                autocomplete="location">
+                                                <option value="">Select a country</option>
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->name }}" data-id="{{ $country->id }}"
+                                                        {{ $country->name == 'India' ? 'selected' : '' }}>
+                                                        {{ $country->name }}</option>
+                                                @endforeach
+                                            </select>
 
                                             @error('location')
                                                 <span class="invalid-feedback" role="alert">
@@ -124,38 +130,30 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group row">
-                                        <label for="phone"
-                                            class="col-md-4 col-form-label ">{{ __('Phone Number') }}</label>
-
-                                        <div class="col-md-6 input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"
-                                                    id="country-code">{{ __('Country Code') }}</span>
+                                        <label for="phone" class="col-md-4 col-form-label">{{ __('Phone') }}</label>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="country-code-addon">+91</span>
+                                                </div>
+                                                <input id="phone" type="text"
+                                                    class="form-control @error('phone') is-invalid @enderror"
+                                                    name="phone" value="{{ old('phone') }}" autocomplete="phone">
+                                                @error('phone')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
-                                            <input id="country_code" type="text"
-                                                class="form-control @error('country_code') is-invalid @enderror"
-                                                name="country_code" value="{{ old('country_code') }}" required
-                                                aria-describedby="country-code">
-
-                                            <input id="phone" type="text"
-                                                class="form-control @error('phone') is-invalid @enderror" name="phone"
-                                                value="{{ old('phone') }}" required autocomplete="phone">
-
-                                            @error('country_code')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-
-                                            @error('phone')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                         </div>
                                     </div>
+
                                     <input type="hidden" name="role_id" value="0">
+                                    <input id="country_code" type="hidden"
+                                        class="form-control @error('country_code') is-invalid @enderror"
+                                        name="country_code" value="91" autocomplete="country_code">
                                     <div class="form-group row mb-0">
                                         <div class="col-md-7 offset-md-4">
                                             <button type="submit" class="btn btn-primary">
@@ -172,4 +170,31 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#location').on('change', function() {
+
+                var countryId = $(this).find(':selected').data('id');
+                console.log(countryId);
+                var countryCode =
+                    "{{ old('country_code') }}"; // Get the old value from Laravel's validation error message
+
+                // Use an AJAX request to retrieve the phone code for the selected country
+                $.ajax({
+                    url: '/countries/' + countryId + '/phone-code',
+                    type: 'GET',
+                    success: function(data) {
+                        $('#country_code').val(data.phone_code);
+                        $("#country-code-addon").html(data.phone_code)
+                    },
+                    error: function() {
+                        $('#country_code').val(
+                            countryCode); // If there's an error, use the old value
+                        $("#country-code-addon").html(countryCode)
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

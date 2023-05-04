@@ -28,3 +28,5 @@ Route::post('admin/user/delete', 'Admin\UsersController@delete')->name('admin.us
 Route::post('admin/user/store', 'Admin\UsersController@store')->name('admin.users.store')->middleware('authentic');
 
 Route::get('user/home', 'HomeController@authenticationValidateUser')->name('user.route')->middleware('authentic');
+
+Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');

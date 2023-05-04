@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        PragmaRX\Countries\Package\CountriesServiceProvider::class,
 
     ],
 
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Countries' => Stevebauman\Countries\CountriesFacade::class,
+
     ],
 
 ];

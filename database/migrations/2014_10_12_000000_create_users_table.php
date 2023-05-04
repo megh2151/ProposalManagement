@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('phone');
             $table->string('country_code')->default("+91");
+            $table->string('activation_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

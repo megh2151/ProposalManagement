@@ -10,7 +10,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use PragmaRX\Countries\Package\Countries;
+
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -93,7 +94,8 @@ class RegisterController extends Controller
             'location' => $data['location'] ?? 'India', // provide a default value of '' if $data['location'] is null
             'phone' => $data['phone'],
             'country_code' => $data['country_code'] ?? "+91",
-            'role_id' => $data['role_id']
+            'role_id' => $data['role_id'],
+            'activation_token' => Str::random(60)
         ]);
     }
 }

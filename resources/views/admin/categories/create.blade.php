@@ -2,26 +2,22 @@
 
 @section('content')
 <div class="breadcrumb-wrapper">
-	<h1>Create User</h1>
+	<h1>Create Category</h1>
 </div>
 
 <div class="row">
 	<div class="col-lg-12">
 		<div class="card card-default">
 			<div class="card-header card-header-border-bottom">
-				<h2>Create User</h2>
+				<h2>Create Category</h2>
 			</div>
 
 			<div class="card-body">
-				<form method="post" id="create-user" action="{{route('admin.users.store')}}" enctype="multipart/form-data" data-parsley-validate>
+				<form method="post" id="create-category" action="{{route('admin.category.store')}}" enctype="multipart/form-data" data-parsley-validate>
 					@csrf
 					<div class="form-group">
 						<label for="name">Name</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" required>
-					</div>
-					<div class="form-group">
-						<label for="email">Email</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="" required>
 					</div>
 					<div class="form-group">
 						<label class="text-dark mb-2 font-weight-medium d-inline-block" for="">Status</label>
@@ -54,6 +50,6 @@
 
 @section('script')
 <script>
-$('#create-user').parsley();	
+$('#create-category').parsley();	
 </script>
 @endsection

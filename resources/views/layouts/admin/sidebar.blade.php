@@ -17,6 +17,18 @@
                         <span class="nav-text">Users</span>
                     </a>
                 </li>
+                <li class="">
+                    <a class="sidenav-item-link" href="/admin/categories">
+                    <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="nav-text">Categories</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a class="sidenav-item-link" href="/admin/proposals">
+                    <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="nav-text">Proposals</span>
+                    </a>
+                </li>
               </ul>
             </div>
           </div>

@@ -49,7 +49,7 @@ class UsersController extends Controller
         $user = new User();
         $user->name = $name;
         $user->email = $email;
-        $user->status = $status;
+        $user->is_active = $status;
         $user->role_id = 2;
         $user->password = $hash_password;
         $user->save();
@@ -61,13 +61,12 @@ class UsersController extends Controller
     {
         $id = $request->id;
         $name = $request->name;
-        $email = $request->email;
-
+        $status = $request->status;
         $user = User::find($id);
         if ($user) {
             $user->name = $name;
-            $user->email = $email;
-            $product->save();
+            $user->is_active = $status;
+            $user->save();
             return redirect()->back()->with('success', 'User updated successfully.');
         } else {
             return redirect()->back()->with('error', 'User not found.');

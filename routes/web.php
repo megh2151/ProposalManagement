@@ -26,6 +26,24 @@ Route::get('admin/user/create', 'Admin\UsersController@create')->name('admin.use
 Route::get('admin/user/edit/{id}', 'Admin\UsersController@edit')->name('admin.users.edit')->middleware('authentic');
 Route::post('admin/user/delete', 'Admin\UsersController@delete')->name('admin.users.delete')->middleware('authentic');
 Route::post('admin/user/store', 'Admin\UsersController@store')->name('admin.users.store')->middleware('authentic');
+Route::post('admin/user/update', 'Admin\UsersController@update')->name('admin.user.update')->middleware('authentic');
+
+
+Route::get('admin/categories', 'Admin\CategoryController@index')->name('admin.categories')->middleware('authentic');
+Route::get('admin/category/create', 'Admin\CategoryController@create')->name('admin.category.create')->middleware('authentic');
+Route::get('admin/category/edit/{id}', 'Admin\CategoryController@edit')->name('admin.category.edit')->middleware('authentic');
+Route::post('admin/category/delete', 'Admin\CategoryController@delete')->name('admin.category.delete')->middleware('authentic');
+Route::post('admin/category/store', 'Admin\CategoryController@store')->name('admin.category.store')->middleware('authentic');
+Route::post('admin/category/update', 'Admin\CategoryController@update')->name('admin.category.update')->middleware('authentic');
+
+Route::get('admin/category/{id}/subcategory/create', 'Admin\CategoryController@createSubcategory')->name('admin.subcategory.create')->middleware('authentic');
+Route::get('admin/category/{id}/subcategory', 'Admin\CategoryController@subCategoryIndex')->name('admin.subcategory.index')->middleware('authentic');
+Route::get('admin/category/{id}/subcategory/{subid}/edit', 'Admin\CategoryController@subCategoryEdit')->name('admin.subcategory.edit')->middleware('authentic');
+Route::post('admin/subcategory/delete', 'Admin\CategoryController@subCategoryDelete')->name('admin.subcategory.delete')->middleware('authentic');
+Route::post('admin/subcategory/store', 'Admin\CategoryController@subCategoryStore')->name('admin.subcategory.store')->middleware('authentic');
+Route::post('admin/subcategory/update', 'Admin\CategoryController@subCategoryUpdate')->name('admin.subcategory.update')->middleware('authentic');
+
+
 
 Route::get('user/home', 'HomeController@authenticationValidateUser')->name('user.route')->middleware('authentic');
 

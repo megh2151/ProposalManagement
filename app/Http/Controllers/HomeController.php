@@ -31,6 +31,7 @@ class HomeController extends Controller
     }
 
     public function authenticationValidateUser(){
-        return view('authenticationValidateUser');
+        return view('user.home');
+        // return view('authenticationValidateUser');
     }
 }

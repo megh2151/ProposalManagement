@@ -17,11 +17,11 @@
                         <a class="nav-link" href="/">Contact</a>
                     </li>
                 </ul>
-                <ul class="nav justify-content-end">
+                <!-- <ul class="nav justify-content-end">
                     <li class="nav-item">
                         <a class="nav-link" href="#"><span class="fa fa-phone mr-3" aria-hidden="true"></span>(+605) 1234-56789</a>
                     </li>
-                </ul>
+                </ul> -->
             @else
                 <ul class="navbar-nav">
                     <li class="nav-item {{ request()->is('dashboard') ? 'active' : ''}}">
@@ -49,5 +49,19 @@
                 </ul>
             @endguest
         </div>
+
+        <ul class="navbar-nav justify-content-end">
+            <!-- Authentication Links -->
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                @endif
+            @endguest
+        </ul>
     </nav>
 </header>

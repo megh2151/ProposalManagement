@@ -11,9 +11,9 @@ body{font-family: 'Open Sans', sans-serif;}
 .sidebar .social-nav .nav-link{font-size: 1.2rem;}
 /*---header css---*/
 header{padding-top: 20px;}
-header .navbar .navbar-nav{width: 80%;}
-header .navbar .navbar-nav .nav-item{width: 20%;}
-#app .navbar .navbar-nav .nav-item{padding: 0 20px;}
+/* header .navbar .navbar-nav{width: 80%;} 
+header .navbar .navbar-nav .nav-item{width: 20%;}*/
+header .navbar .navbar-nav .nav-item{padding: 0 20px;}
 header .navbar .navbar-nav .nav-link, #app .navbar .navbar-nav .nav-item .nav-link{color: #1C534C;font-size: 14px;font-weight: 600;}
 header .navbar .navbar-nav .nav-item.active .nav-link{color: #62A777;font-weight: 900;}
 header .nav{width: 20%;align-items: center;}

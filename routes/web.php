@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +44,40 @@ Route::post('admin/subcategory/delete', 'Admin\CategoryController@subCategoryDel
 Route::post('admin/subcategory/store', 'Admin\CategoryController@subCategoryStore')->name('admin.subcategory.store')->middleware('authentic');
 Route::post('admin/subcategory/update', 'Admin\CategoryController@subCategoryUpdate')->name('admin.subcategory.update')->middleware('authentic');
 
+Route::get('admin/proposals', 'Admin\ProposalController@index')->name('admin.proposal.index')->middleware('authentic');
+Route::post('admin/proposals/update', 'Admin\ProposalController@update')->name('admin.proposal.update')->middleware('authentic');
 
+Route::get('admin/proposals/preview/{path}', function ($filename) {
+    // Check if the file exists in the storage
+    if (!Storage::disk('local')->exists($filename)) {
+        abort(404);
+    }
+    
+    // Get the file path and content type
+    $filePath = storage_path('app/' . $filename);
+    $contentType = Storage::disk('local')->mimeType($filename);
+   
+    // Return the file for preview
+    return response()->file($filePath, [
+        'Content-Type' => $contentType,
+        'Content-Disposition' => 'inline',
+    ]);
+    
+});
+
+Route::get('admin/proposals/download/{filename}', function ($filename) {
+    // Check if the file exists in the storage
+    if (!Storage::disk('local')->exists($filename)) {
+        abort(404);
+    }
+
+    // Get the file path and content type
+    $filePath = storage_path('app/' . $filename);
+    $contentType = Storage::disk('local')->mimeType($filename);
+
+    // Return the file for download
+    return response()->download($filePath, $filename, ['Content-Type' => $contentType]);
+});
 
 Route::get('user/home', 'HomeController@authenticationValidateUser')->name('user.route')->middleware('authentic');
 

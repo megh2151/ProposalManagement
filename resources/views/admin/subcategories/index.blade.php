@@ -20,6 +20,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Category</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -28,6 +29,7 @@
                                 @foreach ($subcategories as $subcategory)
                                     <tr>
                                         <td>{{ $subcategory->name }}</td>
+                                        <td>{{ $subcategory->category->name }}</td>
                                         <td>{{ $subcategory->status ? 'Active' : 'InActive' }}</td>
                                         </td>
                                         <td><a href="{{ route('admin.subcategory.edit', ['id' => $id, 'subid'=>$subcategory->id]) }}">EDIT</a> |

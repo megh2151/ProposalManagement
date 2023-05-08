@@ -30,7 +30,7 @@
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->status ? 'Active' : 'InActive' }}</td>
                                         </td>
-                                        <td><a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}">Sub Cat</a> | <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">EDIT</a> |
+                                        <td><a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}">Sub Categories</a> | <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">EDIT</a> |
                                             <a href="javascript:void(0);" class="delete-category"
                                                 data-categoryId="{{ $category->id }}">DELETE</a>
                                         </td>

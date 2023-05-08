@@ -128,6 +128,7 @@ class CategoryController extends Controller
         $cat_id = $request->cat_id;
         $category = Category::find($cat_id);
         if ($category) {
+            $category->subcategories->delete();
             $category->delete();
             return redirect()->back()->with('success', 'Category deleted successfully.');
         } else {

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description"
         content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Proposal Admin </title>
 
     <!-- GOOGLE FONTS -->

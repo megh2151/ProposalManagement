@@ -13,16 +13,22 @@ body{font-family: 'Open Sans', sans-serif;}
 header{padding-top: 20px;}
 /* header .navbar .navbar-nav{width: 80%;} 
 header .navbar .navbar-nav .nav-item{width: 20%;}*/
+header .navbar-toggler{background-color: #1C534C;color: #fff;padding: 10px;}
+header .navbar-toggler .navbar-toggler-icon{font-size: 1.5rem;height: auto;}
 header .navbar .navbar-nav .nav-item{padding: 0 20px;}
 header .navbar .navbar-nav .nav-link, #app .navbar .navbar-nav .nav-item .nav-link{color: #1C534C;font-size: 14px;font-weight: 600;}
 header .navbar .navbar-nav .nav-item.active .nav-link{color: #62A777;font-weight: 900;}
-header .nav{width: 20%;align-items: center;}
+header .nav{align-items: center;}
 header .nav .nav-link{color: #62A777;font-weight: 600;}
 header .nav .nav-link span{background-color: #62A777;font-weight: 600;color: #fff;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;}
 header .nav .nav-link.logout{background-color: #CDE8D2;font-weight: 600;color: #62A777;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;padding: 0;}
 header .nav .nav-link.logout:hover{background-color: #62A777;color: #fff;}
+/*-------footer----css*/
+footer .social-nav{width: 100%;display: none;background-color: #1C534C;}
+footer .social-nav .nav-item{padding: 8px 0;}
+footer .social-nav .nav-link{font-size: 1.2rem;}
 /*---page css-----*/
-.wrapper{padding-left: 80px;background-color: #F2FDF5;}
+.wrapper{padding-left: 80px;background-color: #F2FDF5;min-height: 100vh;}
 .landing-page .form-card{background-color: transparent;}
 .content-wrapper .row{margin-left: 0;margin-right: 0;}
 .form-control:focus{box-shadow:none;}
@@ -73,6 +79,14 @@ header .nav .nav-link.logout:hover{background-color: #62A777;color: #fff;}
 #proposals .card .card-text{color: #666;}
 #proposals .card .btn-read{background-color:#62A777;border-radius: 20px;color: #fff;font-weight: 600;}
 #proposals .card .btn-read .fa{font-size: 1.2rem;vertical-align: middle;}
-@media all and (min-width: 768px){
+@media all and (max-width: 767px){
+    header{padding-top: 0;}
+    .mobile-nav{flex-direction: row;}
+    .form-card .left-col .bg-overlay{padding: 2rem 1.5rem;}
+    .form-card .left-col .carousel{min-height: 280px;}
 }
-@media all and (max-width: 767px){}
+@media all and (max-width: 600px){
+    .sidebar{display: none;}
+    .wrapper{padding-left: 0;}
+    footer .social-nav{display: flex;}
+}

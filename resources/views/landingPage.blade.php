@@ -4,7 +4,7 @@
 <div class="container landing-page">
     <div class="card form-card">
         <div class="row justify-content-center">
-            <div class="col-md-6 left-col">
+            <div class="col-md-9 col-lg-6 left-col">
                 <div class="bg-overlay">
                     <a class="brand" href="#">Logo</a>
                     <div class="brand-name">

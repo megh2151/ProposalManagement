@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-lg">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon fa fa-bars"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="main-menu">
@@ -31,26 +31,10 @@
                         <a class="nav-link" href="#">Settings</a>
                     </li>
                 </ul>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><span class="fa fa-user mr-3" aria-hidden="true"></span>{{ Auth::user()->name }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link logout" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
             @endguest
         </div>
 
-        <ul class="navbar-nav justify-content-end">
+        <ul class="navbar-nav justify-content-end mobile-nav">
             <!-- Authentication Links -->
             @guest
                 <li class="nav-item">
@@ -61,7 +45,22 @@
                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                     </li>
                 @endif
-            @endguest
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><span class="fa fa-user mr-3" aria-hidden="true"></span>{{ Auth::user()->name }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link logout" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+        @endguest
         </ul>
     </nav>
 </header>

@@ -28,6 +28,7 @@
             <!-- /.content-wrapper -->
 
             <div class="control-sidebar-bg"></div>
+            @include('partials.footer')
         </div>
 
         @include('partials.javascripts')

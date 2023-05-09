@@ -23,10 +23,11 @@ header .nav .nav-link{color: #62A777;font-weight: 600;}
 header .nav .nav-link span{background-color: #62A777;font-weight: 600;color: #fff;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;}
 header .nav .nav-link.logout{background-color: #CDE8D2;font-weight: 600;color: #62A777;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;padding: 0;}
 header .nav .nav-link.logout:hover{background-color: #62A777;color: #fff;}
+.mobile-nav{flex-direction: row;}
 /*-------footer----css*/
 footer .social-nav{width: 100%;display: none;background-color: #1C534C;}
 footer .social-nav .nav-item{padding: 8px 0;}
-footer .social-nav .nav-link{font-size: 1.2rem;}
+footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 /*---page css-----*/
 .wrapper{padding-left: 80px;background-color: #F2FDF5;min-height: 100vh;}
 .landing-page .form-card{background-color: transparent;}
@@ -79,14 +80,32 @@ footer .social-nav .nav-link{font-size: 1.2rem;}
 #proposals .card .card-text{color: #666;}
 #proposals .card .btn-read{background-color:#62A777;border-radius: 20px;color: #fff;font-weight: 600;}
 #proposals .card .btn-read .fa{font-size: 1.2rem;vertical-align: middle;}
+@media all and (min-width: 991px) and (max-width: 1024px){
+    header .navbar-toggler{display: none;}
+    header .navbar-collapse{display: flex!important;flex-basis: auto;}
+}
+@media all and (min-width: 768px) and (max-width: 990px){
+    .form-card .left-col .carousel{min-height: 280px;}
+    header .navbar-toggler{display: none;}
+    header .navbar-collapse{display: flex!important;flex-basis: auto;}
+    header .navbar-collapse .navbar-nav{flex-direction: row;}
+    #dashboardTab.nav-tabs .nav-item{width: 25%;}
+}
 @media all and (max-width: 767px){
     header{padding-top: 0;}
-    .mobile-nav{flex-direction: row;}
     .form-card .left-col .bg-overlay{padding: 2rem 1.5rem;}
     .form-card .left-col .carousel{min-height: 280px;}
+    .form-card .right-col h3{margin-bottom: 1.5rem;}
+    header .navbar-collapse{position: absolute;width: 90%;top: 60px;z-index: 999;left: 16px;background-color: rgb(28, 83, 76);padding: 2rem 0;border-radius: .25rem;}
+    header .navbar-collapse .navbar-nav .nav-link{color: #fff;font-weight: 600;}
+    header .navbar-collapse .navbar-nav .nav-item{margin-bottom: 1.5rem;}
+    #dashboardTab{justify-content: center;}
+    #dashboardTab.nav-tabs .nav-item{width: 28%;margin-right: 5%;}
+    #dashboardTab.nav-tabs .nav-item:last-child{margin-right: 0;}
 }
 @media all and (max-width: 600px){
     .sidebar{display: none;}
     .wrapper{padding-left: 0;}
-    footer .social-nav{display: flex;}
+    footer .social-nav{display: flex;justify-content: center;}
+    .form-card .right-col{padding:2rem 1rem;}
 }

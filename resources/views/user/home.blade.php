@@ -1,7 +1,7 @@
 @extends('layouts.user.app')
 
 @section('content')
-<div class="container">
+<div class="container p-0">
     <ul class="nav nav-tabs" id="dashboardTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">My Profile</button>
@@ -16,7 +16,7 @@
     <div class="tab-content" id="dashboardTabContent">
         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="row">
-                <div class="col-md-5 pl-md-0">
+                <div class="col-lg-5 col-md-7 pl-md-0">
                     <form method="POST">
                         @csrf
 
@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-12 p-md-0">
                             <label for="email" class="col-form-label">{{ __('Email Address:') }}</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
 
@@ -82,7 +82,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12 p-md-0">
                             <label for="location" class="col-form-label">{{ __('Location:') }}</label>
                             <div class="input-group">
                                 <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location') }}" required>
@@ -97,7 +97,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12 p-md-0">
                             <label for="phone" class="col-form-label">{{ __('Phone') }}</label>
                             <div class="input-group phone">
                                 <div class="input-group-prepend">
@@ -125,7 +125,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-7"></div>
+                <div class="col-lg-7 col-md-5"></div>
             </div>
         </div>
         <div class="tab-pane fade" id="proposals" role="tabpanel" aria-labelledby="proposals-tab">

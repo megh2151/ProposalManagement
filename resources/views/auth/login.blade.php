@@ -34,10 +34,10 @@
             </div>
             <div class="col-md-6 right-col">
                 <h3>Login</h3>
-                <form method="POST" action="{{ route('login') }}" class="d-md-flex align-items-center h-100 mt-0">
+                <form method="POST" action="{{ route('login') }}" class="d-md-flex align-items-center h-100 mt-0 justify-content-center">
                     @csrf
-                    <div class="w-100">
-                        <div class="form-group w-75 mx-auto">
+                    <div class="col-lg-8">
+                        <div class="form-group">
                             <label for="email" class="col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -47,7 +47,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group w-75 mx-auto">
+                        <div class="form-group">
                             <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
@@ -57,19 +57,17 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <div class="form-group row justify-content-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
+                                <label class="form-check-label" for="remember">
+                                    {{ __('Remember Me') }}
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-3">
+                        <div class="form-group row mb-0 justify-content-center">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-submit">
                                     {{ __('Login') }}
                                 </button>

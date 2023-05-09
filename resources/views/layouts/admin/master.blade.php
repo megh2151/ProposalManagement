@@ -16,6 +16,9 @@
 
     <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
 
+    <!-- Bootsrap CSS STYLE -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/adminStyles.css') }}" />
+    <link href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!-- PLUGINS CSS STYLE -->
     <link href="{{ asset('admin/assets/plugins/simplebar/simplebar.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/assets/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />

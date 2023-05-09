@@ -37,7 +37,7 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group row">
-                            <div class="col-md-4 pl-md-0">
+                            <div class="col-lg-4 pl-lg-0">
                                 <label for="name" class="col-form-label ">{{ __('First Name') }}</label>
                                 <input id="name" type="text"
                                 class="form-control @error('name') is-invalid @enderror" name="name"
@@ -49,7 +49,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 p-md-0">
+                            <div class="col-lg-4 p-lg-0">
                                 <label for="middle_name"class=" col-form-label ">{{ __('Middle Name') }}</label>
                                 <input id="middle_name" type="text"
                                     class="form-control @error('middle_name') is-invalid @enderror"
@@ -62,7 +62,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 pr-md-0">
+                            <div class="col-lg-4 pr-lg-0">
                                 <label for="last_name" class=" col-form-label ">{{ __('Last Name') }}</label>
                                 <input id="last_name" type="text"
                                     class="form-control @error('last_name') is-invalid @enderror"
@@ -75,7 +75,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-lg-12">
                             <label for="email" class="col-form-label ">{{ __('E-Mail Address') }}</label>
 
                             <input id="email" type="email"
@@ -89,7 +89,7 @@
                             @enderror
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-6 pl-md-0">
+                            <div class="col-lg-6 pl-lg-0">
                                 <label for="password" class="col-form-label ">{{ __('Password') }}</label>
 
                                 <input id="password" type="password"
@@ -102,12 +102,12 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-md-6 pr-md-0">
+                            <div class="col-lg-6 pr-lg-0">
                                 <label for="password-confirm" class="col-form-label ">{{ __('Confirm Password') }}</label>
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-lg-12">
                             <label for="location" class="col-form-label ">{{ __('Location') }}</label>
                             <div class="input-group">
                                 <select id="location" name="location"
@@ -130,7 +130,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-lg-12">
                             <label for="phone" class="col-form-label">{{ __('Phone') }}</label>
                             <div class="input-group phone">
                                 <div class="input-group-prepend">

@@ -41,6 +41,11 @@ class ProposalController extends Controller
         }
     }
     
+    public function chat()
+    {
+        // $proposals = Proposal::get();
+        return view('admin.proposals.chat');
+    }
 
 }
 

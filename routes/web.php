@@ -79,6 +79,8 @@ Route::get('admin/proposals/download/{filename}', function ($filename) {
     return response()->download($filePath, $filename, ['Content-Type' => $contentType]);
 });
 
+Route::get('admin/proposals/{id}/chat', 'Admin\ProposalController@chat')->name('admin.proposal.chat')->middleware('authentic');
+
 Route::get('user/home', 'HomeController@authenticationValidateUser')->name('user.route')->middleware('authentic');
 
 Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');

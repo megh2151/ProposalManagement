@@ -1,4 +1,4 @@
-<aside class="left-sidebar bg-sidebar">
+<aside class="left-sidebar admin-sidebar">
           <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
             <div class="app-brand">

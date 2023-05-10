@@ -1,7 +1,9 @@
 .admin-sidebar{background-color: #1C534C!important;}
+.admin-sidebar .sidebar{padding-bottom: 2rem!important;}
 .admin-sidebar .app-brand{background-color: #62A777;}
 .admin-sidebar .sidebar .nav > li.active > a i{color: #62A777;}
 .admin-sidebar .sidebar .sidebar-inner > li > a:before{background: #62A777;} 
+.main-header .navbar{padding-right: 0;}
 .card-chat{border: 0!important;box-shadow: 0px 0px 10px #ccc;}
 .card-chat .card-header{background-color: rgba(98, 167, 119, 0.1);}
 .card-chat .card-header img{width: 60px;height: 60px;}
@@ -29,3 +31,17 @@
 .chat-right-content .chat-message.chat-right{text-align: right;justify-content: flex-end;}
 .chat-right-content .chat-message .message{background-color: rgba(233, 236, 239, 0.5);padding: 0.5rem 1.25rem;border-radius: 0.25rem;margin-bottom: 0.25rem;color: #1b223c;}
 .chat-right-content .chat-message .date-time{font-size: 10px;padding-left: 1.25rem;}
+.admin-wrapper .add-btn{background-color: #62A777;color: #fff;font-weight: 600;text-transform: uppercase;border-radius: 20px;padding: 5px 20px 2px;}
+.admin-wrapper .btn-submit{background-color: #62A777;color: #fff;font-weight: 600;text-transform: uppercase;border-radius: 20px;padding: .5rem 1.5rem;}
+.admin-wrapper .add-btn i{font-size: 1.3rem;vertical-align: middle;}
+.admin-wrapper .add-btn:hover{color: #fff;}
+.admin-wrapper .card{border: 0;}
+.admin-wrapper .card .basic-data-table{overflow-x: auto!important;}
+.admin-wrapper .card .basic-data-table .row{margin: 0;}
+.rounded-btn{width: 35px;height: 35px;border-radius: 50%;line-height: 35px;text-align: center;}
+.rounded-btn i{font-size: 1rem;}
+.admin-wrapper .basic-data-table .pagination .page-link{height: auto!important;padding: 10px;}
+.admin-wrapper .basic-data-table .pagination .page-item.active .page-link{background-color: #1C534C!important;border-color: #1C534C!important;}
+.admin-wrapper .basic-data-table .dataTables_filter .form-control{border-radius: 20px;height: 35px;}
+.admin-wrapper .basic-data-table .table th{border: 0;background-color: rgba(98, 167, 119, 0.2);color: #1C534C;}
+.admin-wrapper .basic-data-table .table td{border-top: 0;border-bottom: 1px solid #e5e9f2;}

@@ -81,7 +81,7 @@
             <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
-            <div class="content-wrapper">
+            <div class="content-wrapper admin-wrapper">
                 <div class="content">
                     @if (count($errors) > 0)
                         <div class="alert alert-danger alert-dismissible">

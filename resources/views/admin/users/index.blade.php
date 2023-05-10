@@ -2,44 +2,48 @@
 
 @section('content')
     <div class="breadcrumb-wrapper">
-        <h1>Users</h1>
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h1>Government Users</h1>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{{ route('admin.users.create') }}" class="btn add-btn">
+                    <i class="mdi mdi-plus-circle mr-1"></i> Add User
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h2>Users</h2>
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-outline-primary btn-sm text-uppercase">
-                        <i class=" mdi mdi-plus mr-1"></i> Add User
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="basic-data-table">
-                        <table id="basic-data-table" class="table nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        </td>
-                                        <td><a href="{{ route('admin.users.edit', ['id' => $user->id]) }}">EDIT</a> |
-                                            <a href="javascript:void(0);" class="delete-user"
-                                                data-userId="{{ $user->id }}">DELETE</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="card user-card">
+        <div class="card-body">
+            <div class="basic-data-table">
+                <table id="basic-data-table" class="table nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                </td>
+                                <td>
+                                    <a class="mr-2" href="{{ route('admin.users.edit', ['id' => $user->id]) }}">
+                                        <button class="rounded-btn btn-success"><i class="mdi mdi-pencil"></i></button>
+                                    </a>
+                                    <a href="javascript:void(0);" class="delete-user"
+                                        data-userId="{{ $user->id }}">
+                                        <button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -6,28 +6,13 @@
         <div class="card card-chat">
             <div class="card-header">
                 <div class="row m-0 align-items-center">
-                    <div class="col-md-4 pl-0">
-                        <form>
-                            <input type="text" placeholder="Search..." class="form-control" />
-                        </form>
-                    </div>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="row align-items-center">
                             <div class="col-2">
                                 <img src="{{asset('admin/assets/img/user/u2.jpg')}}" class="rounded-circle" />
                             </div>
-                            <div class="col-9 pl-0">
-                                <h3 class="title">Leon Battista</h3>
-                            </div>
-                            <div class="col-1 p-0">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Logout</a>
-                                    </div>
-                                </div>
+                            <div class="col-10 pl-0">
+                                <h3 class="title">{{$proposal->user->name}}</h3>
                             </div>
                         </div>
                     </div>
@@ -35,94 +20,35 @@
             </div>
             <div class="card-body px-0">
                 <div class="row mx-0">
-                    <div class="col-md-4 chat-users">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <div class="chat chat-user">
-                                        <div class="position-relative mr-3">
-                                            <img class="rounded-circle chat-profile" src="{{asset('admin/assets/img/user/u1.jpg')}}" alt="Image">
-                                            <span class="status away"></span>
-                                        </div>
-                                        <div class="chat-user-body">
-                                            <div class="chat-user-content">
-                                                <h5>User one</h5>
-                                                <p class="last-msg">Lorem Ipsum is simply dummy text of</p>
+                    <div class="col-md-12 chat-right-content">
+                        <div class="chat-content" id="chat-content">
+                            @if($messages->isEmpty())
+                            <p class="text-center mb-5" id="empty-message">No messages found.</p>
+                            @else
+                                @foreach($messages as $message)
+                                    @if($message->from_id == auth()->user()->id)
+                                        <div class="chat chat-message chat-right" id="{{ $message->id }}">
+                                            <div class="chat-body">
+                                                <p class="message">{{ $message->message }}</p>
+                                                <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
                                             </div>
-                                            <span class="chat-date">6 May</span>
+                                            <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    <div class="chat chat-user">
-                                        <div class="position-relative mr-3">
-                                            <img class="rounded-circle chat-profile" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
-                                            <span class="status active"></span>
-                                        </div>
-                                        <div class="chat-user-body">
-                                            <div class="chat-user-content">
-                                                <h5>Leon Battista</h5>
-                                                <p class="last-msg">Lorem Ipsum is simply dummy text of</p>
+                                    @else
+                                        <div class="chat chat-message chat-left" id="{{ $message->id }}">
+                                            <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
+                                            <div class="chat-body">
+                                                <p class="message">{{ $message->message }}</p>
+                                                <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
                                             </div>
-                                            <span class="chat-date">6 May</span>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <div class="chat chat-user">
-                                        <div class="position-relative mr-3">
-                                            <img class="rounded-circle chat-profile" src="{{asset('admin/assets/img/user/u3.jpg')}}" alt="Image">
-                                            <span class="status away"></span>
-                                        </div>
-                                        <div class="chat-user-body">
-                                            <div class="chat-user-content">
-                                                <h5>User one</h5>
-                                                <p class="last-msg">Lorem Ipsum is simply dummy text of</p>
-                                            </div>
-                                            <span class="chat-date">6 May</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-8 chat-right-content">
-                        <div class="chat-content">
-                            <div class="chat chat-message chat-left">
-                                <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
-                                <div class="chat-body">
-                                    <p class="message">Lorem ipsum dolor sit amet.</p>
-                                    <div class="date-time">27-07-2019, 1.03 PM</div>
-                                </div>
-                            </div>
-                            <div class="chat chat-message chat-right">
-                                <div class="chat-body">
-                                    <p class="message">Consectetur adipisicing elit Odio ex.</p>
-                                    <div class="date-time">27-07-2019, 1.03 PM</div>
-                                </div>
-                                <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
-                            </div>
-                            <div class="chat chat-message chat-left">
-                                <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
-                                <div class="chat-body">
-                                    <p class="message">Lorem ipsum dolor sit amet.</p>
-                                    <div class="date-time">27-07-2019, 1.03 PM</div>
-                                </div>
-                            </div>
-                            <div class="chat chat-message chat-right">
-                                <div class="chat-body">
-                                    <p class="message">Consectetur adipisicing elit Odio ex.</p>
-                                    <div class="date-time">27-07-2019, 1.03 PM</div>
-                                </div>
-                                <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
-                            </div>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
-                        <form class="px-5 pb-3">
-                            <input type="text" class="form-control mb-3" placeholder="Type your message here">
+                        <form class="px-5 pb-3" id="message-form">
+                            <input type="text" class="form-control mb-3" placeholder="Type your message here" id="message-input">
+                            <button data-from_id="{{auth()->user()->id}}" data-to_id="{{$proposal->user->id}}" data-proposal_id="{{$proposal->id}}" class="float-right btn btn-primary" id="send-button"><i class="mdi mdi-send"></i></button>
                         </form>
                     </div>
                 </div>
@@ -132,4 +58,91 @@
 @endsection
 
 @section('script')
+<script>
+    // Get references to the input and button elements
+    const messageInput = $('#message-input');
+    const sendButton = $('#send-button');
+    const chatContent = $('#chat-content');
+    
+    // Add a click event listener to the send button
+    sendButton.on('click', function(event) {
+        event.preventDefault();
+        
+        var from_id = $(this).attr('data-from_id'); 
+        var to_id = $(this).attr('data-to_id');
+        var proposal_id = $(this).attr('data-proposal_id'); 
+        // Get the value of the message input
+        const message = messageInput.val().trim();
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        // Check if the message input is not empty
+        if (message !== '') {
+            // Send the message to the server using Ajax
+            $.ajax({
+                url: '/send-message',
+                method: 'POST',
+                data: {
+                    from_id: from_id, 
+                    to_id: to_id, 
+                    proposal_id: proposal_id, // Replace with the ID of the proposal
+                    message: message,
+                    _token: csrfToken,
+                },
+                success: function(data) {
+                    // Create a new chat message element with the message and the current date and time
+                    const chatMessage = `
+                        <div class="chat chat-message chat-right" id="${data.id}">
+                            <div class="chat-body">
+                                <p class="message">${message}</p>
+                                <div class="date-time">${new Date().toLocaleString()}</div>
+                            </div>
+                            <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
+                        </div>`;
+                    $("#empty-message").remove();
+                    // Append the new chat message element to the chat content
+                    chatContent.append(chatMessage);
+                    
+                    // Clear the message input
+                    messageInput.val('');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(errorThrown);
+                }
+            });
+        }
+    });
+
+    function loadMessages() {
+        var lastMessageId = $('.chat-message:last').attr('id');
+        $.ajax({
+            url: '/messages',
+            type: 'GET',
+            data: {last_message_id: lastMessageId},
+            success: function(response) {
+                if (response && response.length > 0) {
+                    $.each(response, function(i, message) {
+                        // Append the new message to the chat window
+                        var html = '<div class="chat chat-message chat-left" id="' + message.id + '">' +
+                                '<img class="rounded-circle mr-3" src="' + message.from.avatar + '" alt="Image">' +
+                                '<div class="chat-body">' +
+                                '<p class="message">' + message.message + '</p>' +
+                                '<div class="date-time">' + message.created_at + '</div>' +
+                                '</div>' +
+                                '</div>';
+                        
+                        $('#chat-content').append(html);
+                    });
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    // Load messages on page load
+    loadMessages();
+
+    // Periodically load new messages
+    setInterval(loadMessages, 5000);
+</script>
 @endsection

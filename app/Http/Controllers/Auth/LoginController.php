@@ -33,12 +33,17 @@ class LoginController extends Controller
         $fieldData = $request->all();
 
         if(auth()->attempt(array('email' => $fieldData['email'], 'password' => $fieldData['password']))){
-            if(auth()->user()->role_id == 1){
-                return redirect()->route('admin.route');
-            } elseif(auth()->user()->role_id == 0){
-                return redirect()->route('user.route');
+            if(auth()->user()->is_active == 1){
+                if(auth()->user()->role_id == 1){
+                    return redirect()->route('admin.route');
+                } elseif(auth()->user()->role_id == 0){
+                    return redirect()->route('user.dashboard');
+                } elseif(auth()->user()->role_id == 2) {
+                    return redirect()->route('admin.proposal.index');
+                }
             } else {
-                return redirect()->route('home');
+                auth()->logout();
+                return redirect()->route('login')->with('error', 'Your account is inactive.');
             }
 
         }else{

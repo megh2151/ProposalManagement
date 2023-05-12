@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,15 +23,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
-
-    public function authenticationValidateAdmin(){
-        return view('authenticationValidateAdmin');
-    }
-
-    public function authenticationValidateUser(){
         return view('user.home');
-        // return view('authenticationValidateUser');
+    }
+
+    public function aboutUs()
+    {
+        return view('about-us');
+    }
+
+    public function contactUs()
+    {
+        return view('contact-us');
     }
 }

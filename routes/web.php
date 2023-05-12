@@ -20,14 +20,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('admin/home', 'Admin\HomeController@index')->name('admin.route')->middleware('authentic');
+
 Route::get('admin/users', 'Admin\UsersController@index')->name('admin.users')->middleware('authentic');
 Route::get('admin/user/create', 'Admin\UsersController@create')->name('admin.users.create')->middleware('authentic');
 Route::get('admin/user/edit/{id}', 'Admin\UsersController@edit')->name('admin.users.edit')->middleware('authentic');
 Route::post('admin/user/delete', 'Admin\UsersController@delete')->name('admin.users.delete')->middleware('authentic');
 Route::post('admin/user/store', 'Admin\UsersController@store')->name('admin.users.store')->middleware('authentic');
 Route::post('admin/user/update', 'Admin\UsersController@update')->name('admin.user.update')->middleware('authentic');
+
+Route::get('admin/proposal-users', 'Admin\UsersController@propUserindex')->name('admin.proposal.users')->middleware('authentic');
+Route::get('admin/proposal-users/{id}/chat', 'Admin\UsersController@propUserChat')->name('admin.proposal.users.chat')->middleware('authentic');
 
 
 Route::get('admin/categories', 'Admin\CategoryController@index')->name('admin.categories')->middleware('authentic');
@@ -81,6 +84,39 @@ Route::get('admin/proposals/download/{filename}', function ($filename) {
 
 Route::get('admin/proposals/{id}/chat', 'Admin\ProposalController@chat')->name('admin.proposal.chat')->middleware('authentic');
 
-Route::get('user/home', 'HomeController@authenticationValidateUser')->name('user.route')->middleware('authentic');
+Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->middleware('authentic');
+Route::post('user/profile/update', 'UserController@updateProfile')->name('user.profile.update')->middleware('authentic');
+
+Route::post('user/proposal/submit', 'ProposalController@proposalSubmit')->name('user.proposal.submit')->middleware('authentic');
+
+Route::get('user/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
 
 Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');
+Route::get('/subcategories/{category_id}', 'ProposalController@getSubcategories');
+
+
+Route::get('proposals/preview/{path}', function ($filename) {
+
+    // Check if the file exists in the storage
+    if (!Storage::disk('public')->exists('proposals/'.$filename)) {
+        abort(404);
+    }
+    
+    // Get the file path and content type
+    $filePath = storage_path('app/' . 'public/proposals/'.$filename);
+    $contentType = Storage::disk('public')->mimeType('proposals/'.$filename);
+   
+    // Return the file for preview
+    return response()->file($filePath, [
+        'Content-Type' => $contentType,
+        'Content-Disposition' => 'inline',
+    ]);
+    
+});
+
+Route::post('/send-message', 'Admin\ProposalController@sendMessage')->middleware('authentic');
+Route::get('/messages', 'Admin\ProposalController@getNewMessages')->middleware('authentic');
+Route::delete('/proposals/{proposal}', 'ProposalController@destroy')->name('proposals.destroy')->middleware('authentic');
+
+Route::get('/about-us', 'HomeController@aboutUs');
+Route::get('/contact-us', 'HomeController@contactUs');

@@ -10,8 +10,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+
 
 class RegisterController extends Controller
 {
@@ -50,11 +52,13 @@ class RegisterController extends Controller
         $countries = Country::get();
         return view('auth.register', compact('countries'));
     }
+
     public function getPhoneCode($id)
     {
         $country = Country::where('id', $id)->first();
         return response()->json(['phone_code' => $country->phonecode]);
     }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -63,16 +67,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-
             'phone' => 'required|string|max:255',
-
         ]);
     }
 
@@ -84,8 +85,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -95,7 +95,28 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'country_code' => $data['country_code'] ?? "+91",
             'role_id' => $data['role_id'],
-            'activation_token' => Str::random(60)
+            'activation_token' => Str::random(60),
+            'is_active'=>'0'
         ]);
+       
+        Mail::to($user->email)->send(new WelcomeMail($user));
+
+        return redirect()->route('login')->with('success', 'Registration successful! Please login to continue.');
+
     }
+
+    public function activateUser($token){
+        $user = User::where('activation_token',$token)->first();
+        
+        if($user){
+            $user->is_active = 1;
+            $user->save();
+            auth()->login($user); // log in the user
+            return redirect('/user/dashboard')->with('success','Your account now activated!!');
+        }else{
+            
+             return redirect('/')->with('error','User Not found!');
+        }
+    }
+    
 }

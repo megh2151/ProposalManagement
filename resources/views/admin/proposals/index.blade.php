@@ -39,7 +39,11 @@
                                         <td>{{ $proposal->note }}</td>
                                         <td>{{ $proposal->status }}</td>
                                         </td>
-                                        <td><a target="_blank" href="/admin/proposals/preview/document.pdf" class="">View</a> | <a href="/admin/proposals/download/document.pdf" class="download">Download</a> | <a href="javascript:void(0);" class="update-status" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}">Update Status</a> | <a href="javascript:void(0);" class="update-note" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">Update Note</a></td>
+                                        <td><a target="_blank" href="/admin/proposals/preview/document.pdf" class="">View</a> | <a href="/admin/proposals/download/document.pdf" class="download">Download</a> | <a href="javascript:void(0);" class="update-status" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}">Update Status</a> | <a href="javascript:void(0);" class="update-note" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">Update Note</a>
+                                        <a class="mr-2" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}">
+                                                <button class="rounded-btn btn-success"><i class="mdi mdi-chat"></i></button>
+                                        </a>
+                                    </td>
                                     </tr>
                                 @endforeach
                             </tbody>

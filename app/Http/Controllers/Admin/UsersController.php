@@ -12,10 +12,32 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
 
+     //
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (auth()->user()->role_id ==2) {
+                return redirect()->route('admin.proposal.index')->with('error', 'You do not have permission to access this page.');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         $users = User::where('role_id',2)->get();
         return view('admin.users.index', compact('users'));
+    }
+
+    public function propUserindex()
+    {
+        $users = User::where('role_id',0)->get();
+        return view('admin.proposals.users.index', compact('users'));
     }
 
 
@@ -85,4 +107,15 @@ class UsersController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         }
     }
+
+    public function propUserChat($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            return view('admin.proposals.users.chat', compact('user'));
+        }
+    }
+    
+
+
 }

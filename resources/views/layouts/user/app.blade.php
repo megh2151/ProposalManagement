@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">

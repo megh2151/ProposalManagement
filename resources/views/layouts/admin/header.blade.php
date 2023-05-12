@@ -6,7 +6,6 @@
         </button>
         <!-- search form -->
         <div class="search-form d-none d-lg-inline-block">
-
         </div>
 
         <div class="navbar-right ">
@@ -14,12 +13,11 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="d-none d-lg-inline-block">Proposal Admin</span>
+                        <span class="d-none d-lg-inline-block">{{auth()->user()->name}}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <!-- User image -->
                         <li class="dropdown-footer">
-                            <a href="{{ route('home') }}">HomePage</a>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

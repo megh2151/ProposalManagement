@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="breadcrumb-wrapper">
-        <h1>Sub Categories</h1>
+        <h1>Sub Categories {{$category->name}}</h1>
     </div>
 
     <div class="row">
@@ -30,7 +30,7 @@
                                     <tr>
                                         <td>{{ $subcategory->name }}</td>
                                         <td>{{ $subcategory->category->name }}</td>
-                                        <td>{{ $subcategory->status ? 'Active' : 'InActive' }}</td>
+                                        <td>{{ $subcategory->is_active ? 'Active' : 'InActive' }}</td>
                                         </td>
                                         <td><a href="{{ route('admin.subcategory.edit', ['id' => $id, 'subid'=>$subcategory->id]) }}">EDIT</a> |
                                             <a href="javascript:void(0);" class="delete-subcategory"

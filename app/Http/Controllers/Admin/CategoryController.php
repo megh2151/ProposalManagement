@@ -36,7 +36,8 @@ class CategoryController extends Controller
     public function subCategoryIndex($id)
     {
         $subcategories = SubCategory::where('category_id',$id)->get();
-        return view('admin.subcategories.index', compact('subcategories','id'));
+        $category = Category::find($id);
+        return view('admin.subcategories.index', compact('subcategories','id','category'));
     }
      
      

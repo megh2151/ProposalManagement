@@ -35,7 +35,14 @@
                                     @if($proposal->file_path)
                                     <a target="_blank" href="/proposals/preview/{{$proposal->file_path}}" class="btn btn-read">Open<i class="fa fa-play-circle ml-4" aria-hidden="true"></i></a>
                                     @endif
+                                    
                                     <a href="javascript:void(0);"  data-proposalid="{{$proposal->id}}" class="btn btn-danger float-right mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}"   class="btn btn-primary float-right mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    @if(count($proposal->messages))
+                                    <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
+                                        <button class="rounded-btn btn-success"><i class="mdi mdi-chat"></i></button>
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

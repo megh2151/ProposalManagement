@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
+Auth::routes(['verify' => true]);
+Auth::routes(['register' => false]);
+
 Auth::routes();
 
 Route::get('admin/home', 'Admin\HomeController@index')->name('admin.route')->middleware('authentic');
@@ -52,14 +57,14 @@ Route::post('admin/proposals/update', 'Admin\ProposalController@update')->name('
 
 Route::get('admin/proposals/preview/{path}', function ($filename) {
     // Check if the file exists in the storage
-    if (!Storage::disk('local')->exists($filename)) {
+    if (!Storage::disk('public')->exists('proposals/'.$filename)) {
         abort(404);
     }
     
     // Get the file path and content type
-    $filePath = storage_path('app/' . $filename);
-    $contentType = Storage::disk('local')->mimeType($filename);
-   
+    $filePath = storage_path('app/' . 'public/proposals/'.$filename);
+    $contentType = Storage::disk('public')->mimeType('proposals/'.$filename);
+
     // Return the file for preview
     return response()->file($filePath, [
         'Content-Type' => $contentType,
@@ -70,13 +75,14 @@ Route::get('admin/proposals/preview/{path}', function ($filename) {
 
 Route::get('admin/proposals/download/{filename}', function ($filename) {
     // Check if the file exists in the storage
-    if (!Storage::disk('local')->exists($filename)) {
+    if (!Storage::disk('public')->exists('proposals/'.$filename)) {
         abort(404);
     }
-
+    
     // Get the file path and content type
-    $filePath = storage_path('app/' . $filename);
-    $contentType = Storage::disk('local')->mimeType($filename);
+    $filePath = storage_path('app/' . 'public/proposals/'.$filename);
+    $contentType = Storage::disk('public')->mimeType('proposals/'.$filename);
+
 
     // Return the file for download
     return response()->download($filePath, $filename, ['Content-Type' => $contentType]);
@@ -88,6 +94,12 @@ Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->
 Route::post('user/profile/update', 'UserController@updateProfile')->name('user.profile.update')->middleware('authentic');
 
 Route::post('user/proposal/submit', 'ProposalController@proposalSubmit')->name('user.proposal.submit')->middleware('authentic');
+
+Route::get('user/proposal/{id}/chat', 'ProposalController@propChat')->name('user.proposal.chat')->middleware('authentic');
+Route::get('user/proposal/{id}/edit', 'ProposalController@editProposal')->name('user.proposal.edit')->middleware('authentic');
+
+Route::post('user/proposal/update', 'ProposalController@proposalUpdate')->name('user.proposal.update')->middleware('authentic');
+
 
 Route::get('user/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
 

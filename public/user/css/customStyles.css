@@ -80,6 +80,34 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 #proposals .card .card-text{color: #666;}
 #proposals .card .btn-read{background-color:#62A777;border-radius: 20px;color: #fff;font-weight: 600;}
 #proposals .card .btn-read .fa{font-size: 1.2rem;vertical-align: middle;}
+
+.card-chat{border: 0!important;box-shadow: 0px 0px 10px #ccc;}
+.card-chat .card-header{background-color: rgba(98, 167, 119, 0.1);}
+.card-chat .card-header img{width: 60px;height: 60px;}
+.card-chat .card-header .form-control{border-radius: 20px;}
+.card-chat .card-header .title{color:#62A777;}
+.card-chat .card-header .dropdown-toggle{font-size: 1.5rem;position: relative;color: #8a909d;}
+.card-chat .card-header .dropdown-toggle::after{display: none;}
+.card-chat .card-header .dropdown-toggle::before{font-family: "Material Design Icons";content: "\F1D9";}
+.card-chat .card-header .dropdown-menu.show{left: auto!important;min-width: auto;right: 0;}
+.chat-users{border-right: 1px solid #ddd;padding: 0!important;}
+.card-chat .chat{display: flex;align-items: flex-start;}
+.chat-users .chat-user-body{flex: 1;display: flex;justify-content: space-between;}
+.chat-users .chat-user-content h5{color: #1b223c;font-size: 0.9375rem;margin-bottom: 0;}
+.chat-users .chat-user-content .last-msg{width: 125px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin-bottom: 0;color: #8a909d;}
+.chat-users .chat-date{text-align: right;font-size: 12px;color: #8a909d;}
+.chat-users .nav-link{padding:.5rem 1rem;}
+.chat-users .nav-link.active{background-color: #62A777;}
+.chat-users .nav-link.active h5, .chat-users .nav-link.active p, .chat-users .nav-link.active span{color: #fff;}
+.chat-users .status{position: absolute;bottom: 0;right: 0px;width: 12px;height: 12px;border: 2px solid #fff;border-radius: 50%;}
+.chat-users .status.active{background-color: #29cc97;}
+.chat-users .status.away{background-color: #fec400;}
+.chat-right-content .chat-message{margin-bottom: 1.5rem;}
+.chat-right-content .chat-message.chat-left img{width: 50px;}
+.chat-right-content .chat-message.chat-right img{width: 40px}
+.chat-right-content .chat-message.chat-right{text-align: right;justify-content: flex-end;}
+.chat-right-content .chat-message .message{background-color: rgba(233, 236, 239, 0.5);padding: 0.5rem 1.25rem;border-radius: 0.25rem;margin-bottom: 0.25rem;color: #1b223c;}
+.chat-right-content .chat-message .date-time{font-size: 10px;padding-left: 1.25rem;}
 @media all and (min-width: 991px) and (max-width: 1024px){
     header .navbar-toggler{display: none;}
     header .navbar-collapse{display: flex!important;flex-basis: auto;}

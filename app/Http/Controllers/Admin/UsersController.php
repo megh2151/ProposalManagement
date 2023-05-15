@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\GovWelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -59,7 +61,7 @@ class UsersController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required | email',
+            'email' => 'required | email|unique:users',
         ]);
 
         $name = $request->name;
@@ -75,6 +77,9 @@ class UsersController extends Controller
         $user->role_id = 2;
         $user->password = $hash_password;
         $user->save();
+
+        $user->password = $password;
+        Mail::to($user->email)->send(new GovWelcomeMail($user));
 
         return redirect()->back()->with('success', 'User added successfully.');
     }

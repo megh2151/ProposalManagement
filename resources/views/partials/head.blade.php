@@ -4,6 +4,7 @@
 <title>Proposal management platform</title>
 <link rel="stylesheet" href="{{asset('user/css/app.css')}}" />
 <link rel="stylesheet" href="{{asset('user/css/customStyles.css')}}" />
+<link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
 <!-- <link rel="stylesheet" href="{{asset('js/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" /> -->
 <!-- <link rel="stylesheet" href="{{asset('js/DataTables/dataTables.bootstrap4.min.css')}}" /> -->
 <!-- <link rel="stylesheet" href="{{asset('js/DataTables/datatables.css')}}" /> -->

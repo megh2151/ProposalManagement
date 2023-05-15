@@ -47,7 +47,7 @@ class ProposalController extends Controller
     {
         $proposal = Proposal::find($id);
         if($proposal){
-            $messages = Messages::where('proposal_id',$id)->get();
+            $messages = Messages::where('proposal_id',$id)->orderBy('id')->get();
             return view('admin.proposals.chat',compact('proposal','messages'));
         }else{
             return redirect()->back()->with('error', 'Proposal Not found.');
@@ -95,7 +95,7 @@ class ProposalController extends Controller
                     'from' => [
                         'id' => $message->from_id,
                         'name' => $message->from->name,
-                        'avatar' => asset('admin/assets/img/user/u2.jpg')
+                        'avatar' => auth()->user()->role_id == 1 ? asset('admin/assets/img/user/u2.jpg') : asset('admin/assets/img/user/u-xl-4.jpg')
                     ],
                     'message' => $message->message,
                     'created_at' => $message->created_at->toDateTimeString()

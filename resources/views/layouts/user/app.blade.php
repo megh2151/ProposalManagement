@@ -22,6 +22,27 @@
 
                 <!-- Main content -->
                 <section class="content container-fluid">
+                @if (count($errors) > 0)
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     @yield('content')
                 </section>
                 <!-- /.content -->
@@ -33,5 +54,6 @@
         </div>
 
         @include('partials.javascripts')
+        @yield('script')
     </body>
 </html>

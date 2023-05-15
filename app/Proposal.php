@@ -21,4 +21,9 @@ class Proposal extends Model
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Messages');
+    }
 }

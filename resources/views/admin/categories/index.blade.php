@@ -28,7 +28,7 @@
                                 @foreach ($categories as $category)
                                     <tr>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->status ? 'Active' : 'InActive' }}</td>
+                                        <td>{{ $category->is_active ? 'Active' : 'InActive' }}</td>
                                         </td>
                                         <td><a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}">Sub Categories</a> | <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">EDIT</a> |
                                             <a href="javascript:void(0);" class="delete-category"

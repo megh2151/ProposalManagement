@@ -23,7 +23,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (auth()->user()->role_id ==2) {
+            if (auth()->user() && auth()->user()->role_id ==2) {
                 return redirect()->route('admin.proposal.index')->with('error', 'You do not have permission to access this page.');
             }
             return $next($request);

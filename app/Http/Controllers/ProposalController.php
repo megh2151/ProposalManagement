@@ -158,4 +158,20 @@ class ProposalController extends Controller
         }
     }
 
+    public function view($id){
+        $proposal = Proposal::find($id);
+        if($proposal){
+            if($proposal->file_path){
+                $url = '/admin/proposals/preview/'.$proposal->file_path;
+                return redirect()->away($url)->withHeaders([
+                    'Refresh' => '0;url=' . $url,
+                    'Window-target' => '_blank'
+                ]);
+            }
+            return view('user.proposals.preview', compact('proposal'));
+        }else{
+            return redirect()->back()->with('error', 'Proposal Not found.');
+        }
+    }
+
 }

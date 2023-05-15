@@ -1,19 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
+    <div class="card form-card">
+        <div class="row justify-content-center">
+            <div class="col-md-12 right-col">
+                <h3>{{ __('Reset Password') }}</h3>
+                @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
@@ -39,7 +36,6 @@
                             </div>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>

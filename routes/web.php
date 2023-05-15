@@ -128,6 +128,8 @@ Route::get('proposals/preview/{path}', function ($filename) {
     
 });
 
+Route::get('user/proposal/{id}/view', 'ProposalController@view')->name('user.proposal.view')->middleware('authentic');
+
 Route::post('/send-message', 'Admin\ProposalController@sendMessage')->middleware('authentic');
 Route::get('/messages', 'Admin\ProposalController@getNewMessages')->middleware('authentic');
 Route::delete('/proposals/{proposal}', 'ProposalController@destroy')->name('proposals.destroy')->middleware('authentic');

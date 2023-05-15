@@ -16,31 +16,29 @@
     </ul>
     <div class="tab-content" id="dashboardTabContent">
         <div class="tab-pane fade show active" id="proposals" role="tabpanel" aria-labelledby="proposals-tab">
-            <div class="col-lg-10 p-0">
+            <div class="col-lg-12 p-0">
                 <div class="row">
                     @if(count($proposals))
                         @foreach($proposals as $proposal)
                         <div class="col-md-4 pl-md-0">
                             <div class="card">
                                 <div class="card-header row">
-                                    <div class="col-7 p-0">
-                                        <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}}</h5>
+                                    <div class="col-8 p-0">
+                                        <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}} </h5>
                                     </div>
-                                    <div class="col-5 text-right p-0">
-                                        <label>{{date('jS F Y',strtotime($proposal->created_at))}}</label>
+                                    <div class="col-4 text-right p-0">
+                                        <label>{{date('jS F Y',strtotime($proposal->created_at))}}</br>{{ucfirst($proposal->status)}}</label>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">{!!$proposal->description!!}</p>
-                                    @if($proposal->file_path)
-                                    <a target="_blank" href="/proposals/preview/{{$proposal->file_path}}" class="btn btn-read">Open<i class="fa fa-play-circle ml-4" aria-hidden="true"></i></a>
-                                    @endif
+                                    <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
+
+                                    <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger float-right mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     
-                                    <a href="javascript:void(0);"  data-proposalid="{{$proposal->id}}" class="btn btn-danger float-right mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}"   class="btn btn-primary float-right mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-primary float-right mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     @if(count($proposal->messages))
                                     <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
-                                        <button class="rounded-btn btn-success"><i class="mdi mdi-chat"></i></button>
+                                        <button class="btn btn-success"><i class="mdi mdi-chat"></i></button>
                                     </a>
                                     @endif
                                 </div>

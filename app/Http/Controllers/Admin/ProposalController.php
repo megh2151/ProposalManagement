@@ -42,6 +42,26 @@ class ProposalController extends Controller
             return redirect()->back()->with('error', 'Proposal Not found.');
         }
     }
+
+
+    public function view($id){
+        $proposal = Proposal::find($id);
+        if($proposal){
+            $proposal->no_of_times_viewed = $proposal->no_of_times_viewed + 1;
+            $proposal->save();
+            if($proposal->file_path){
+                $url = '/admin/proposals/preview/'.$proposal->file_path;
+                return redirect()->away($url)->withHeaders([
+                    'Refresh' => '0;url=' . $url,
+                    'Window-target' => '_blank'
+                ]);
+            }
+
+            return view('admin.proposals.preview', compact('proposal'));
+        }else{
+            return redirect()->back()->with('error', 'Proposal Not found.');
+        }
+    }
     
     public function chat($id)
     {

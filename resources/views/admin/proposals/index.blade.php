@@ -39,9 +39,8 @@
                                         <td>{{ $proposal->note }}</td>
                                         <td>{{ $proposal->status }}</td>
                                         </td>
-                                        <td><a target="_blank" href="/admin/proposals/preview/{{$proposal->file_path}}" class="">View</a> | <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download">Download</a> | <a href="javascript:void(0);" class="update-status" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}">Update Status</a> | <a href="javascript:void(0);" class="update-note" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">Update Note</a>
-                                        <a class="mr-2" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}">
-                                                <button class="rounded-btn btn-success"><i class="mdi mdi-chat"></i></button>
+                                        <td><a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="">View</a> @if($proposal->file_path)| <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download">Download</a>@endif | <a href="javascript:void(0);" class="update-status" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}">Update Status</a> | <a href="javascript:void(0);" class="update-note" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">Update Note</a> | 
+                                        <a class="mr-2" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}">Send Message
                                         </a>
                                     </td>
                                     </tr>

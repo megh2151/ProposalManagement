@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Proposal;
+use App\User;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -31,6 +34,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $proposal_count = Proposal::count();
+        $user_count = User::where('role_id',0)->count();
+        $gov_count = User::where('role_id',2)->count();
+        $cat_count = Category::count();
+        $proposals = Proposal::orderBy('no_of_times_viewed','desc')->get();
+        return view('admin.home',compact('proposal_count','user_count','gov_count','cat_count','proposals'));
     }
 }

@@ -55,6 +55,8 @@ Route::post('admin/subcategory/update', 'Admin\CategoryController@subCategoryUpd
 Route::get('admin/proposals', 'Admin\ProposalController@index')->name('admin.proposal.index')->middleware('authentic');
 Route::post('admin/proposals/update', 'Admin\ProposalController@update')->name('admin.proposal.update')->middleware('authentic');
 
+Route::get('admin/proposals/{id}/view/', 'Admin\ProposalController@view')->name('admin.proposal.view')->middleware('authentic');
+
 Route::get('admin/proposals/preview/{path}', function ($filename) {
     // Check if the file exists in the storage
     if (!Storage::disk('public')->exists('proposals/'.$filename)) {

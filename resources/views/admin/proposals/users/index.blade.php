@@ -21,7 +21,6 @@
                             <th>Email</th>
                             <th>Location</th>
                             <th>Phone</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,9 +32,6 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->location }}</td>
                                 <td>{{ $user->phone }}</td>
-                                <td><a class="mr-2" href="{{ route('admin.proposal.users.chat', ['id' => $user->id]) }}">
-                                    <button class="rounded-btn btn-success"><i class="mdi mdi-chat"></i></button>
-                                </a></td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -108,6 +108,7 @@ Route::get('user/{token}', 'Auth\RegisterController@activateUser')->name('user.a
 Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');
 Route::get('/subcategories/{category_id}', 'ProposalController@getSubcategories');
 
+Route::get('/country/{id}/phone-code', 'HomeController@getPhoneCode');
 
 Route::get('proposals/preview/{path}', function ($filename) {
 
@@ -129,6 +130,9 @@ Route::get('proposals/preview/{path}', function ($filename) {
 });
 
 Route::get('user/proposal/{id}/view', 'ProposalController@view')->name('user.proposal.view')->middleware('authentic');
+
+Route::post('/user/profile/update-password', 'UserController@updatePassword')->name('user.profile.updatePassword')->middleware('authentic');
+
 
 Route::post('/send-message', 'Admin\ProposalController@sendMessage')->middleware('authentic');
 Route::get('/messages', 'Admin\ProposalController@getNewMessages')->middleware('authentic');

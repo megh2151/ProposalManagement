@@ -12,7 +12,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link " id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">My Profile</button>
         </li>
-        
+        <li class="nav-item" role="presentation">
+            <button class="nav-link " id="password-tab" data-toggle="tab" data-target="#password" type="button" role="tab" aria-controls="password" aria-selected="false">Change Password</button>
+        </li>
     </ul>
     <div class="tab-content" id="dashboardTabContent">
         <div class="tab-pane fade show active" id="proposals" role="tabpanel" aria-labelledby="proposals-tab">
@@ -183,17 +185,6 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-12 p-md-0">
-                            <label for="password" class="col-form-label">{{ __('Password:') }}</label>
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="">
-                            <i><small>If you want to change the password</small></i>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group col-md-12 p-md-0">
                             <label for="location" class="col-form-label">{{ __('Location:') }}</label>
                             <div class="input-group">
                                 <select id="location" name="location"
@@ -202,7 +193,7 @@
                                     <option value="">Select a country</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->name }}" data-id="{{ $country->id }}"
-                                            {{ $country->name == 'India' ? 'selected' : '' }}>
+                                            {{ $country->name == auth()->user()->location ? 'selected' : '' }}>
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>
@@ -222,7 +213,7 @@
                             <div class="input-group phone">
                                 <div class="input-group-prepend">
                                     <i class="fa fa-plus mr-1" aria-hidden="true"></i>
-                                    <span class="input-group-text" id="country-code-addon">91</span>
+                                    <span class="input-group-text" id="country-code-addon">{{auth()->user()->country_code}}</span>
                                 </div>
                                 <input id="phone" type="text"
                                     class="form-control @error('phone') is-invalid @enderror"
@@ -234,7 +225,7 @@
                                 @enderror
                             </div>
                             <input type="hidden" name="role_id" value="0">
-                            <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="91" autocomplete="country_code">
+                            <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="{{auth()->user()->country_code}}" autocomplete="country_code">
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-update">
@@ -246,7 +237,36 @@
                 <div class="col-lg-7 col-md-5"></div>
             </div>
         </div>
-        
+        <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+            <div class="row">
+                <div class="col-lg-5 col-md-7 pl-md-0">
+                <form method="POST" action="{{ route('user.profile.updatePassword') }}" id="changePasswordForm">
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="old_password">{{ __('Old Password') }}</label>
+                        <input type="password" id="old_password" name="old_password" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new_password">{{ __('New Password') }}</label>
+                        <input type="password" id="new_password" name="new_password" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">{{ __('Confirm Password') }}</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-update">{{ __('Update') }}</button>
+                    </div>
+                </form>
+
+                </div>
+                <div class="col-lg-7 col-md-5"></div>
+            </div>
+        </div>
         
     </div>
 </div>
@@ -266,7 +286,7 @@
 
                 // Use an AJAX request to retrieve the phone code for the selected country
                 $.ajax({
-                    url: '/countries/' + countryId + '/phone-code',
+                    url: '/country/' + countryId + '/phone-code',
                     type: 'GET',
                     success: function(data) {
                         $('#country_code').val(data.phone_code);
@@ -360,6 +380,38 @@
                     });
                 }
             });
+
+            $('#changePasswordForm').submit(function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var oldPassword = $('#old_password').val();
+            var newPassword = $('#new_password').val();
+            var confirmPassword = $('#confirm_password').val();
+
+            // Perform client-side validation
+            if (oldPassword === '') {
+                alert('Please enter your old password.');
+                return false;
+            }
+
+            if (newPassword === '') {
+                alert('Please enter your new password.');
+                return false;
+            }
+
+            if (confirmPassword === '') {
+                alert('Please confirm your new password.');
+                return false;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match.');
+                return false;
+            }
+
+            // If all validations pass, submit the form
+            this.submit();
+        });
         });
     </script>
 @endsection

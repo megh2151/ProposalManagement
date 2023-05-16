@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Country;
 class HomeController extends Controller
 {
     /**
@@ -34,5 +34,11 @@ class HomeController extends Controller
     public function contactUs()
     {
         return view('contact-us');
+    }
+
+    public function getPhoneCode($id)
+    {
+        $country = Country::where('id', $id)->first();
+        return response()->json(['phone_code' => $country->phonecode]);
     }
 }

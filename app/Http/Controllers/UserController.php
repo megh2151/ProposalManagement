@@ -8,6 +8,9 @@ use App\User;
 use App\Proposal;
 use App\Category;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     /**
@@ -36,13 +39,21 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'phone' => 'required|string|max:255',
+            'phone' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignore($user->id, 'id'),
+            ],
             'location' => 'required',
         ]);
+    
 
 
         $first_name = $request->first_name;
@@ -51,7 +62,6 @@ class UserController extends Controller
         $location = $request->location;
         $phone = $request->phone;
         $country_code = $request->country_code;
-        $password = $request->password;
 
         $user = \Auth::user();
         $user->name = $first_name;
@@ -59,13 +69,34 @@ class UserController extends Controller
         $user->last_name = $last_name;
         $user->location = $location;
         $user->phone = $phone;
-        if($password){
-            $user->password = Hash::make($password);
-        }
         $user->country_code = $country_code;
         $user->save();
 
         return redirect()->back()->with('success', 'Profile successfully.');
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        // Server-side form validation
+        $request->validate([
+            'old_password' => ['required', 'string'],
+            'new_password' => ['required', 'string', 'min:8', 'different:old_password'],
+            'confirm_password' => ['required', 'string', 'min:8', 'same:new_password'],
+        ]);
+
+        // Verify the old password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'Incorrect old password.']);
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password updated successfully!');
     }
     
 

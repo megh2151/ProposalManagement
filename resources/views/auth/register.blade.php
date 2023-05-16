@@ -115,8 +115,7 @@
                                     autocomplete="location">
                                     <option value="">Select a country</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->name }}" data-id="{{ $country->id }}"
-                                            {{ $country->name == 'India' ? 'selected' : '' }}>
+                                        <option value="{{ $country->name }}" data-id="{{ $country->id }}">
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>
@@ -135,7 +134,7 @@
                             <div class="input-group phone">
                                 <div class="input-group-prepend">
                                     <i class="fa fa-plus mr-1" aria-hidden="true"></i>
-                                    <span class="input-group-text" id="country-code-addon">91</span>
+                                    <span class="input-group-text" id="country-code-addon"></span>
                                 </div>
                                 <input id="phone" type="text"
                                     class="form-control @error('phone') is-invalid @enderror"
@@ -147,7 +146,7 @@
                                 @enderror
                             </div>
                             <input type="hidden" name="role_id" value="0">
-                            <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="91" autocomplete="country_code">
+                            <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="" autocomplete="country_code">
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-submit mt-3">

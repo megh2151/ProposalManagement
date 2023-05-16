@@ -2,46 +2,46 @@
 
 @section('content')
     <div class="breadcrumb-wrapper">
-        <h1>Sub Categories {{$category->name}}</h1>
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h1>Sub Categories <span>{{$category->name}}</span></h1>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{{ route('admin.subcategory.create',['id'=>$id]) }}" class="btn add-btn">
+                    <i class="mdi mdi-plus-circle mr-1"></i> Add Sub Category
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h2>Sub Categories</h2>
-                    <a href="{{ route('admin.subcategory.create',['id'=>$id]) }}" class="btn btn-outline-primary btn-sm text-uppercase">
-                        <i class=" mdi mdi-plus mr-1"></i> Add Sub Category
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="basic-data-table">
-                        <table id="basic-data-table" class="table nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($subcategories as $subcategory)
-                                    <tr>
-                                        <td>{{ $subcategory->name }}</td>
-                                        <td>{{ $subcategory->category->name }}</td>
-                                        <td>{{ $subcategory->is_active ? 'Active' : 'InActive' }}</td>
-                                        </td>
-                                        <td><a href="{{ route('admin.subcategory.edit', ['id' => $id, 'subid'=>$subcategory->id]) }}">EDIT</a> |
-                                            <a href="javascript:void(0);" class="delete-subcategory"
-                                                data-subcategoryId="{{ $subcategory->id }}">DELETE</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="card card-subcategory">
+        <div class="card-body">
+            <div class="basic-data-table">
+                <table id="basic-data-table" class="table nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($subcategories as $subcategory)
+                            <tr>
+                                <td>{{ $subcategory->name }}</td>
+                                <td>{{ $subcategory->category->name }}</td>
+                                <td>{{ $subcategory->is_active ? 'Active' : 'InActive' }}</td>
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.subcategory.edit', ['id' => $id, 'subid'=>$subcategory->id]) }}"><button class="rounded-btn btn-success mr-2"><i class="mdi mdi-pencil"></i></button></a>
+                                    <a href="javascript:void(0);" class="delete-subcategory"
+                                        data-subcategoryId="{{ $subcategory->id }}"><button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
     <div class="container p-0 ">
         <div class="row">
             <div class="col-xl-3 col-sm-6">
-                <div class="card card-mini mb-4">
+                <div class="card card-mini mb-4 bg-success">
                     <div class="card-body">
                         <h2 class="mb-1">{{$proposal_count}}</h2>
                         <p>Total Proposals</p>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
-                <div class="card card-mini  mb-4">
+                <div class="card card-mini mb-4 bg-info">
                     <div class="card-body">
                         <h2 class="mb-1">{{$user_count}}</h2>
                         <p>Total Users</p>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
-                <div class="card card-mini mb-4">
+                <div class="card card-mini mb-4 bg-warning">
                     <div class="card-body">
                         <h2 class="mb-1">{{$gov_count}}</h2>
                         <p>Total Gov Users</p>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
-                <div class="card card-mini mb-4">
+                <div class="card card-mini mb-4 bg-primary">
                     <div class="card-body">
                         <h2 class="mb-1">{{$cat_count}}</h2>
                         <p> Total Categories</p>
@@ -65,9 +65,9 @@
                                         <td>{{ $proposal->no_of_times_viewed ? $proposal->no_of_times_viewed : 0 }}</td>
                                         <td>
                                             <div class="rating">
-                                                <span class="star text-danger">&#9733;</span>
-                                                <span class="star text-danger">&#9733;</span>
-                                                <span class="star text-danger">&#9733;</span>
+                                                <span class="star text-warning">&#9733;</span>
+                                                <span class="star text-warning">&#9733;</span>
+                                                <span class="star text-warning">&#9733;</span>
                                                 <span class="star">&#9733;</span>
                                                 <span class="star">&#9733;</span>
                                             </div>

@@ -7,51 +7,45 @@
         <h1>Proposals</h1>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h2>Proposals</h2>
-                </div>
-                <div class="card-body">
-                    <div class="basic-data-table">
-                        <table id="basic-data-table" class="table nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Follow Up</th>
-                                    <th>Title</th>
-                                    <th>User</th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
-                                    <th>Note</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($proposals as $proposal)
-                                    <tr>
-                                        <td><input type="checkbox" name="is_followup" {{$proposal->is_followup ? 'checked' : ''}} class="is_followup" data-followup="{{$proposal->is_followup}}" data-proposalId="{{$proposal->id}}"></td>
-                                        <td>{{ $proposal->title }}</td>
-                                        <td>{{ $proposal->user->name }}</td>
-                                        <td>{{ $proposal->category->name }}</td>
-                                        <td>{{ $proposal->subcategory->name }}</td>
-                                        <td>{{ $proposal->note }}</td>
-                                        <td>{{ $proposal->status }}</td>
-                                        </td>
-                                        <td><a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="">View</a> @if($proposal->file_path)| <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download">Download</a>@endif | <a href="javascript:void(0);" class="update-status" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}">Update Status</a> | <a href="javascript:void(0);" class="update-note" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">Update Note</a> | 
-                                        <a class="mr-2" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}">Send Message
-                                        </a>
-                                    </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="card card-proposals">
+        <div class="card-body">
+            <div class="basic-data-table">
+                <table id="basic-data-table" class="table nowrap">
+                    <thead>
+                        <tr>
+                            <th>Follow Up</th>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
+                            <th>Note</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($proposals as $proposal)
+                            <tr>
+                                <td><input type="checkbox" name="is_followup" {{$proposal->is_followup ? 'checked' : ''}} class="is_followup" data-followup="{{$proposal->is_followup}}" data-proposalId="{{$proposal->id}}"></td>
+                                <td>{{ $proposal->title }}</td>
+                                <td>{{ $proposal->user->name }}</td>
+                                <td>{{ $proposal->category->name }}</td>
+                                <td>{{ $proposal->subcategory->name }}</td>
+                                <td>{{ $proposal->note }}</td>
+                                <td>{{ $proposal->status }}</td>
+                                </td>
+                                <td><a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="mr-1"><button class="rounded-btn btn-info mb-2"><i class="mdi mdi-eye"></i></button></a> @if($proposal->file_path) <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download mr-1"><button class="rounded-btn btn-primary mb-2"><i class="mdi mdi-download"></i></button></a>@endif <a href="javascript:void(0);" class="update-status mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}"><button class="rounded-btn btn-success mb-2" title="Update Status"><i class="mdi mdi-account-check"></i></button></a> <a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}"><button class="rounded-btn btn-primary mb-2" title="Update Note"><i class="mdi mdi-table-edit"></i></button></a>  
+                                <a class="" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}"><button class="rounded-btn btn-warning mb-2" title="Send Message"><i class="mdi mdi-message-text"></i></button>
+                                </a>
+                            </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

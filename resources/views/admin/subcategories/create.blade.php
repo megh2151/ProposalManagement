@@ -5,17 +5,13 @@
 	<h1>Create Sub Category</h1>
 </div>
 
-<div class="row">
-	<div class="col-lg-12">
-		<div class="card card-default">
-			<div class="card-header card-header-border-bottom">
-				<h2>Create Sub Category</h2>
-			</div>
-
-			<div class="card-body">
-				<form method="post" id="create-subcategory" action="{{route('admin.subcategory.store')}}" enctype="multipart/form-data" data-parsley-validate>
-					@csrf
-					<input type="hidden" name="cat_id" id="cat_id" value="{{$id}}">
+<div class="card category-card">
+	<div class="card-body py-5">
+		<form method="post" id="create-subcategory" action="{{route('admin.subcategory.store')}}" enctype="multipart/form-data" data-parsley-validate>
+			@csrf
+			<input type="hidden" name="cat_id" id="cat_id" value="{{$id}}">
+			<div class="row m-0 justify-content-center">
+				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="name">Name</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" required>
@@ -37,12 +33,12 @@
 							</li>
 						</ul>
 					</div>
-					<div class="form-footer pt-4 pt-5 mt-4 border-top">
-						<button type="submit" class="btn btn-primary btn-default">Submit</button>
-					</div>
-				</form>
+				</div>
 			</div>
-		</div>
+			<div class="form-footer pt-5 mt-4 text-center">
+				<button type="submit" class="btn btn-submit">Submit</button>
+			</div>
+		</form>
 	</div>
 </div>
 

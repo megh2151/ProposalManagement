@@ -2,44 +2,45 @@
 
 @section('content')
     <div class="breadcrumb-wrapper">
-        <h1>Categories</h1>
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h1>Categories</h1>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{{ route('admin.category.create') }}" class="btn add-btn">
+                    <i class=" mdi mdi-plus-circle mr-1"></i> Add Category
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                    <h2>Categories</h2>
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-outline-primary btn-sm text-uppercase">
-                        <i class=" mdi mdi-plus mr-1"></i> Add Category
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="basic-data-table">
-                        <table id="basic-data-table" class="table nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($categories as $category)
-                                    <tr>
-                                        <td>{{ $category->name }}</td>
-                                        <td>{{ $category->is_active ? 'Active' : 'InActive' }}</td>
-                                        </td>
-                                        <td><a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}">Sub Categories</a> | <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">EDIT</a> |
-                                            <a href="javascript:void(0);" class="delete-category"
-                                                data-categoryId="{{ $category->id }}">DELETE</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <div class="card category-card">
+        <div class="card-body">
+            <div class="basic-data-table">
+                <table id="basic-data-table" class="table nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categories as $category)
+                            <tr>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->is_active ? 'Active' : 'InActive' }}</td>
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}"><button class="rounded-pill btn-warning mr-2">Sub Categories</button></a> 
+                                    <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}"><button class="rounded-btn btn-success mr-2"><i class="mdi mdi-pencil"></i></button></a>
+                                    <a href="javascript:void(0);" class="delete-category"
+                                        data-categoryId="{{ $category->id }}"><button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

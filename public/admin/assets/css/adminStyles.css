@@ -45,3 +45,9 @@
 .admin-wrapper .basic-data-table .dataTables_filter .form-control{border-radius: 20px;height: 35px;}
 .admin-wrapper .basic-data-table .table th{border: 0;background-color: rgba(98, 167, 119, 0.2);color: #1C534C;}
 .admin-wrapper .basic-data-table .table td{border-top: 0;border-bottom: 1px solid #e5e9f2;}
+.admin-wrapper .rounded-pill{padding: .5rem 1rem;font-weight: 500;}
+.admin-wrapper .card-header{border: 0;background-color: #dbf5e3;border-bottom: 0;}
+.admin-wrapper .card .card-header h2{color: #62A777;font-weight: 600;text-transform: capitalize;}
+.admin-wrapper .breadcrumb-wrapper h1 span{color: #62A777;}
+.admin-wrapper .card-mini{box-shadow: 0px 0px 10px #ccc;}
+.admin-wrapper .card-mini p{color: #fff;font-weight: 700;}

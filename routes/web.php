@@ -91,6 +91,9 @@ Route::get('admin/proposals/download/{filename}', function ($filename) {
 });
 
 Route::get('admin/proposals/{id}/chat', 'Admin\ProposalController@chat')->name('admin.proposal.chat')->middleware('authentic');
+Route::post('admin/proposals/{id}/update-rating', 'Admin\ProposalController@updateRating')->name('admin.proposal.updateRating')->middleware('authentic');
+
+
 
 Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->middleware('authentic');
 Route::post('user/profile/update', 'UserController@updateProfile')->name('user.profile.update')->middleware('authentic');

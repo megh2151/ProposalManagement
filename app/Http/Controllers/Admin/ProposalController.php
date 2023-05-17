@@ -126,6 +126,15 @@ class ProposalController extends Controller
         return response()->json($transformedMessages);
     }
 
+
+    public function updateRating(Request $request,$id){
+        $proposal = Proposal::find($id);
+        if($proposal){
+            $proposal->rating = $request->rating;
+            $proposal->save();
+            return response()->json(['message' => 'Rating Updated']);
+        }
+    }
 }
 
 ?>

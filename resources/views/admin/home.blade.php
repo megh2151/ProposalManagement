@@ -1,5 +1,25 @@
 @extends('layouts.admin.master')
 
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<style>
+    .star-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.star-rating .star {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating .filled {
+    color: gold;
+}
+    </style>
+@ensection
 @section('content')
     <div class="breadcrumb-wrapper">
         <h1>Dashboard</h1>
@@ -9,33 +29,40 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-success">
                     <div class="card-body">
-                        <h2 class="mb-1">{{$proposal_count}}</h2>
-                        <p>Total Proposals</p>
+                        <a href="{{route('admin.proposal.index')}}">
+                            <h2 class="mb-1">{{$proposal_count}}</h2>
+                            <p>Total Proposals</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-info">
                     <div class="card-body">
-                        <h2 class="mb-1">{{$user_count}}</h2>
-                        <p>Total Users</p>
+                        <a href="{{route('admin.proposal.users')}}">
+                            <h2 class="mb-1">{{$user_count}}</h2>
+                            <p>Total Users</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-warning">
                     <div class="card-body">
-                        <h2 class="mb-1">{{$gov_count}}</h2>
-                        <p>Total Gov Users</p>
-                    
+                        <a href="{{route('admin.users')}}">
+                            <h2 class="mb-1">{{$gov_count}}</h2>
+                            <p>Total Gov Users</p>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-primary">
                     <div class="card-body">
-                        <h2 class="mb-1">{{$cat_count}}</h2>
-                        <p> Total Categories</p>
+                        <a href="{{route('admin.categories')}}">
+                            <h2 class="mb-1">{{$cat_count}}</h2>
+                            <p> Total Categories</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -60,17 +87,15 @@
                             <tbody>
                                 @foreach ($proposals as $proposal)
                                     <tr>
-                                        <td>{{ $proposal->title }}</td>
+                                        <td><a href="{{route('admin.proposal.index')}}">{{ $proposal->title }}</a></td>
                                         <td>{{ date('jS M Y h:i A',strtotime($proposal->created_at->toDateTimeString())) }}</td>
                                         <td>{{ $proposal->no_of_times_viewed ? $proposal->no_of_times_viewed : 0 }}</td>
                                         <td>
-                                            <div class="rating">
-                                                <span class="star text-warning">&#9733;</span>
-                                                <span class="star text-warning">&#9733;</span>
-                                                <span class="star text-warning">&#9733;</span>
-                                                <span class="star">&#9733;</span>
-                                                <span class="star">&#9733;</span>
-                                            </div>
+                                        <div class="star-rating" >
+                                            @for ($i = 5; $i >= 1; $i--)
+                                                <span class="star {{ $proposal->rating >= $i ? 'filled' : 'empty' }}"><i class="fas fa-star"></i></span>
+                                            @endfor
+                                        </div>
                                         </td>
                                     </tr>
                                 @endforeach

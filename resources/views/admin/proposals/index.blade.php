@@ -1,6 +1,29 @@
 @extends('layouts.admin.master')
 
-@section('style')
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<style>
+.star-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.star-rating .star {
+    color: #ddd;
+    cursor: pointer;
+}
+
+.star-rating .star:hover,
+.star-rating .star:hover ~ .star {
+    color: gold;
+}
+
+.star-rating .filled {
+    color: gold;
+}
+</style>
 @endsection
 @section('content')
     <div class="breadcrumb-wrapper">
@@ -20,6 +43,9 @@
                             <th>Sub Category</th>
                             <th>Note</th>
                             <th>Status</th>
+                            @if(auth()->user() && auth()->user()->role_id==2)
+                            <th>Rating</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -27,13 +53,20 @@
                         @foreach ($proposals as $proposal)
                             <tr>
                                 <td><input type="checkbox" name="is_followup" {{$proposal->is_followup ? 'checked' : ''}} class="is_followup" data-followup="{{$proposal->is_followup}}" data-proposalId="{{$proposal->id}}"></td>
-                                <td>{{ $proposal->title }}</td>
+                                <td>{{ substr($proposal->title, 0, 70) }}</td>
                                 <td>{{ $proposal->user->name }}</td>
                                 <td>{{ $proposal->category->name }}</td>
                                 <td>{{ $proposal->subcategory->name }}</td>
-                                <td>{{ $proposal->note }}</td>
+                                <td><a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">View</a></td>
                                 <td>{{ $proposal->status }}</td>
-                                </td>
+                                @if(auth()->user() && auth()->user()->role_id==2)
+                                <td>
+                                <div class="star-rating" data-proposal-id="{{ $proposal->id }}">
+                                        @for ($i = 5; $i >= 1; $i--)
+                                            <span class="star {{ $proposal->rating >= $i ? 'filled' : 'empty' }}"><i class="fas fa-star"></i></span>
+                                        @endfor
+                                    </div></td>
+                                @endif    
                                 <td><a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="mr-1"><button class="rounded-btn btn-info mb-2"><i class="mdi mdi-eye"></i></button></a> @if($proposal->file_path) <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download mr-1"><button class="rounded-btn btn-primary mb-2"><i class="mdi mdi-download"></i></button></a>@endif <a href="javascript:void(0);" class="update-status mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}"><button class="rounded-btn btn-success mb-2" title="Update Status"><i class="mdi mdi-account-check"></i></button></a> <a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}"><button class="rounded-btn btn-primary mb-2" title="Update Note"><i class="mdi mdi-table-edit"></i></button></a>  
                                 <a class="" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}"><button class="rounded-btn btn-warning mb-2" title="Send Message"><i class="mdi mdi-message-text"></i></button>
                                 </a>
@@ -69,7 +102,7 @@
                         </select>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" id="note" name="note"></textarea>
+                            <textarea class="form-control" id="note" name="note" rows="6"></textarea>
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary btn-pill">Update</button>    
@@ -147,6 +180,33 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('Error updating checkbox value:', errorThrown);
                 }
+                });
+            });
+
+            $('.star-rating .star').on('click', function() {
+                var star = $(this);
+                var reversedIndex = star.siblings('.star').length - star.index();
+                var rating = reversedIndex + 1;
+                var proposalId = star.closest('.star-rating').data('proposal-id');
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                
+                $.ajax({
+                    url: '/admin/proposals/' + proposalId + '/update-rating',
+                    type: 'POST',
+                    data: { rating: rating, _token: csrfToken },
+                    success: function(response) {
+                        // Handle success response if needed
+                        console.log('Rating updated successfully');
+                        
+                        // Update the star rating display
+                        star.addClass('filled');
+                        star.nextAll('.star').addClass('filled');
+                        star.prevAll('.star').removeClass('filled');
+                    },
+                    error: function(error) {
+                        // Handle error response if needed
+                        console.error('Error updating rating:', error);
+                    }
                 });
             });
         });

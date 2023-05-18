@@ -8,8 +8,11 @@
                 <div class="row m-0 align-items-center">
                     <div class="col-md-12">
                         <div class="row align-items-center">
-                            <div class="col-12 pl-0">
+                            <div class="col-10">
                                 <h3 class="title">{{$proposal->title}}</h3>
+                            </div>
+                            <div class="col-2 text-right">
+                                <a href="{{route('user.dashboard')}}"><i class="mdi mdi-close-box" style="font-size: 26px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,12 +33,12 @@
                                                 <p class="message">{{ $message->message }}</p>
                                                 <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
                                             </div>
-                                            <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
+                                            <img class="rounded-circle mr-3" src="{{auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg')}}" alt="Image">
                                         </div>
                                     @else
                                         @php $to_id = $message->from_id; @endphp
                                         <div class="chat chat-message chat-left" id="{{ $message->id }}">
-                                        <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
+                                        <img class="rounded-circle ml-3" src="{{$message->from->profile_photo ? asset($message->from->profile_photo) : asset('storage/profiles/default_user.jpg')}}" alt="Image">
                                             <div class="chat-body">
                                                 <p class="message">{{ $message->message }}</p>
                                                 <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
@@ -94,7 +97,7 @@
                                 <p class="message">${message}</p>
                                 <div class="date-time">${new Date().toLocaleString()}</div>
                             </div>
-                            <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
+                            <img class="rounded-circle mr-3" src="{{auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg')}}" alt="Image">
                         </div>`;
                     $("#empty-message").remove();
                     // Append the new chat message element to the chat content

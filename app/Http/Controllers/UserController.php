@@ -10,6 +10,7 @@ use App\Category;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -43,7 +44,6 @@ class UserController extends Controller
 
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'phone' => [
                 'required',
@@ -54,7 +54,6 @@ class UserController extends Controller
             'location' => 'required',
         ]);
     
-
 
         $first_name = $request->first_name;
         $middle_name = $request->middle_name;
@@ -72,6 +71,34 @@ class UserController extends Controller
         $user->country_code = $country_code;
         $user->save();
 
+        if ($request->has('cropped_photo')) {
+            // Get the cropped photo data from the request
+            $croppedPhotoData = $request->input('cropped_photo');
+    
+            // Decode the base64-encoded data URL
+            $croppedPhoto = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $croppedPhotoData));
+            
+            // Retrieve the existing photo path from the user's database record
+            $existingPhotoPath = $user->profile_photo;
+            
+            // Delete the previous photo file if it exists
+            if ($existingPhotoPath) {
+                Storage::delete('public/profiles/' . basename($existingPhotoPath));
+            }
+            
+            // Generate a unique filename for the photo
+            $filename = uniqid().'.jpg';
+    
+            // Define the storage path for the photo
+            $storagePath = 'profiles/' . $filename;
+    
+            // Save the photo to the storage location
+            Storage::disk('public')->put($storagePath, $croppedPhoto);
+    
+            // Update the user's profile photo
+            $user->profile_photo = 'storage/'.$storagePath;
+            $user->save();
+        }
         return redirect()->back()->with('success', 'Profile successfully.');
     }
 

@@ -115,7 +115,7 @@ class ProposalController extends Controller
                     'from' => [
                         'id' => $message->from_id,
                         'name' => $message->from->name,
-                        'avatar' => auth()->user()->role_id == 1 ? asset('admin/assets/img/user/u2.jpg') : asset('admin/assets/img/user/u-xl-4.jpg')
+                        'avatar' => $message->from->profile_photo ? asset($message->from->profile_photo) : asset('storage/profiles/default_user.jpg')
                     ],
                     'message' => $message->message,
                     'created_at' => $message->created_at->toDateTimeString()

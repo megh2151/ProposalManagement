@@ -196,7 +196,7 @@
                     data: { rating: rating, _token: csrfToken },
                     success: function(response) {
                         // Handle success response if needed
-                        console.log('Rating updated successfully');
+                        alert('Rating updated successfully');
                         
                         // Update the star rating display
                         star.addClass('filled');

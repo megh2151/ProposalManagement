@@ -2,8 +2,17 @@
 
 @section('content')
 <div class="breadcrumb-wrapper">
-	<h1>Create Sub Category</h1>
-</div>
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h1>Create Sub Category</h1>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{{ route('admin.subcategory.index',['id'=>$id]) }}" class="btn add-btn">
+                    <i class="mdi mdi-arrow-left mr-1"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
 
 <div class="card category-card">
 	<div class="card-body py-5">

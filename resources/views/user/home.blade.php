@@ -1,5 +1,7 @@
 @extends('layouts.user.app')
-
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
+@endsection
 @section('content')
 <div class="container p-0">
     <ul class="nav nav-tabs" id="dashboardTab" role="tablist">
@@ -154,7 +156,7 @@
                             </div>
                             <div class="col-md-4 p-md-0">
                                 <label for="middle_name" class="col-form-label">{{ __('Middle Name:') }}</label>
-                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{auth()->user()->middle_name}}" required>
+                                <input id="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" name="middle_name" value="{{auth()->user()->middle_name}}" >
 
                                 @error('middle_name')
                                     <span class="invalid-feedback" role="alert">
@@ -227,6 +229,22 @@
                             <input type="hidden" name="role_id" value="0">
                             <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="{{auth()->user()->country_code}}" autocomplete="country_code">
                         </div>
+
+                        <div class="form-group col-md-12 p-md-0">
+                        <label for="profile_photo" class="col-form-label">{{ __('User Image') }}</label>
+                            <div class="custom-file mb-1">
+                            <input type="hidden" name="cropped_photo" id="cropped_photo">
+                            <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo" required="">
+                            <label class="custom-file-label" for="coverImage">Choose file...</label>
+                                <div id="preview-div"  class="d-none mt-3 mb-3">
+                                    <img id="photo-preview" class="mt-3 mb-3" src="" alt="Photo Preview" style="max-width: 100%; height: auto;margin-bottom:15px;">
+                                    <div class="row text-center m-auto">
+                                        <button id="crop-button" class="btn btn-primary text-center mt-2" disabled>Crop</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-update">
                                 {{ __('update') }}
@@ -272,6 +290,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
     <script>
         
         $(document).ready(function() {
@@ -382,36 +401,94 @@
             });
 
             $('#changePasswordForm').submit(function(event) {
-            event.preventDefault(); // Prevent form submission
+                event.preventDefault(); // Prevent form submission
 
-            var oldPassword = $('#old_password').val();
-            var newPassword = $('#new_password').val();
-            var confirmPassword = $('#confirm_password').val();
+                var oldPassword = $('#old_password').val();
+                var newPassword = $('#new_password').val();
+                var confirmPassword = $('#confirm_password').val();
 
-            // Perform client-side validation
-            if (oldPassword === '') {
-                alert('Please enter your old password.');
-                return false;
-            }
+                // Perform client-side validation
+                if (oldPassword === '') {
+                    alert('Please enter your old password.');
+                    return false;
+                }
 
-            if (newPassword === '') {
-                alert('Please enter your new password.');
-                return false;
-            }
+                if (newPassword === '') {
+                    alert('Please enter your new password.');
+                    return false;
+                }
 
-            if (confirmPassword === '') {
-                alert('Please confirm your new password.');
-                return false;
-            }
+                if (confirmPassword === '') {
+                    alert('Please confirm your new password.');
+                    return false;
+                }
 
-            if (newPassword !== confirmPassword) {
-                alert('New password and confirm password do not match.');
-                return false;
-            }
+                if (newPassword !== confirmPassword) {
+                    alert('New password and confirm password do not match.');
+                    return false;
+                }
 
-            // If all validations pass, submit the form
-            this.submit();
-        });
+                // If all validations pass, submit the form
+                this.submit();
+            });
+
+            const photoInput = $('#profile_photo');
+            const photoPreview = $('#photo-preview');
+            const cropButton = $('#crop-button');
+            let cropper;
+
+            photoInput.on('change', function() {
+                const file = this.files[0];
+                $("#preview-div").removeClass('d-none')
+                if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.attr('src', e.target.result);
+                    cropButton.prop('disabled', false);
+                    if (cropper) {
+                    cropper.destroy();
+                    }
+                    cropper = new Cropper(photoPreview[0], {
+                    aspectRatio: 1, // Adjust the aspect ratio as needed
+                    viewMode: 1, // Set the crop box to fit within the preview container
+                    autoCropArea: 0.8, // Define the initial crop area size (0-1)
+                    });
+                };
+
+                reader.readAsDataURL(file);
+                }
+            });
+
+            cropButton.on('click', function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                const croppedCanvas = cropper.getCroppedCanvas({
+                width: 200, // Specify the desired cropped image width
+                height: 200, // Specify the desired cropped image height
+                });
+
+                // Convert the cropped canvas to a Blob object
+                croppedCanvas.toBlob(function(blob) {
+                // Preview the cropped image
+                const croppedImage = new Image();
+                croppedImage.src = URL.createObjectURL(blob);
+                croppedImage.alt = 'Cropped Image';
+                // Create a new hidden input element
+                // Replace the existing photo preview with the cropped image
+                photoPreview.replaceWith(croppedImage);
+                $(".cropper-container").hide();
+                cropButton.css('visibility', 'hidden');
+                // Convert the cropped image to a data URL
+                const croppedDataURL = croppedCanvas.toDataURL('image/jpeg');
+                // Set the data URL as the value of the hidden input field
+                $('#cropped_photo').val(croppedDataURL);
+
+                }, 'image/jpeg'); // Specify the desired output image format
+
+                // Reset the cropper instance and clear the preview image
+                cropper.reset();
+                photoPreview.attr('src', '');
+            });
         });
     </script>
 @endsection

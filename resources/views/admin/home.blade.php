@@ -19,7 +19,7 @@
     color: gold;
 }
     </style>
-@ensection
+@endsection
 @section('content')
     <div class="breadcrumb-wrapper">
         <h1>Dashboard</h1>

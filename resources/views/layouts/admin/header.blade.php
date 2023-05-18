@@ -13,10 +13,14 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" class="user-image" alt="User Image">
                         <span class="d-none d-lg-inline-block">{{auth()->user()->name}}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <!-- User image -->
+                        <li class="dropdown-footer">
+                            <a href="{{route('admin.profile')}}">Profile</a>
+                        </li>
                         <li class="dropdown-footer">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

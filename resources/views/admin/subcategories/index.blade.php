@@ -7,13 +7,16 @@
                 <h1>Sub Categories <span>{{$category->name}}</span></h1>
             </div>
             <div class="col-4 text-right">
+                <a href="{{ route('admin.categories') }}" class="btn add-btn">
+                    <i class="mdi mdi-arrow-left mr-1"></i> Back
+                </a>
                 <a href="{{ route('admin.subcategory.create',['id'=>$id]) }}" class="btn add-btn">
                     <i class="mdi mdi-plus-circle mr-1"></i> Add Sub Category
                 </a>
             </div>
         </div>
     </div>
-
+   
     <div class="card card-subcategory">
         <div class="card-body">
             <div class="basic-data-table">

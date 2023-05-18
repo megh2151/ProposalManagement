@@ -3,6 +3,7 @@
     <head>
         @include('partials.head')
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @yield('css')
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">

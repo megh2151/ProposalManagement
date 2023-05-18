@@ -8,11 +8,14 @@
                 <div class="row m-0 align-items-center">
                     <div class="col-md-12">
                         <div class="row align-items-center">
-                            <div class="col-2">
-                                <img src="{{asset('admin/assets/img/user/u2.jpg')}}" class="rounded-circle" />
+                            <div class="col-1">
+                                <img src="{{$proposal->user->profile_photo ? asset($proposal->user->profile_photo) : asset('storage/profiles/default_user.jpg')}}" class="rounded-circle" />
                             </div>
                             <div class="col-10 pl-0">
                                 <h3 class="title">{{$proposal->user->name}}</h3>
+                            </div>
+                            <div class="col-1">
+                            <a href="{{route('admin.proposal.index')}}"><i class="mdi mdi-close-box title" style="font-size: 26px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -32,11 +35,11 @@
                                                 <p class="message">{{ $message->message }}</p>
                                                 <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
                                             </div>
-                                            <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
+                                            <img class="rounded-circle ml-3" src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="Image">
                                         </div>
                                     @else
                                         <div class="chat chat-message chat-left" id="{{ $message->id }}">
-                                            <img class="rounded-circle mr-3" src="{{asset('admin/assets/img/user/u2.jpg')}}" alt="Image">
+                                            <img class="rounded-circle mr-3" src="{{$message->from->profile_photo ? asset($message->from->profile_photo) : asset('storage/profiles/default_user.jpg')}}" alt="Image">
                                             <div class="chat-body">
                                                 <p class="message">{{ $message->message }}</p>
                                                 <div class="date-time">{{ $message->created_at->format('d-m-Y, h:i A') }}</div>
@@ -95,7 +98,7 @@
                                 <p class="message">${message}</p>
                                 <div class="date-time">${new Date().toLocaleString()}</div>
                             </div>
-                            <img class="rounded-circle ml-3" src="{{asset('admin/assets/img/user/u-xl-4.jpg')}}" alt="Image">
+                            <img class="rounded-circle ml-3" src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="Image">
                         </div>`;
                     $("#empty-message").remove();
                     // Append the new chat message element to the chat content

@@ -93,6 +93,10 @@ Route::get('admin/proposals/download/{filename}', function ($filename) {
 Route::get('admin/proposals/{id}/chat', 'Admin\ProposalController@chat')->name('admin.proposal.chat')->middleware('authentic');
 Route::post('admin/proposals/{id}/update-rating', 'Admin\ProposalController@updateRating')->name('admin.proposal.updateRating')->middleware('authentic');
 
+Route::post('admin/profile/update', 'Admin\UsersController@profileUpdate')->name('admin.profile.update')->middleware('authentic');
+
+Route::get('admin/profile', 'Admin\UsersController@profile')->name('admin.profile')->middleware('authentic');
+
 
 
 Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->middleware('authentic');

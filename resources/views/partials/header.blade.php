@@ -39,7 +39,7 @@
                 @endif
             @else
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);"><span class="fa fa-user mr-3" aria-hidden="true"></span>{{ Auth::user()->name }}</a>
+                    <a class="nav-link" href="javascript:void(0);"><img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="User Image" width="50"> {{ Auth::user()->name }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link logout" href="{{ route('logout') }}"

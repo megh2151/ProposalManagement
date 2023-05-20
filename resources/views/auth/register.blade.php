@@ -18,14 +18,14 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                    <button class="btn btn-readmore">Read More<i class="fa fa-chevron-circle-right ml-3" aria-hidden="true"></i></button>
+                                    <p>We created Letter to AsoRock in response to the president's appeal for mindset change and patriotism during his campaign. He challenged us to ask what we can do for our country.</p>
+                                    <a href="/about-us"><button class="btn btn-readmore">Read More<i class="fa fa-chevron-circle-right ml-3" aria-hidden="true"></i></button></a>
                                 </div>
                                 <div class="carousel-item">
-                                    <p> It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p>
+                                    <p>The citizens have valuable ideas that can improve Nigeria but may face barriers in accessing government agencies that can implement them. That's why we built a portal that allows citizens to submit their ideas or proposals in a transparent and efficient way, bypassing the bureaucratic process.</p>
                                 </div>
                                 <div class="carousel-item">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                    <p>This way, we can connect with the government and bring positive change to our country. Please spread the word on social media and with your friends.</p>
                                 </div>
                             </div>
  

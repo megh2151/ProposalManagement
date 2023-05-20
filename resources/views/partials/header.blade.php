@@ -16,6 +16,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact-us">Contact</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/faq">FAQs</a>
+                    </li>
                 </ul>
             @else
                 <ul class="navbar-nav">

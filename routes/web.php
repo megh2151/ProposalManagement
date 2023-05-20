@@ -146,4 +146,5 @@ Route::get('/messages', 'Admin\ProposalController@getNewMessages')->middleware('
 Route::delete('/proposals/{proposal}', 'ProposalController@destroy')->name('proposals.destroy')->middleware('authentic');
 
 Route::get('/about-us', 'HomeController@aboutUs');
+Route::get('/faq', 'HomeController@faq');
 Route::get('/contact-us', 'HomeController@contactUs');

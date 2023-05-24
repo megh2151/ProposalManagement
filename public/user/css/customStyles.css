@@ -24,6 +24,7 @@ header .nav .nav-link span{background-color: #62A777;font-weight: 600;color: #ff
 header .nav .nav-link.logout{background-color: #CDE8D2;font-weight: 600;color: #62A777;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;padding: 0;}
 header .nav .nav-link.logout:hover{background-color: #62A777;color: #fff;}
 .mobile-nav{flex-direction: row;}
+.user-menu .dropdown-toggle{border: 0;background-color: transparent;width: auto;}
 /*-------footer----css*/
 footer .social-nav{width: 100%;display: none;background-color: #1C534C;}
 footer .social-nav .nav-item{padding: 8px 0;}
@@ -35,14 +36,14 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 .form-control:focus{box-shadow:none;}
 .content-wrapper{padding:30px 0;}
 .form-card{border: 0;border-radius: 0 20px 20px 0;}
-.form-card .left-col{background: url(../images/home-bg.png)center no-repeat;background-size: cover;padding: 0;}
+.form-card .left-col{/*background: url(../images/home-bg.png)center no-repeat;background-size: cover;*/padding: 0;}
 .landing-page .form-card .left-col .bg-overlay{background-color: rgba(28, 83, 76 , 0.9);}
 .landing-page .form-card .left-col{background: none;}
 .form-card .left-col .bg-overlay{background-color: rgba(28, 83, 76 , 0.8);position: relative;z-index: 1;height: 100%;width: 100%;padding:3rem 2.5rem 2rem;}
 .form-card .left-col .brand{color: #fff;font-size: 2rem;text-transform: uppercase;font-weight: 700;font-family: 'Open Sans', sans-serif;}
 .form-card .left-col .brand:hover{text-decoration: none;}
-.form-card .left-col .brand-name{margin-top: 2.5rem;}
-.form-card .left-col .brand-name h1{color: #fff;font-weight: 900;font-family: 'Open Sans', sans-serif;}
+.form-card .left-col .brand-name{margin-top: 2rem;margin-bottom: 1.5rem;}
+.form-card .left-col .brand-name h1{color: #fff;font-weight: 900;font-family: 'Open Sans', sans-serif;text-transform: uppercase;}
 .form-card .left-col .brand-name h1 span{color: #62A777;}
 .form-card .left-col .carousel{min-height: 180px;}
 .form-card .left-col .carousel-indicators{margin-bottom: 0;}

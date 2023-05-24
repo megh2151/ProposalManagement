@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="container p-0">
+    <h2 class="mb-4">Proposal Management Platform</h2>
     <ul class="nav nav-tabs" id="dashboardTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="proposals-tab" data-toggle="tab" data-target="#proposals" type="button" role="tab" aria-controls="proposals" aria-selected="true">My Proposals</button>

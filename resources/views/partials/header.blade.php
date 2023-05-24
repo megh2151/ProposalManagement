@@ -41,19 +41,22 @@
                     </li>
                 @endif
             @else
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);"><img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="User Image" width="50"> {{ Auth::user()->name }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link logout" href="{{ route('logout') }}"
+                <li class="dropdown user-menu">
+                    <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="User Image" width="50">
+                        <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <!-- User image -->
+                        <li class="dropdown-footer">
+                            <a class="nav-link logout" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                        document.getElementById('logout-form').submit();">Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                        </li>
+                    </ul>
                 </li>
         @endguest
         </ul>

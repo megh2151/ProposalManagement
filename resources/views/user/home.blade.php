@@ -25,7 +25,7 @@
                     @if(count($proposals))
                         @foreach($proposals as $proposal)
                         <div class="col-md-4 pl-md-0">
-                            <div class="card">
+                            <div class="card proposal-card">
                                 <div class="card-header row">
                                     <div class="col-8 p-0">
                                         <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}} </h5>
@@ -35,22 +35,26 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
-
-                                    <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger float-right mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    
-                                    <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-primary float-right mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    @if(count($proposal->messages))
-                                    <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
-                                        <button class="btn btn-success"><i class="mdi mdi-chat"></i></button>
-                                    </a>
-                                    @endif
+                                    <div class="row">
+                                        <div class="col-4 pl-0">
+                                            <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col-8 text-right pr-0">            
+                                            <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            @if(count($proposal->messages))
+                                                 <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
+                                                    <button class="btn btn-warning"><i class="mdi mdi-chat"></i></button>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
                     @else
-                        <p>No Proposal Found!</p>   
+                        <!-- <p>No Proposal Found!</p>    -->
                     @endif
                 </div>
             </div>

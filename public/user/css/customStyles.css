@@ -36,7 +36,9 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 .content-wrapper{padding:30px 0;}
 .form-card{border: 0;border-radius: 0 20px 20px 0;}
 .form-card .left-col{background: url(../images/home-bg.png)center no-repeat;background-size: cover;padding: 0;}
-.form-card .left-col .bg-overlay{background-color: rgba(28, 83, 76 , 0.6);position: relative;z-index: 1;height: 100%;width: 100%;padding:3rem 2.5rem 2rem;}
+.landing-page .form-card .left-col .bg-overlay{background-color: rgba(28, 83, 76 , 0.9);}
+.landing-page .form-card .left-col{background: none;}
+.form-card .left-col .bg-overlay{background-color: rgba(28, 83, 76 , 0.8);position: relative;z-index: 1;height: 100%;width: 100%;padding:3rem 2.5rem 2rem;}
 .form-card .left-col .brand{color: #fff;font-size: 2rem;text-transform: uppercase;font-weight: 700;font-family: 'Open Sans', sans-serif;}
 .form-card .left-col .brand:hover{text-decoration: none;}
 .form-card .left-col .brand-name{margin-top: 2.5rem;}
@@ -60,7 +62,7 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 .form-card .right-col .btn-submit{background-color: #62A777;color: #fff;border-radius: 20px;border:0;text-transform: uppercase;font-weight: 600;padding: 6px 20px;}
 .form-card .right-col .btn-link{color: #62A777;}
 #dashboardTab{border-bottom: 0;margin-bottom: 20px;}
-#dashboardTab.nav-tabs .nav-item{width: 15%;margin-right: 20px;}
+#dashboardTab.nav-tabs .nav-item{width: 20%;margin-right: 20px;}
 #dashboardTab.nav-tabs .nav-link{border: 0;background-color:#fff;color: #444;font-weight: 600;box-shadow: 0px 2px 5px #ccc;width: 100%;border-radius: 20px;}
 #dashboardTab.nav-tabs .nav-link.active{background-color:#62A777;color: #fff;}
 .content .tab-content{padding-top: 2rem;}
@@ -80,7 +82,8 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 #proposals .card .card-text{color: #666;}
 #proposals .card .btn-read{background-color:#62A777;border-radius: 20px;color: #fff;font-weight: 600;}
 #proposals .card .btn-read .fa{font-size: 1.2rem;vertical-align: middle;}
-
+#proposals .proposal-card .btn{width: 35px;height: 35px;border-radius: 50%;padding: 0;line-height: 35px;text-align: center;border: 0;}
+#proposals .proposal-card .btn i{font-size: 1.2rem;}
 .card-chat{border: 0!important;box-shadow: 0px 0px 10px #ccc;}
 .card-chat .card-header{background-color: rgba(98, 167, 119, 0.1);}
 .card-chat .card-header img{width: 60px;height: 60px;}
@@ -129,7 +132,7 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 collapsed    header .navbar-toggler{display: none;}
     header .navbar-collapse{display: flex!important;flex-basis: auto;}
     header .navbar-collapse .navbar-nav{flex-direction: row;}
-    #dashboardTab.nav-tabs .nav-item{width: 25%;}
+    #dashboardTab.nav-tabs .nav-item{width: 25%;margin-right: 0;padding: 0 5px;}
 }
 @media all and (max-width: 767px){
     header{padding-top: 0;}
@@ -139,9 +142,8 @@ collapsed    header .navbar-toggler{display: none;}
     header .navbar-collapse{position: absolute;width: 90%;top: 60px;z-index: 999;left: 16px;background-color: rgb(28, 83, 76);padding: 2rem 0;border-radius: .25rem;}
     header .navbar-collapse .navbar-nav .nav-link{color: #fff;font-weight: 600;}
     header .navbar-collapse .navbar-nav .nav-item{margin-bottom: 1.5rem;}
-    #dashboardTab{justify-content: center;}
-    #dashboardTab.nav-tabs .nav-item{width: 28%;margin-right: 5%;}
-    #dashboardTab.nav-tabs .nav-item:last-child{margin-right: 0;}
+    #dashboardTab{justify-content: center;margin-bottom: 0;}
+    #dashboardTab.nav-tabs .nav-item{width: 50%;margin-right: 0;padding: 10px;}
 }
 @media all and (max-width: 600px){
     .sidebar{display: none;}

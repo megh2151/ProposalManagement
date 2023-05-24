@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 left-col">
                 <div class="bg-overlay">
-                    <a class="brand" href="#">Logo</a>
+                    <a class="brand" href="#">Send Proposal to Asorock</a>
                     <div class="brand-name">
                         <h1>Proposal<br />Management<br><span>Platform</span></h1>
                     </div>

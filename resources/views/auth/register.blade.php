@@ -55,7 +55,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-lg-12">
+                        <div class="form-group col-lg-12 p-lg-0">
                             <label for="email" class="col-form-label ">{{ __('E-Mail Address') }}</label>
 
                             <input id="email" type="email"
@@ -87,7 +87,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
-                        <div class="form-group col-lg-12">
+                        <div class="form-group col-lg-12 p-lg-0">
                             <label for="location" class="col-form-label ">{{ __('Location') }}</label>
                             <div class="input-group">
                                 <select id="location" name="location"
@@ -109,14 +109,14 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-lg-12">
+                        <div class="form-group col-lg-12 p-lg-0">
                             <label for="phone" class="col-form-label">{{ __('Phone') }}</label>
                             <div class="input-group phone">
                                 <div class="input-group-prepend">
                                     <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                                     <span class="input-group-text" id="country-code-addon"></span>
                                 </div>
-                                <input id="phone" type="text"
+                                <input id="phone" type="number"
                                     class="form-control @error('phone') is-invalid @enderror"
                                     name="phone" value="{{ old('phone') }}" autocomplete="phone">
                                 @error('phone')

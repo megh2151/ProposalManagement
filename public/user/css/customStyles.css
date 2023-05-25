@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 body{font-family: 'Open Sans', sans-serif;}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
+input[type=number] {-moz-appearance: textfield;}
 /*---sidebar css---*/
 .sidebar{background-color: #1C534C;position: fixed;left:0;top:0;height: 100%;padding: 1rem 0;width: 60px;z-index: 999;}
 .sidebar .nav-link{text-align: center;color: #62A777;}
@@ -24,7 +27,8 @@ header .nav .nav-link span{background-color: #62A777;font-weight: 600;color: #ff
 header .nav .nav-link.logout{background-color: #CDE8D2;font-weight: 600;color: #62A777;width: 35px;height: 35px;border-radius: 50%;vertical-align: middle;line-height: 35px;text-align: center;font-size: 1.2rem;padding: 0;}
 header .nav .nav-link.logout:hover{background-color: #62A777;color: #fff;}
 .mobile-nav{flex-direction: row;}
-.user-menu .dropdown-toggle{border: 0;background-color: transparent;width: auto;}
+.user-info .dropdown-toggle{border: 0;background-color: transparent;width: auto;display: inline-block;}
+.user-info .dropdown-toggle img{width: 50px;height: 50px;border-radius: 50%;}
 /*-------footer----css*/
 footer .social-nav{width: 100%;display: none;background-color: #1C534C;}
 footer .social-nav .nav-item{padding: 8px 0;}
@@ -145,6 +149,10 @@ collapsed    header .navbar-toggler{display: none;}
     header .navbar-collapse .navbar-nav .nav-item{margin-bottom: 1.5rem;}
     #dashboardTab{justify-content: center;margin-bottom: 0;}
     #dashboardTab.nav-tabs .nav-item{width: 50%;margin-right: 0;padding: 10px;}
+    .dropdown.user-info{text-align: right;}
+    .user-info .dropdown-menu{margin: 0;padding: 0;min-width: 8rem;}
+    .user-info .dropdown-menu .nav-link.logout{padding: 10px;}
+    .navbar{align-items: flex-start;}
 }
 @media all and (max-width: 600px){
     .sidebar{display: none;}

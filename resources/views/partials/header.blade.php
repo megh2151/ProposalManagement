@@ -41,7 +41,7 @@
                     </li>
                 @endif
             @else
-                <li class="dropdown user-menu">
+                <li class="dropdown user-info">
                     <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                     <img src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="User Image" width="50">
                         <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>

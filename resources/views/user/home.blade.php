@@ -222,7 +222,7 @@
                                     <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                                     <span class="input-group-text" id="country-code-addon">{{auth()->user()->country_code}}</span>
                                 </div>
-                                <input id="phone" type="text"
+                                <input id="phone" type="number"
                                     class="form-control @error('phone') is-invalid @enderror"
                                     name="phone" value="{{auth()->user()->phone}}" autocomplete="phone">
                                 @error('phone')

@@ -6,9 +6,8 @@
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-6 left-col">
                 <div class="bg-overlay">
-                    <a class="brand" href="#">Logo</a>
                     <div class="brand-name">
-                        <h1>Proposal<br />Management<br><span>Platform</span></h1>
+                        <h1>Send Proposal<br />to <span>Asorock</span></h1>
                     </div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">

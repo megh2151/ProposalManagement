@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Proposal;
 use App\Messages;
-
+use App\Category;
 
 class ProposalController extends Controller
 {
@@ -14,7 +14,8 @@ class ProposalController extends Controller
     public function index()
     {
         $proposals = Proposal::get();
-        return view('admin.proposals.index', compact('proposals'));
+        $categories = Category::where('is_active',1)->get();
+        return view('admin.proposals.index', compact('proposals','categories'));
     }
 
     public function update(Request $request)
@@ -134,6 +135,57 @@ class ProposalController extends Controller
             $proposal->save();
             return response()->json(['message' => 'Rating Updated']);
         }
+    }
+
+    public function sendAccessRequest(Request $request){
+        $propId = $request->propId;
+
+        $proposal = Proposal::find($propId);
+        if($proposal){
+            $proposal->access_request_note = $request->request_note;
+            $proposal->is_access_request = 1;
+            $proposal->save();
+            return redirect()->back()->with('success', 'Request Send to the User.');
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $authorLastName = $request->input('author_last_name');
+        $authorFirstName = $request->input('author_first_name');
+        $email = $request->input('email');
+        $category = $request->input('category');
+        $dateSubmitted = $request->input('date_submitted');
+
+        $query = Proposal::query();
+
+        if ($authorFirstName || $authorLastName || $email) {
+            $query->whereHas('user', function ($subquery) use ($authorFirstName, $authorLastName, $email) {
+                if ($authorFirstName) {
+                    $subquery->where('name', 'LIKE', "%$authorFirstName%");
+                }
+                if ($authorLastName) {
+                    $subquery->where('last_name', 'LIKE', "%$authorLastName%");
+                }
+                if ($email) {
+                    $subquery->where('email', 'LIKE', "%$email%");
+                }
+            });
+        }
+    
+        if ($category) {
+            $query->where('category_id', $category);
+        }
+    
+        if ($dateSubmitted) {
+            $query->whereDate('created_at', $dateSubmitted);
+        }
+
+        $proposals = $query->get();
+
+        // Pass the $proposals variable to your view and update the table accordingly
+        $categories = Category::where('is_active',1)->get();
+        return view('admin.proposals.index', compact('proposals','categories'));
     }
 }
 

@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="container p-0">
+    <h2 class="mb-4">Proposal Management Platform</h2>
     <ul class="nav nav-tabs" id="dashboardTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="proposals-tab" data-toggle="tab" data-target="#proposals" type="button" role="tab" aria-controls="proposals" aria-selected="true">My Proposals</button>
@@ -25,7 +26,7 @@
                     @if(count($proposals))
                         @foreach($proposals as $proposal)
                         <div class="col-md-4 pl-md-0">
-                            <div class="card">
+                            <div class="card proposal-card {{$proposal->is_access_request ? 'bg-warning' : ''}}">
                                 <div class="card-header row">
                                     <div class="col-8 p-0">
                                         <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}} </h5>
@@ -35,22 +36,29 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
-
-                                    <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger float-right mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    
-                                    <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-primary float-right mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    @if(count($proposal->messages))
-                                    <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
-                                        <button class="btn btn-success"><i class="mdi mdi-chat"></i></button>
-                                    </a>
-                                    @endif
+                                    <div class="row">
+                                        <div class="col-4 pl-0">
+                                            <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="col-8 text-right pr-0">
+                                            @if($proposal->is_access_request)
+                                                <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
+                                            @endif            
+                                            <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            @if(count($proposal->messages))
+                                                 <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
+                                                    <button class="btn btn-warning"><i class="mdi mdi-chat"></i></button>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
                     @else
-                        <p>No Proposal Found!</p>   
+                        <!-- <p>No Proposal Found!</p>    -->
                     @endif
                 </div>
             </div>
@@ -63,7 +71,7 @@
 
                         <div class="form-group">
                             <label for="proposal_title" class="col-form-label">{{ __('Title for Proposal:') }}</label>
-                            <input id="proposal_title" type="text" class="form-control @error('proposal_title') is-invalid @enderror" name="proposal_title" required>
+                            <input id="proposal_title" maxlength="40" type="text" class="form-control @error('proposal_title') is-invalid @enderror" name="proposal_title" required>
 
                             @error('proposal_title')
                                 <span class="invalid-feedback" role="alert">
@@ -107,7 +115,28 @@
                             @enderror
                         </div>
 
-
+                        <div class="form-group col-md-12 p-md-0">
+                            <label for="is_gov_access" class="col-form-label">{{ __('Is Gov User Access:') }}</label>
+                            <div class="input-group" >
+                                <div class="form-check mr-3">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="yesRadio" value="1" checked>
+                                    <label class="form-check-label" for="yesRadio" >
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="noRadio" value="0">
+                                    <label class="form-check-label" for="noRadio">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            @error('is_gov_access')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="description" class="col-form-label">{{ __('Description:') }}</label>
                             <textarea id="description" row="6" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" ></textarea>
@@ -217,7 +246,7 @@
                                     <i class="fa fa-plus mr-1" aria-hidden="true"></i>
                                     <span class="input-group-text" id="country-code-addon">{{auth()->user()->country_code}}</span>
                                 </div>
-                                <input id="phone" type="text"
+                                <input id="phone" type="number"
                                     class="form-control @error('phone') is-invalid @enderror"
                                     name="phone" value="{{auth()->user()->phone}}" autocomplete="phone">
                                 @error('phone')
@@ -286,6 +315,22 @@
             </div>
         </div>
         
+    </div>
+</div>
+<div class="modal fade" id="sendRequest" tabindex="-1" role="dialog" aria-labelledby="sendRequestLabel"
+        aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="request-note"></p>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -398,6 +443,12 @@
                         }
                     });
                 }
+            });
+
+            $(document).on('click', '.access_request', function(e) {
+                var accessNote = $(this).attr('data-accessNote');
+                $("#request-note").text(accessNote);
+                $("#sendRequest").modal('show');
             });
 
             $('#changePasswordForm').submit(function(event) {

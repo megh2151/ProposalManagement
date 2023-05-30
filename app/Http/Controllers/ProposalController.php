@@ -38,6 +38,8 @@ class ProposalController extends Controller
         $proposal_file = $request->proposal_file;
         $category = $request->category;
         $subcategory = $request->subcategory;
+        $is_gov_access = $request->is_gov_access;
+        
 
         $proposal = new Proposal();
         $proposal->title = $proposal_title;
@@ -45,6 +47,7 @@ class ProposalController extends Controller
         $proposal->description = $description;
         $proposal->category_id = $category;
         $proposal->sub_category_id = $subcategory;
+        $proposal->is_gov_access = $is_gov_access;
         $proposal->save();
        
         if ($request->hasFile('proposal_file')) {
@@ -87,6 +90,7 @@ class ProposalController extends Controller
         $proposal_file = $request->proposal_file;
         $category = $request->category;
         $subcategory = $request->subcategory;
+        $is_gov_access = $request->is_gov_access;
 
         $proposal = Proposal::find($request->prop_id);
         if($proposal){
@@ -95,6 +99,11 @@ class ProposalController extends Controller
             $proposal->description = $description;
             $proposal->category_id = $category;
             $proposal->sub_category_id = $subcategory;
+            $proposal->is_gov_access = $is_gov_access;
+            if($is_gov_access==1){
+                $proposal->is_access_request = 0;
+                $proposal->access_request_note = null;
+            }
             $proposal->save();
         
             if ($request->hasFile('proposal_file')) {

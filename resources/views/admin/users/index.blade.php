@@ -20,6 +20,7 @@
                 <table id="basic-data-table" class="table nowrap">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Action</th>
@@ -28,6 +29,8 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
+
+                                <td> <img class="rounded-circle" src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $user->name }}" width="40" height="40"></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 </td>

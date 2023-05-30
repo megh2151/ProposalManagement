@@ -11,7 +11,7 @@
                         <input type="hidden" id="prop_id" name="prop_id" value="{{$proposal->id}}" />
                         <div class="form-group">
                             <label for="proposal_title" class="col-form-label">{{ __('Title for Proposal:') }}</label>
-                            <input id="proposal_title" type="text" class="form-control @error('proposal_title') is-invalid @enderror" value="{{$proposal->title}}" name="proposal_title" required>
+                            <input id="proposal_title"  type="text" maxlength="40" class="form-control @error('proposal_title') is-invalid @enderror" value="{{$proposal->title}}" name="proposal_title" required>
 
                             @error('proposal_title')
                                 <span class="invalid-feedback" role="alert">
@@ -49,6 +49,28 @@
                                 </select>
                             </div>
                             @error('subcategory')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-12 p-md-0">
+                            <label for="is_gov_access" class="col-form-label">{{ __('Is Gov User Access:') }}</label>
+                            <div class="input-group" >
+                                <div class="form-check mr-3">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="yesRadio" value="1" {{$proposal->is_gov_access==1 ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="yesRadio">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="noRadio" value="0" {{$proposal->is_gov_access==0 ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="noRadio">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            @error('is_gov_access')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

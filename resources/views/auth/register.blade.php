@@ -19,7 +19,7 @@
                         <div class="form-group row">
                             <div class="col-lg-4 pl-lg-0">
                                 <label for="name" class="col-form-label ">{{ __('First Name') }}</label>
-                                <input id="name" type="text"
+                                <input id="name" type="text" maxlength="15"
                                 class="form-control @error('name') is-invalid @enderror" name="name"
                                 value="{{ old('name') }}" autocomplete="name" autofocus>
 
@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-lg-4 p-lg-0">
                                 <label for="middle_name"class=" col-form-label ">{{ __('Middle Name') }}</label>
-                                <input id="middle_name" type="text"
+                                <input id="middle_name" type="text" maxlength="15"
                                     class="form-control @error('middle_name') is-invalid @enderror"
                                     name="middle_name" value="{{ old('middle_name') }}"
                                     autocomplete="middle_name">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-lg-4 pr-lg-0">
                                 <label for="last_name" class=" col-form-label ">{{ __('Last Name') }}</label>
-                                <input id="last_name" type="text"
+                                <input id="last_name" type="text" maxlength="15"
                                     class="form-control @error('last_name') is-invalid @enderror"
                                     name="last_name" value="{{ old('last_name') }}" autocomplete="last_name">
 
@@ -58,7 +58,7 @@
                         <div class="form-group col-lg-12 p-lg-0">
                             <label for="email" class="col-form-label ">{{ __('E-Mail Address') }}</label>
 
-                            <input id="email" type="email"
+                            <input id="email" type="email"maxlength="40"
                                 class="form-control @error('email') is-invalid @enderror" name="email"
                                 value="{{ old('email') }}" autocomplete="email">
 
@@ -72,7 +72,7 @@
                             <div class="col-lg-6 pl-lg-0">
                                 <label for="password" class="col-form-label ">{{ __('Password') }}</label>
 
-                                <input id="password" type="password"
+                                <input id="password" type="password" maxlength="15"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     autocomplete="new-password">
 
@@ -84,7 +84,7 @@
                             </div>
                             <div class="col-lg-6 pr-lg-0">
                                 <label for="password-confirm" class="col-form-label ">{{ __('Confirm Password') }}</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+                                <input id="password-confirm" type="password" maxlength="15" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
                         <div class="form-group col-lg-12 p-lg-0">

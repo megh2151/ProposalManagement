@@ -8,14 +8,14 @@ class Authenticated
 {
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role_id == 1){
+        if(auth()->user() && auth()->user()->role_id == 1){
             return $next($request);
-        } else if(auth()->user()->role_id == 2){
+        } else if(auth()->user() && auth()->user()->role_id == 2){
             return $next($request);
-        }else if(auth()->user()->role_id == 0){
+        }else if(auth()->user() && auth()->user()->role_id == 0){
             return $next($request);
         }
 
-        return redirect('home')->with('error', "You have no proper authentication to access the area!");
+        return redirect('/')->with('error', "You have no proper authentication to access the area!");
     }
 }

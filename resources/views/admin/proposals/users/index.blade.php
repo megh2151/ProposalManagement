@@ -12,7 +12,7 @@
     <div class="card user-card">
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap">
+                <table id="basic-data-table" class="table nowrap" data-order='[[ 7, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Image</th>
@@ -22,6 +22,7 @@
                             <th>Email</th>
                             <th>Location</th>
                             <th>Phone</th>
+                            <th>Registration Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->location }}</td>
                                 <td>{{ $user->phone }}</td>
+                                <td>{{ date('Y-m-d h:i:s A',strtotime($user->created_at->toDateTimeString())) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

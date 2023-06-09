@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Proposal;
 use App\Messages;
 use App\Category;
+use App\Mail\RequestAccess;
+use Illuminate\Support\Facades\Mail;
 
 class ProposalController extends Controller
 {
@@ -50,15 +52,12 @@ class ProposalController extends Controller
         if($proposal){
             $proposal->no_of_times_viewed = $proposal->no_of_times_viewed + 1;
             $proposal->save();
+            $url = '';
             if($proposal->file_path){
                 $url = '/admin/proposals/preview/'.$proposal->file_path;
-                return redirect()->away($url)->withHeaders([
-                    'Refresh' => '0;url=' . $url,
-                    'Window-target' => '_blank'
-                ]);
             }
 
-            return view('admin.proposals.preview', compact('proposal'));
+            return view('admin.proposals.preview', compact('proposal','url'));
         }else{
             return redirect()->back()->with('error', 'Proposal Not found.');
         }
@@ -145,6 +144,7 @@ class ProposalController extends Controller
             $proposal->access_request_note = $request->request_note;
             $proposal->is_access_request = 1;
             $proposal->save();
+            Mail::to($proposal->user->email)->send(new RequestAccess($proposal));
             return redirect()->back()->with('success', 'Request Send to the User.');
         }
     }

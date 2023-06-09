@@ -21,6 +21,12 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(function ($request, $next) {
+            if (auth()->user() && (auth()->user()->role_id ==2 || auth()->user()->role_id ==1)) {
+                return redirect()->route('admin.proposal.index');
+            }
+            return $next($request);
+        });
         $this->middleware('auth');
     }
 
@@ -41,7 +47,7 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-
+    
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => 'nullable|string|max:255',
@@ -71,7 +77,7 @@ class UserController extends Controller
         $user->country_code = $country_code;
         $user->save();
 
-        if ($request->has('cropped_photo')) {
+        if ($request->has('cropped_photo') && $request->cropped_photo) {
             // Get the cropped photo data from the request
             $croppedPhotoData = $request->input('cropped_photo');
     

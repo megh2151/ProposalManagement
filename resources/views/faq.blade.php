@@ -152,7 +152,7 @@
 
             <div class="collapse" id="question6">
                 <div class="card card-body">
-                    <p>Yes, you can. Please sign in, go to your profile, and edit your proposal.</p>S
+                    <p>Yes, you can. Please sign in, go to your profile, and edit your proposal.</p>
                 </div>
             </div>
         </div>

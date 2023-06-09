@@ -55,7 +55,8 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-12 p-md-0">
-                            <label for="is_gov_access" class="col-form-label">{{ __('Is Gov User Access:') }}</label>
+                            <label for="is_gov_access" class="col-form-label">Grant Government Full access?</label>
+                            </br><small class="text-danger"><i>[Note: "Yes" means the government can download your proposal and contact you. "No" means Government cannot download your proposal until you change to "Yes"]</i></small>
                             <div class="input-group" >
                                 <div class="form-check mr-3">
                                     <input class="form-check-input" type="radio" name="is_gov_access" id="yesRadio" value="1" {{$proposal->is_gov_access==1 ? 'checked' : ''}}>

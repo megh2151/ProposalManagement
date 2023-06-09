@@ -27,7 +27,7 @@
 				    <div class="col-lg-6">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{$category->name}}" placeholder="Enter Name" value="" required>
+                            <input type="text" maxlength="20" class="form-control" id="name" name="name" value="{{$category->name}}" placeholder="Enter Name" value="" required>
                         </div>
                         <div class="form-group">
                             <label class="text-dark mb-2 font-weight-medium d-inline-block" for="">Status</label>
@@ -39,7 +39,7 @@
                                     </label>
                                 </li>
                                 <li class="d-inline-block mr-3">
-                                    <label class="control control-radio">In Active
+                                    <label class="control control-radio">Inactive
                                         <input type="radio" name="status" value="0" {{$category->is_active ? '' : 'checked'}}>
                                         <div class="control-indicator"></div>
                                     </label>

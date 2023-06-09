@@ -17,13 +17,15 @@
     <div class="card user-card">
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap">
+                <table id="basic-data-table" class="table nowrap" data-order='[[ 3, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Registration Date</th>
                             <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +35,7 @@
                                 <td> <img class="rounded-circle" src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $user->name }}" width="40" height="40"></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                </td>
+                                <td>{{ date('Y-m-d h:i:s A',strtotime($user->created_at->toDateTimeString())) }}</td>
                                 <td>
                                     <a class="mr-2" href="{{ route('admin.users.edit', ['id' => $user->id]) }}">
                                         <button class="rounded-btn btn-success"><i class="mdi mdi-pencil"></i></button>
@@ -43,6 +45,7 @@
                                         <button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button>
                                     </a>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>

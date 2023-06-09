@@ -47,7 +47,7 @@ class LoginController extends Controller
             }
 
         }else{
-            return redirect()->route('login')->with('error','Your provided information wrong!');
+            return redirect()->route('login')->with('error','You provided wrong information');
         }
 
     }

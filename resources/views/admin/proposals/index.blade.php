@@ -64,14 +64,16 @@
         
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap">
+                <table id="basic-data-table" class="table nowrap" data-order='[[ 6, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Follow Up</th>
                             <th>Title</th>
                             <th>User</th>
+                            <th>Contact</th>
                             <th>Category</th>
                             <th>Sub Category</th>
+                            <th>Submitted Date</th>
                             <th>Note</th>
                             <th>Status</th>
                             @if(auth()->user() && auth()->user()->role_id==2)
@@ -87,8 +89,11 @@
                                 <td>{{ substr($proposal->title, 0, 70) }}</td>
                                 <td><img src="{{ $proposal->user->profile_photo ? asset($proposal->user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $proposal->user->name }}" width="40" height="40" class="rounded-circle">
                                 {{ $proposal->user->name }}</td>
+                                <td>{{ $proposal->user->email }}
+                                {{$proposal->user->country_code}} {{ $proposal->user->phone }}</td>
                                 <td>{{ $proposal->category->name }}</td>
                                 <td>{{ $proposal->subcategory->name }}</td>
+                                <td>{{ date('Y-m-d h:i:s A',strtotime($proposal->created_at->toDateTimeString())) }}</td>
                                 <td>
                                 @if(auth()->user() && (auth()->user()->role_id==2 && $proposal->is_gov_access) || auth()->user()->role_id==1)  
                                 <a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}">View</a>
@@ -239,6 +244,7 @@
                 method: 'POST',
                 data: data,
                 success: function(response) {
+                    alert('Follow up updated successfully');
                     console.log('Checkbox value updated successfully!');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

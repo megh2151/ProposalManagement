@@ -39,6 +39,46 @@ class HomeController extends Controller
         $gov_count = User::where('role_id',2)->count();
         $cat_count = Category::count();
         $proposals = Proposal::orderBy('no_of_times_viewed','desc')->get();
-        return view('admin.home',compact('proposal_count','user_count','gov_count','cat_count','proposals'));
+        $approved_proposal_count = Proposal::where('status','approved')->count();
+        $pending_proposal_count = Proposal::where('status','pending')->count();
+        $cancel_proposal_count = Proposal::where('status','cancel')->count();
+
+        // Fetch pending and approved proposals grouped by date
+        $pendingProposals = Proposal::where('status', 'pending')
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->get();
+
+        $approvedProposals = Proposal::where('status', 'approved')
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->get();
+
+        // Format the data for the chart
+        $activityData = [
+            'pending' => [],
+            'approved' => [],
+            'labels' => []
+        ];
+
+        // Merge the pending and approved proposals data into a single dataset
+        foreach ($pendingProposals as $pending) {
+            $activityData['pending'][] = $pending->count;
+            $activityData['labels'][] = $pending->date;
+        }
+
+        foreach ($approvedProposals as $approved) {
+            $activityData['approved'][] = $approved->count;
+            if (!in_array($approved->date, $activityData['labels'])) {
+                $activityData['labels'][] = $approved->date;
+            }
+        }
+        
+
+        // Sort the labels array in ascending order
+        sort($activityData['labels']);
+
+
+        return view('admin.home',compact('proposal_count','user_count','gov_count','cat_count','proposals','approved_proposal_count','pending_proposal_count','activityData','cancel_proposal_count'));
     }
 }

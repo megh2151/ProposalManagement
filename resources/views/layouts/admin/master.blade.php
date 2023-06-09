@@ -131,6 +131,8 @@
     <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/parsley.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/charts/Chart.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/chart.js') }}"></script>
     @yield('script')
 </body>
 

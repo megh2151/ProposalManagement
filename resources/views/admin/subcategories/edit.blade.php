@@ -39,7 +39,7 @@
                                     </label>
                                 </li>
                                 <li class="d-inline-block mr-3">
-                                    <label class="control control-radio">In Active
+                                    <label class="control control-radio">Inactive
                                         <input type="radio" name="status" value="0" {{$subcategory->is_active ? '' : 'checked'}}>
                                         <div class="control-indicator"></div>
                                     </label>

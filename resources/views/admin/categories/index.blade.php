@@ -17,12 +17,14 @@
     <div class="card category-card">
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap">
+                <table id="basic-data-table" class="table nowrap" data-order='[[ 2, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
+                            <th>Created Date</th>
                             <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +32,7 @@
                             <tr>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->is_active ? 'Active' : 'InActive' }}</td>
-                                </td>
+                                <td>{{ date('Y-m-d h:i:s A',strtotime($category->created_at->toDateTimeString())) }}</td>
                                 <td>
                                     <a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}"><button class="rounded-pill btn-warning mr-2">Sub Categories</button></a> 
                                     <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}"><button class="rounded-btn btn-success mr-2"><i class="mdi mdi-pencil"></i></button></a>

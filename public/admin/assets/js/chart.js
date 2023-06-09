@@ -1272,7 +1272,7 @@ $(document).ready(function() {
   }
 
   /*======== 16. ANALYTICS - ACTIVITY CHART ========*/
-  var activity = document.getElementById("activity");
+  var activity = document.getElementById("activity1");
   if (activity !== null) {
     var activityData = [
       {
@@ -1395,7 +1395,7 @@ $(document).ready(function() {
       }
     };
 
-    var ctx = document.getElementById("activity").getContext("2d");
+    var ctx = document.getElementById("activity1").getContext("2d");
     var myLine = new Chart(ctx, config);
 
     var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");

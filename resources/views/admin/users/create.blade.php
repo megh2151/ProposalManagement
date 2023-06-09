@@ -38,7 +38,7 @@
 									</label>
 								</li>
 								<li class="d-inline-block mr-3">
-									<label class="control control-radio">In Active
+									<label class="control control-radio">Inactive
 										<input type="radio" name="status" value="0">
 										<div class="control-indicator"></div>
 									</label>

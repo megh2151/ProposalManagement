@@ -30,6 +30,8 @@
                                 <div class="card-header row">
                                     <div class="col-8 p-0">
                                         <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}} </h5>
+                                        <strong><i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                                        <span>{{$proposal->no_of_times_viewed ? $proposal->no_of_times_viewed : 0}}</span></strong>
                                     </div>
                                     <div class="col-4 text-right p-0">
                                         <label>{{date('jS F Y',strtotime($proposal->created_at))}}</br>{{ucfirst($proposal->status)}}</label>
@@ -38,16 +40,16 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-4 pl-0">
-                                            <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
+                                            <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" title="View Proposal Uploaded" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
                                         </div>
                                         <div class="col-8 text-right pr-0">
                                             @if($proposal->is_access_request)
-                                                <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
+                                                <a href="javascript:void(0);" title="Grant access to Government" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
                                             @endif            
-                                            <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                            <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}"  title="Edit My Proposal" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" title="Delete My Proposal" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             @if(count($proposal->messages))
-                                                 <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" >
+                                                 <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" title="Make comments" >
                                                     <button class="btn btn-warning"><i class="mdi mdi-chat"></i></button>
                                                 </a>
                                             @endif
@@ -116,7 +118,8 @@
                         </div>
 
                         <div class="form-group col-md-12 p-md-0">
-                            <label for="is_gov_access" class="col-form-label">{{ __('Is Gov User Access:') }}</label>
+                             <label for="is_gov_access" class="col-form-label">Grant Government Full access?</label>
+                            </br><small class="text-danger"><i>[Note: "Yes" means the government can download your proposal and contact you. "No" means Government cannot download your proposal until you change to "Yes"]</i></small>
                             <div class="input-group" >
                                 <div class="form-check mr-3">
                                     <input class="form-check-input" type="radio" name="is_gov_access" id="yesRadio" value="1" checked>
@@ -263,7 +266,7 @@
                         <label for="profile_photo" class="col-form-label">{{ __('User Image') }}</label>
                             <div class="custom-file mb-1">
                             <input type="hidden" name="cropped_photo" id="cropped_photo">
-                            <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo" required="">
+                            <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo">
                             <label class="custom-file-label" for="coverImage">Choose file...</label>
                                 <div id="preview-div"  class="d-none mt-3 mb-3">
                                     <img id="photo-preview" class="mt-3 mb-3" src="" alt="Photo Preview" style="max-width: 100%; height: auto;margin-bottom:15px;">
@@ -322,13 +325,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access</h5>
+                <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access </h5>
+                <a href="" id="edit-proposal-btn" title="Edit My Proposal" class="btn btn-success ml-2 btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                
             </div>
             <div class="modal-body">
                 <p id="request-note"></p>
+                <p>"To grant access to Government, click the green edit icon button above and change "No" to "Yes" on the edit page."</p>
             </div>
         </div>
     </div>
@@ -447,6 +453,9 @@
 
             $(document).on('click', '.access_request', function(e) {
                 var accessNote = $(this).attr('data-accessNote');
+                var proposalid = $(this).attr('data-proposalid');
+                var url = 'proposal/'+proposalid+'/edit';
+                $("#edit-proposal-btn").attr('href',url);
                 $("#request-note").text(accessNote);
                 $("#sendRequest").modal('show');
             });

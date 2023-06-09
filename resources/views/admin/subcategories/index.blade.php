@@ -20,12 +20,13 @@
     <div class="card card-subcategory">
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap">
+                <table id="basic-data-table" class="table nowrap" data-order='[[ 3, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Category</th>
                             <th>Status</th>
+                            <th>Created Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,12 +36,13 @@
                                 <td>{{ $subcategory->name }}</td>
                                 <td>{{ $subcategory->category->name }}</td>
                                 <td>{{ $subcategory->is_active ? 'Active' : 'InActive' }}</td>
-                                </td>
+                                <td>{{ date('Y-m-d h:i:s A',strtotime($subcategory->created_at->toDateTimeString())) }}</td>
                                 <td>
                                     <a href="{{ route('admin.subcategory.edit', ['id' => $id, 'subid'=>$subcategory->id]) }}"><button class="rounded-btn btn-success mr-2"><i class="mdi mdi-pencil"></i></button></a>
                                     <a href="javascript:void(0);" class="delete-subcategory"
                                         data-subcategoryId="{{ $subcategory->id }}"><button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button></a>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>

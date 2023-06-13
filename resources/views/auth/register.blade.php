@@ -70,12 +70,17 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6 pl-lg-0">
-                                <label for="password" class="col-form-label ">{{ __('Password') }}</label>
-
-                                <input id="password" type="password" maxlength="15"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
-                                    autocomplete="new-password">
-
+                                <label for="password" class="col-form-label">{{ __('Password') }}</label>
+                                <div class="input-group">
+                                    <input id="password" type="password" maxlength="15"
+                                        class="form-control password-input @error('password') is-invalid @enderror" name="password"
+                                        autocomplete="new-password">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text toggle-password">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                </div>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -83,10 +88,19 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6 pr-lg-0">
-                                <label for="password-confirm" class="col-form-label ">{{ __('Confirm Password') }}</label>
-                                <input id="password-confirm" type="password" maxlength="15" class="form-control" name="password_confirmation" autocomplete="new-password">
+                                <label for="password-confirm" class="col-form-label">{{ __('Confirm Password') }}</label>
+                                <div class="input-group">
+                                    <input id="password-confirm" type="password" maxlength="15" class="password-input form-control"
+                                        name="password_confirmation" autocomplete="new-password">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text toggle-password">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group col-lg-12 p-lg-0">
                             <label for="location" class="col-form-label ">{{ __('Location') }}</label>
                             <div class="input-group">
@@ -162,6 +176,22 @@
                         $("#country-code-addon").html(countryCode)
                     }
                 });
+            });
+
+            $('.toggle-password').on('click', function() {
+                var passwordInput = $(this).closest('.input-group').find('.password-input');
+                var passwordFieldType = passwordInput.attr('type');
+                var eyeIcon = $(this).find('i');
+
+                if (passwordFieldType === 'password') {
+                    passwordInput.attr('type', 'text');
+                    eyeIcon.removeClass('fa-eye');
+                    eyeIcon.addClass('fa-eye-slash');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    eyeIcon.removeClass('fa-eye-slash');
+                    eyeIcon.addClass('fa-eye');
+                }
             });
         });
     </script>

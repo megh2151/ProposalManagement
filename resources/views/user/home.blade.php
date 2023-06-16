@@ -26,10 +26,12 @@
                     @if(count($proposals))
                         @foreach($proposals as $proposal)
                         <div class="col-md-4 pl-md-0">
-                            <div class="card proposal-card">
+                            <div class="card proposal-card {{$proposal->is_access_request ? 'bg-warning' : ''}}">
                                 <div class="card-header row">
                                     <div class="col-8 p-0">
                                         <h5><i class="fa fa-list-alt mr-2" aria-hidden="true"></i>{{$proposal->title}} </h5>
+                                        <strong><i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                                        <span>{{$proposal->no_of_times_viewed ? $proposal->no_of_times_viewed : 0}}</span></strong>
                                     </div>
                                     <div class="col-4 text-right p-0">
                                         <label>{{date('jS F Y',strtotime($proposal->created_at))}}</br>{{ucfirst($proposal->status)}}</label>
@@ -40,7 +42,11 @@
                                         <div class="col-4 pl-0">
                                             <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
                                         </div>
-                                        <div class="col-8 text-right pr-0">            
+                                        <div class="col-8 text-right pr-0">
+                                        
+                                            @if($proposal->is_access_request)
+                                                <a href="javascript:void(0);" title="Gov User Request" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
+                                            @endif            
                                             <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                             <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             @if(count($proposal->messages))
@@ -68,7 +74,7 @@
 
                         <div class="form-group">
                             <label for="proposal_title" class="col-form-label">{{ __('Title for Proposal:') }}</label>
-                            <input id="proposal_title" type="text" class="form-control @error('proposal_title') is-invalid @enderror" name="proposal_title" required>
+                            <input id="proposal_title" maxlength="40" type="text" class="form-control @error('proposal_title') is-invalid @enderror" name="proposal_title" required>
 
                             @error('proposal_title')
                                 <span class="invalid-feedback" role="alert">
@@ -112,7 +118,29 @@
                             @enderror
                         </div>
 
-
+                        <div class="form-group col-md-12 p-md-0">
+                             <label for="is_gov_access" class="col-form-label">Grant Government Full access</label>
+                            </br><small class="text-danger"><i>[Note: "Yes" means the government can download your proposal and contact you. "No" means Government cannot download your proposal until you change to "Yes"]</i></small>
+                            <div class="input-group" >
+                                <div class="form-check mr-3">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="yesRadio" value="1" checked>
+                                    <label class="form-check-label" for="yesRadio" >
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_gov_access" id="noRadio" value="0">
+                                    <label class="form-check-label" for="noRadio">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            @error('is_gov_access')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="description" class="col-form-label">{{ __('Description:') }}</label>
                             <textarea id="description" row="6" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" ></textarea>
@@ -239,7 +267,7 @@
                         <label for="profile_photo" class="col-form-label">{{ __('User Image') }}</label>
                             <div class="custom-file mb-1">
                             <input type="hidden" name="cropped_photo" id="cropped_photo">
-                            <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo" required="">
+                            <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo">
                             <label class="custom-file-label" for="coverImage">Choose file...</label>
                                 <div id="preview-div"  class="d-none mt-3 mb-3">
                                     <img id="photo-preview" class="mt-3 mb-3" src="" alt="Photo Preview" style="max-width: 100%; height: auto;margin-bottom:15px;">
@@ -291,6 +319,22 @@
             </div>
         </div>
         
+    </div>
+</div>
+<div class="modal fade" id="sendRequest" tabindex="-1" role="dialog" aria-labelledby="sendRequestLabel"
+        aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="request-note"></p>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -403,6 +447,12 @@
                         }
                     });
                 }
+            });
+
+            $(document).on('click', '.access_request', function(e) {
+                var accessNote = $(this).attr('data-accessNote');
+                $("#request-note").text(accessNote);
+                $("#sendRequest").modal('show');
             });
 
             $('#changePasswordForm').submit(function(event) {

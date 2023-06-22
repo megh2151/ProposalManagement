@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Proposal;
 use App\User;
 use App\Category;
+use App\Settings;
+
 
 class HomeController extends Controller
 {
@@ -78,7 +80,7 @@ class HomeController extends Controller
         // Sort the labels array in ascending order
         sort($activityData['labels']);
 
-
-        return view('admin.home',compact('proposal_count','user_count','gov_count','cat_count','proposals','approved_proposal_count','pending_proposal_count','activityData','cancel_proposal_count'));
+        $show_activity_summary = Settings::where('show_activity_summary',1)->value('show_activity_summary');
+        return view('admin.home',compact('proposal_count','user_count','gov_count','cat_count','proposals','approved_proposal_count','pending_proposal_count','activityData','cancel_proposal_count','show_activity_summary'));
     }
 }

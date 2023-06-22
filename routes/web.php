@@ -34,9 +34,11 @@ Route::post('admin/user/delete', 'Admin\UsersController@delete')->name('admin.us
 Route::post('admin/user/store', 'Admin\UsersController@store')->name('admin.users.store')->middleware('authentic');
 Route::post('admin/user/update', 'Admin\UsersController@update')->name('admin.user.update')->middleware('authentic');
 
+
+
 Route::get('admin/proposal-users', 'Admin\UsersController@propUserindex')->name('admin.proposal.users')->middleware('authentic');
 Route::get('admin/proposal-users/{id}/chat', 'Admin\UsersController@propUserChat')->name('admin.proposal.users.chat')->middleware('authentic');
-
+Route::post('admin/proposal-users/send-activation', 'Admin\UsersController@sendActivation')->name('admin.propusers.send-activation')->middleware('authentic');
 
 Route::get('admin/categories', 'Admin\CategoryController@index')->name('admin.categories')->middleware('authentic');
 Route::get('admin/category/create', 'Admin\CategoryController@create')->name('admin.category.create')->middleware('authentic');
@@ -52,11 +54,10 @@ Route::post('admin/subcategory/delete', 'Admin\CategoryController@subCategoryDel
 Route::post('admin/subcategory/store', 'Admin\CategoryController@subCategoryStore')->name('admin.subcategory.store')->middleware('authentic');
 Route::post('admin/subcategory/update', 'Admin\CategoryController@subCategoryUpdate')->name('admin.subcategory.update')->middleware('authentic');
 
+// Proposals
 Route::get('admin/proposals', 'Admin\ProposalController@index')->name('admin.proposal.index')->middleware('authentic');
 Route::post('admin/proposals/update', 'Admin\ProposalController@update')->name('admin.proposal.update')->middleware('authentic');
-
 Route::get('admin/proposals/{id}/view/', 'Admin\ProposalController@view')->name('admin.proposal.view')->middleware('authentic');
-
 Route::get('admin/proposals/preview/{path}', function ($filename) {
     // Check if the file exists in the storage
     if (!Storage::disk('public')->exists('proposals/'.$filename)) {
@@ -74,7 +75,6 @@ Route::get('admin/proposals/preview/{path}', function ($filename) {
     ]);
     
 });
-
 Route::get('admin/proposals/download/{filename}', function ($filename) {
     // Check if the file exists in the storage
     if (!Storage::disk('public')->exists('proposals/'.$filename)) {
@@ -89,38 +89,35 @@ Route::get('admin/proposals/download/{filename}', function ($filename) {
     // Return the file for download
     return response()->download($filePath, $filename, ['Content-Type' => $contentType]);
 });
-
 Route::get('admin/proposals/{id}/chat', 'Admin\ProposalController@chat')->name('admin.proposal.chat')->middleware('authentic');
 Route::post('admin/proposals/{id}/update-rating', 'Admin\ProposalController@updateRating')->name('admin.proposal.updateRating')->middleware('authentic');
-
 Route::post('admin/proposal/send-access-request', 'Admin\ProposalController@sendAccessRequest')->name('admin.proposal.request')->middleware('authentic');
 Route::get('/admin/proposal/search', 'Admin\ProposalController@search')->name('admin.proposal.search')->middleware('authentic');
-
-
 Route::post('admin/profile/update', 'Admin\UsersController@profileUpdate')->name('admin.profile.update')->middleware('authentic');
-
 Route::get('admin/profile', 'Admin\UsersController@profile')->name('admin.profile')->middleware('authentic');
 
 
+Route::get('admin/email', 'Admin\EmailController@showForm')->name('email')->middleware('authentic');
+Route::post('admin/send-email', 'Admin\EmailController@sendEmail')->name('sendEmail')->middleware('authentic');
 
+Route::post('admin/update-setting', 'Admin\SettingsController@updateSetting')->name('update-settings')->middleware('authentic');
+
+
+// USER ROUTES 
+Route::get('user/activity-summary', 'UserController@activitySummary')->name('user.activitySummary')->middleware('authentic');
 Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->middleware('authentic');
 Route::post('user/profile/update', 'UserController@updateProfile')->name('user.profile.update')->middleware('authentic');
-
 Route::post('user/proposal/submit', 'ProposalController@proposalSubmit')->name('user.proposal.submit')->middleware('authentic');
-
 Route::get('user/proposal/{id}/chat', 'ProposalController@propChat')->name('user.proposal.chat')->middleware('authentic');
 Route::get('user/proposal/{id}/edit', 'ProposalController@editProposal')->name('user.proposal.edit')->middleware('authentic');
-
 Route::post('user/proposal/update', 'ProposalController@proposalUpdate')->name('user.proposal.update')->middleware('authentic');
-
-
 Route::get('user/{token}', 'Auth\RegisterController@activateUser')->name('user.activate');
+Route::get('user/proposal/{id}/view', 'ProposalController@view')->name('user.proposal.view')->middleware('authentic');
+Route::post('/user/profile/update-password', 'UserController@updatePassword')->name('user.profile.updatePassword')->middleware('authentic');
 
-Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');
-Route::get('/subcategories/{category_id}', 'ProposalController@getSubcategories');
 
-Route::get('/country/{id}/phone-code', 'HomeController@getPhoneCode');
 
+// Common ROUTES
 Route::get('proposals/preview/{path}', function ($filename) {
 
     // Check if the file exists in the storage
@@ -139,16 +136,15 @@ Route::get('proposals/preview/{path}', function ($filename) {
     ]);
     
 });
-
-Route::get('user/proposal/{id}/view', 'ProposalController@view')->name('user.proposal.view')->middleware('authentic');
-
-Route::post('/user/profile/update-password', 'UserController@updatePassword')->name('user.profile.updatePassword')->middleware('authentic');
-
-
+Route::get('/countries/{id}/phone-code', 'Auth\RegisterController@getPhoneCode');
+Route::get('/subcategories/{category_id}', 'ProposalController@getSubcategories');
+Route::get('/country/{id}/phone-code', 'HomeController@getPhoneCode');
 Route::post('/send-message', 'Admin\ProposalController@sendMessage')->middleware('authentic');
 Route::get('/messages', 'Admin\ProposalController@getNewMessages')->middleware('authentic');
 Route::delete('/proposals/{proposal}', 'ProposalController@destroy')->name('proposals.destroy')->middleware('authentic');
-
 Route::get('/about-us', 'HomeController@aboutUs');
 Route::get('/faq', 'HomeController@faq');
 Route::get('/contact-us', 'HomeController@contactUs');
+Route::get('/get-local-government-areas', 'ProposalController@getLocalGovernmentAreas');
+
+

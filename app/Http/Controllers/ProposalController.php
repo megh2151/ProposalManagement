@@ -9,6 +9,8 @@ use App\Proposal;
 use App\Category;
 use App\SubCategory;
 use App\Messages;
+use App\State;
+use App\LocalGovernmentAreas;
 class ProposalController extends Controller
 {
     /**
@@ -28,7 +30,10 @@ class ProposalController extends Controller
             'category' => 'required',
             'subcategory' => 'required',
             'description' => 'required_without:proposal_file',
-            'proposal_file' => 'required_without:description|mimes:doc,docx,pdf|max:2048'
+            'proposal_file' => 'required_without:description|mimes:doc,docx,pdf|max:2048',
+            'estimate' => 'required',
+            'completion_timeline' => 'required',
+            'jobs_created' => 'required',
         ], [
             'description.required_without' => 'Either Description or Proposal File is required.'
         ]);
@@ -39,7 +44,13 @@ class ProposalController extends Controller
         $category = $request->category;
         $subcategory = $request->subcategory;
         $is_gov_access = $request->is_gov_access;
-        
+        $estimate = $request->estimate;
+        $completion_timeline = $request->completion_timeline;
+        $jobs_created = $request->jobs_created;
+        $is_federal = $request->is_federal ? 1 : 0;
+        $is_state = $request->is_state ? 1 : 0;
+        $state = $request->state;
+        $localGovernment = $request->localGovernment;
 
         $proposal = new Proposal();
         $proposal->title = $proposal_title;
@@ -48,6 +59,17 @@ class ProposalController extends Controller
         $proposal->category_id = $category;
         $proposal->sub_category_id = $subcategory;
         $proposal->is_gov_access = $is_gov_access;
+        $proposal->estimate = $estimate;
+        $proposal->completion_timeline = $completion_timeline;
+        $proposal->jobs_created = $jobs_created;
+        $proposal->is_federal = $is_federal;
+        $proposal->is_state = $is_state;
+        $proposal->state_id = $state;
+        $proposal->local_government_area_id = $localGovernment;
+        $proposal->note = "We are delighted to let you know that we have received your proposal, and we appreciate your effort. We kindly ask you to bear with us as the administration is just settling down and has yet to name cabinets. We are grateful for your enthusiasm to work with us, though.
+
+Please continue to improve on it.
+Thank you!";
         $proposal->save();
        
         if ($request->hasFile('proposal_file')) {
@@ -74,6 +96,9 @@ class ProposalController extends Controller
             'category' => 'required',
             'subcategory' => 'required',
             'description' => 'required_without:existing_file',
+            'estimate' => 'required',
+            'completion_timeline' => 'required',
+            'jobs_created' => 'required',
         ];
         
         // Add validation rule for proposal_file only if existing_file is not present
@@ -91,6 +116,13 @@ class ProposalController extends Controller
         $category = $request->category;
         $subcategory = $request->subcategory;
         $is_gov_access = $request->is_gov_access;
+        $estimate = $request->estimate;
+        $completion_timeline = $request->completion_timeline;
+        $jobs_created = $request->jobs_created;
+        $is_federal = $request->is_federal ? 1 : 0;
+        $is_state = $request->is_state ? 1 : 0;
+        $state = $request->state;
+        $localGovernment = $request->localGovernment;
 
         $proposal = Proposal::find($request->prop_id);
         if($proposal){
@@ -100,6 +132,13 @@ class ProposalController extends Controller
             $proposal->category_id = $category;
             $proposal->sub_category_id = $subcategory;
             $proposal->is_gov_access = $is_gov_access;
+            $proposal->estimate = $estimate;
+            $proposal->completion_timeline = $completion_timeline;
+            $proposal->is_federal = $is_federal;
+            $proposal->is_state = $is_state;
+            $proposal->state_id = $state;
+            $proposal->local_government_area_id = $localGovernment;
+
             if($is_gov_access==1){
                 $proposal->is_access_request = 0;
                 $proposal->access_request_note = null;
@@ -161,7 +200,8 @@ class ProposalController extends Controller
         $proposal = Proposal::find($id);
         if($proposal){
             $categories = Category::where('is_active',1)->get();
-            return view('user.proposals.edit',compact('proposal','categories'));
+            $states = State::get();
+            return view('user.proposals.edit',compact('proposal','categories','states'));
         }else{
             return redirect()->back()->with('error', 'Proposal Not found.');
         }
@@ -181,6 +221,16 @@ class ProposalController extends Controller
         }else{
             return redirect()->back()->with('error', 'Proposal Not found.');
         }
+    }
+
+    public function getLocalGovernmentAreas(Request $request)
+    {
+        $selectedState = $request->input('state');
+        
+        // Fetch the local governments based on the selected state
+        $localGovernments = LocalGovernmentAreas::where('state_id', $selectedState)->get();
+
+        return response()->json($localGovernments);
     }
 
 }

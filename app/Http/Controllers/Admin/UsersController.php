@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\GovWelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 class UsersController extends Controller
 {
@@ -192,6 +193,17 @@ class UsersController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
         
+    }
+
+    public function sendActivation(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            Mail::to($user->email)->send(new WelcomeMail($user));
+            return redirect()->back()->with('success', 'Sent activation link.');
+        }
+
+        return redirect()->back()->with('error', 'User Not found.');
     }
 
 

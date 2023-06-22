@@ -37,6 +37,12 @@
                         <span class="nav-text">Categories</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/email') ? 'active' : '' }}">
+                    <a class="sidenav-item-link" href="/admin/email">
+                    <i class="mdi mdi-email"></i>
+                        <span class="nav-text">Email</span>
+                    </a>
+                </li>
                 @endif
                 <li class="{{ Request::is('admin/proposals*') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="/admin/proposals">

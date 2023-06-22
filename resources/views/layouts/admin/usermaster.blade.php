@@ -24,17 +24,8 @@
     <link href="{{ asset('admin/assets/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
 
     <!-- No Extra plugin used -->
-    <link href="{{ asset('admin/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('admin/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel='stylesheet'>
-    <link href="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.css') }}" rel='stylesheet'>
-
-
-    <link href="{{ asset('admin/assets/plugins/toastr/toastr.min.css') }}" rel='stylesheet'>
-
     <!-- SLEEK CSS -->
     <link id="sleek-css" rel="stylesheet" href="{{ asset('admin/assets/css/sleek.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/parsley.css') }}" />
-
     <!-- FAVICON -->
     <link href="{{ asset('admin/assets/img/favicon.png') }}" rel="shortcut icon" />
     <!-- <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -69,8 +60,23 @@
         <!-- ====================================
           ——— LEFT SIDEBAR WITH OUT FOOTER
         ===================================== -->
-        @include('layouts.admin.sidebar')
+        <aside class="left-sidebar admin-sidebar">
+          <div id="sidebar" class="sidebar sidebar-with-footer">
+            <!-- Aplication Brand -->
+            <div class="app-brand">
+              <a href="javascript:void(0)" title="Proposal">
+                <span class="brand-name text-truncate">Activity Summary</span>
+              </a>
+            </div>
 
+            <!-- begin sidebar scrollbar -->
+            <div class="" data-simplebar style="height: 100%;">
+              <!-- sidebar menu -->
+              <ul class="nav sidebar-inner" id="sidebar-menu">
+              </ul>
+            </div>
+          </div>
+        </aside>
 
         <!-- ====================================
         ——— PAGE WRAPPER
@@ -78,7 +84,39 @@
         <div class="page-wrapper">
 
             <!-- Header -->
-            @include('layouts.admin.header')
+            <header class="main-header " id="header">
+    <nav class="navbar navbar-static-top navbar-expand-lg">
+        <!-- Sidebar toggle button -->
+        <button id="sidebar-toggler" class="sidebar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+        </button>
+        <!-- search form -->
+        <div class="search-form d-none d-lg-inline-block">
+        </div>
+
+        <div class="navbar-right ">
+            <ul class="nav navbar-nav">
+                <!-- User Account -->
+                <li class="dropdown user-menu">
+                    <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" class="user-image" alt="User Image">
+                        <span class="d-none d-lg-inline-block">{{auth()->user()->name}}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <!-- User image -->
+                        <li class="dropdown-footer">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
             <!-- ====================================
           ——— CONTENT WRAPPER
           ===================================== -->
@@ -109,7 +147,6 @@
                 </div> <!-- End Content -->
             </div> <!-- End Content Wrapper -->
             <!-- Footer -->
-            @include('layouts.admin.footer')
 
         </div> <!-- End Page Wrapper -->
     </div> <!-- End Wrapper -->
@@ -118,23 +155,6 @@
 
     <script src="{{ asset('admin/assets/plugins/jquery/jquery.min.js ') }}"></script>
     <script src="{{ asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/select2/js/select2.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/jquery-mask-input/jquery.mask.min.js') }}"></script>
-
-    <script src="{{ asset('admin/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/vector-map.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/daterangepicker/moment.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/date-range.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/toastr/toastr.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/sleek.js') }}"></script>
-    <!-- <link href="{{ asset('admin/assets/options/optionswitch.css') }}" rel="stylesheet"> -->
-    <!-- <script src="{{ asset('admin/assets/options/optionswitcher.js') }}"></script> -->
-    <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/parsley.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/charts/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/chart.js') }}"></script>
     @yield('script')

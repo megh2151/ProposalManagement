@@ -19,7 +19,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-12 p-md-0">
+                        <div class="form-group">
                             <label for="category" class="col-form-label">{{ __('Category:') }}</label>
                             <div class="input-group">
                                 <select id="category" name="category"
@@ -39,7 +39,7 @@
                             @enderror
                         </div>
                         
-                        <div class="form-group col-md-12 p-md-0">
+                        <div class="form-group">
                             <label for="subcategory" class="col-form-label">{{ __('Subcategory:') }}</label>
                             <div class="input-group" >
                                 <select id="subcategory" name="subcategory"
@@ -54,7 +54,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-12 p-md-0">
+                        <div class="form-group ">
                             <label for="is_gov_access" class="col-form-label">Grant Government Full access?</label>
                             </br><small class="text-danger"><i>[Note: "Yes" means the government can download your proposal and contact you. "No" means Government cannot download your proposal until you change to "Yes"]</i></small>
                             <div class="input-group" >
@@ -76,6 +76,85 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="estimate" class="col-form-label">{{ __('Enter the estimate of implementing this proposal:') }} (Don’t worry you can change this later)</label>
+                            <div class="input-group">
+                                <input id="estimate" type="text" class="form-control @error('estimate') is-invalid @enderror" name="estimate" value="{{ $proposal->estimate ? $proposal->estimate : old('estimate') }}" oninput="formatCurrency(this)" required>
+                               <div class="input-group-append">
+                                    <span class="input-group-text">N</span>
+                                </div>
+                            </div>
+                            @error('estimate')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="completion_timeline" class="col-form-label">{{ __('Estimated Completion timeline:') }} (Don’t worry you can change this later)</label>
+                            <select id="completion_timeline" name="completion_timeline" class="form-control @error('completion_timeline') is-invalid @enderror" required>
+                                <option value="">Select completion timeline</option>
+                                @for ($months = 1; $months <= 24; $months++)
+                                    <option value="{{ $months }}" {{$proposal->completion_timeline == $months ? 'selected' : '' }}>{{ $months }} months</option>
+                                @endfor
+                            </select>
+                            @error('completion_timeline')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jobs_created" class="col-form-label">{{ __('Projected number of jobs to be created?') }} (Don’t worry you can change this later)</label>
+                            <select id="jobs_created" name="jobs_created" class="form-control @error('jobs_created') is-invalid @enderror" required>
+                                <option value="">Select projected number of jobs</option>
+                                <option value="1-10" {{$proposal->jobs_created == "1-10" ? 'selected' : '' }}>1-10</option>
+                                <option value="11-20" {{$proposal->jobs_created == "11-20" ? 'selected' : '' }}>11-20</option>
+                                <option value="50-100" {{$proposal->jobs_created == "50-100" ? 'selected' : '' }}>50-100</option>
+                                <option value="500-1000" {{$proposal->jobs_created == "500-1000" ? 'selected' : '' }}>500-1000</option>
+                                <option value="1001-5000" {{$proposal->jobs_created == "1001-5000" ? 'selected' : '' }}>1001-5000</option>
+                                <option value="Over 5001-10000" {{$proposal->jobs_created == "Over 5001-10000" ? 'selected' : '' }}>Over 5001-10000</option>
+                            </select>
+                            @error('jobs_created')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checkbox" class="col-form-label">Select Government Level:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="is_federal" id="is_federal" {{$proposal->is_federal ? 'checked' : 
+                                ''}}>
+                                <label class="form-check-label" for="is_federal">Federal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="is_state" id="stateCheckbox" {{$proposal->is_state ? 'checked' : ''}}>
+                                <label class="form-check-label" for="stateCheckbox">State</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="stateDropdown" style="display: {{$proposal->is_state ? 'block' : 'none'}}">
+                            <label for="state" class="col-form-label">Select State:</label>
+                            <select id="state" name="state" class="form-control">
+                                <option value="">Select a state</option>
+                                <!-- Add the options for Nigerian states here -->
+                                @foreach($states as $state)
+                                    <option value="{{$state->id}}" {{$proposal->state_id ==$state->id ? 'selected' : ''}}>{{$state->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="localGovernmentDropdown" style="display: {{$proposal->is_state ? 'block' : 'none'}}">
+                            <label for="localGovernment" class="col-form-label">Select Local Government:</label>
+                            <select id="localGovernment" name="localGovernment" class="form-control">
+                                <option value="">Select a local government</option>
+                                <!-- The options for local governments will be dynamically populated based on the selected state -->
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-form-label">{{ __('Description:') }}</label>
@@ -118,7 +197,9 @@
         
         $(document).ready(function() {
             CKEDITOR.replace('description');
-            var subcategory_id = "{{ $proposal->subcategory_id }}"; //
+            var subcategory_id = "{{ $proposal->sub_category_id }}"; //
+            var local_government_area_id = "{{ $proposal->local_government_area_id }}"; //
+        
 
             $('#category').on('change', function() {
                 var category_id = $(this).val();
@@ -213,11 +294,68 @@
                     });
                 }
             });
+
+            $('#stateCheckbox').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#stateDropdown').show();
+                } else {
+                    $('#stateDropdown').hide();
+                    $('#localGovernmentDropdown').hide();
+                }
+            });
+            $('#state').on('change', function() {
+                var selectedState = $(this).val();
+                if (selectedState !== '') {
+                    // Make an AJAX request to fetch the local governments based on the selected state
+                    $.ajax({
+                        url: '/get-local-government-areas', // Replace with the actual URL to fetch local governments
+                        method: 'GET',
+                        data: { state: selectedState },
+                        success: function(response) {
+                            // Clear the previous options in the local government dropdown
+                            $('#localGovernment').empty();
+                            // Populate the local government dropdown with the received data
+                            $('#localGovernment').empty();
+                            $.each(response, function(key, value) {
+                                var option = $('<option value="' + value.id + '">' + value.name + '</option>');
+                                if (local_government_area_id == value.id) { // Check if the government ID matches the current iteration value
+                                    option.attr('selected', 'selected'); // Set the 'selected' attribute for the matching government
+                                }
+                                $('#localGovernment').append(option);
+                            });
+
+                            // Show the local government dropdown
+                            $('#localGovernmentDropdown').show();
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle the error if the AJAX request fails
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    $('#localGovernmentDropdown').hide();
+                }
+            });
         });
+
+        function formatCurrency(input) {
+            // Remove non-digit characters
+            let value = input.value.replace(/\D/g, '');
+            
+            // Format the number with commas
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            
+            // Set the formatted value back to the input
+            input.value = value;
+        }
 
         $(window).on('load', function() {
             // Trigger the change event on window load
             $('#category').trigger('change');
+            var is_state = "{{ $proposal->is_state }}"; //
+            if(is_state==1){
+                $('#state').trigger('change');
+            }
         });
     </script>
 @endsection

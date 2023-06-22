@@ -72,7 +72,6 @@
                             <th>User</th>
                             <th>Contact</th>
                             <th>Category</th>
-                            <th>Sub Category</th>
                             <th>Submitted Date</th>
                             <th>Note</th>
                             <th>Status</th>
@@ -85,14 +84,13 @@
                     <tbody>
                         @foreach ($proposals as $proposal)
                             <tr>
-                                <td><input type="checkbox" name="is_followup" {{$proposal->is_followup ? 'checked' : ''}} class="is_followup" data-followup="{{$proposal->is_followup}}" data-proposalId="{{$proposal->id}}"></td>
+                                <td  width="5%"><input type="checkbox" name="is_followup" {{$proposal->is_followup ? 'checked' : ''}} class="is_followup" data-followup="{{$proposal->is_followup}}" data-proposalId="{{$proposal->id}}"></td>
                                 <td>{{ substr($proposal->title, 0, 70) }}</td>
                                 <td><img src="{{ $proposal->user->profile_photo ? asset($proposal->user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $proposal->user->name }}" width="40" height="40" class="rounded-circle">
                                 {{ $proposal->user->name }}</td>
-                                <td>{{ $proposal->user->email }}
+                                <td>{{ $proposal->user->email }}</br>
                                 {{$proposal->user->country_code}} {{ $proposal->user->phone }}</td>
-                                <td>{{ $proposal->category->name }}</td>
-                                <td>{{ $proposal->subcategory->name }}</td>
+                                <td><b>{{ $proposal->category->name }}</b> </br>{{ $proposal->subcategory->name }}</td>
                                 <td>{{ date('Y-m-d h:i:s A',strtotime($proposal->created_at->toDateTimeString())) }}</td>
                                 <td>
                                 @if(auth()->user() && (auth()->user()->role_id==2 && $proposal->is_gov_access) || auth()->user()->role_id==1)  

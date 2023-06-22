@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.admin.usermaster')
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -23,18 +23,7 @@
 @section('content')
     <div class="breadcrumb-wrapper">
         <div class="row">
-            <div class="col-md-2">
-                <h1>Dashboard</h1>
-            </div>
-            <div class="col-md-10">
-                <label class="switch switch-primary form-control-label float-right">
-                    <input type="checkbox" id="activityToggle" class="switch-input form-check-input" value="on" {{$show_activity_summary ? 'checked' : ''}}><span class="switch-label"></span>
-                    <span class="switch-handle"></span>
-                </label>
-                <div class="float-right mt-1 mr-2">
-                    <label><b>Show Activity Summary to User</b></label>
-                </div>
-            </div>
+            <h1>Activity Summary</h1>
         </div>
     </div>
     <div class="container p-0 ">
@@ -42,7 +31,7 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-success">
                     <div class="card-body">
-                        <a href="{{route('admin.proposal.index')}}">
+                        <a href="javascript:void(0);">
                             <h2 class="mb-1">{{$proposal_count}}</h2>
                             <p>Total Proposals</p>
                         </a>
@@ -52,7 +41,7 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-info">
                     <div class="card-body">
-                        <a href="{{route('admin.proposal.users')}}">
+                        <a href="javascript:void(0);">
                             <h2 class="mb-1">{{$user_count}}</h2>
                             <p>Total Users</p>
                         </a>
@@ -62,7 +51,7 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-warning">
                     <div class="card-body">
-                        <a href="{{route('admin.users')}}">
+                        <a href="javascript:void(0);">
                             <h2 class="mb-1">{{$gov_count}}</h2>
                             <p>Total Gov Users</p>
                         </a>
@@ -72,7 +61,7 @@
             <div class="col-xl-3 col-sm-6">
                 <div class="card card-mini mb-4 bg-primary">
                     <div class="card-body">
-                        <a href="{{route('admin.categories')}}">
+                        <a href="javascript:void(0);">
                             <h2 class="mb-1">{{$cat_count}}</h2>
                             <p> Total Categories</p>
                         </a>
@@ -149,7 +138,7 @@
                                 <tbody>
                                     @foreach ($proposals as $proposal)
                                         <tr>
-                                            <td><a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}">{{ $proposal->title }}</a></td>
+                                            <td>{{ $proposal->title }}</td>
                                             <td>{{ date('Y-m-d h:i:s A',strtotime($proposal->created_at->toDateTimeString())) }}</td>
                                             <td>{{ $proposal->no_of_times_viewed ? $proposal->no_of_times_viewed : 0 }}</td>
                                             <td>
@@ -282,32 +271,5 @@
       });
     });
   }
-
-  $(document).ready(function() {
-  // Get the checkbox element
-  var activityToggle = $('#activityToggle');
-
-  // Attach a change event listener to the checkbox
-  activityToggle.on('change', function() {
-    // Get the new value of the checkbox
-    var isChecked = $(this).is(':checked');
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    // Make an AJAX call to update the value in the database
-    $.ajax({
-      url: 'update-setting',  // Replace with the actual URL to update the database
-      method: 'POST',
-      data: { show_activity_summary	: isChecked,_token: csrfToken, },  // Pass the new value to the server
-      success: function(response) {
-        // Handle the response from the server
-        console.log(response);
-        alert(response.message)
-      },
-      error: function(xhr, status, error) {
-        // Handle errors
-        console.log(error);
-      }
-    });
-  });
-});
 </script>
 @endsection

@@ -72,9 +72,11 @@ section .section-title {
     -ms-transform: rotateY(0deg);
     z-index: 2;
     margin-bottom: 30px;
+    width: 100%;
 }
 
 .backside {
+    width: 100%;
     position: absolute;
     top: 0;
     left: 0;
@@ -154,7 +156,7 @@ section .section-title {
                                     <div class="card-body text-center mt-4">
                                         <h4 class="card-title">{{$member->designation}} {{$member->name}}</h4>
                                         @if($member->video)
-                                        <video width="320" height="240" controls>
+                                        <video width="100%" height="auto" controls>
                                             <source src="{{ asset($member->video) }}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>

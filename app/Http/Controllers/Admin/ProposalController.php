@@ -15,7 +15,7 @@ class ProposalController extends Controller
 
     public function index()
     {
-        $proposals = Proposal::get();
+        $proposals = Proposal::with('category','subcategory','user','state','local_government_area')->get();
         $categories = Category::where('is_active',1)->get();
         return view('admin.proposals.index', compact('proposals','categories'));
     }

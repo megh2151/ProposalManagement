@@ -101,10 +101,10 @@ Route::get('admin/email', 'Admin\EmailController@showForm')->name('email')->midd
 Route::post('admin/send-email', 'Admin\EmailController@sendEmail')->name('sendEmail')->middleware('authentic');
 
 Route::post('admin/update-setting', 'Admin\SettingsController@updateSetting')->name('update-settings')->middleware('authentic');
-
+Route::get('admin/board-members', 'Admin\AdvisoryBoardMembersController@index')->name('admin.board-members')->middleware('authentic');
+Route::post('admin/update-user', 'Admin\AdvisoryBoardMembersController@updateUser')->name('admin.board-members.update')->middleware('authentic');
 
 // USER ROUTES 
-Route::get('user/activity-summary', 'UserController@activitySummary')->name('user.activitySummary')->middleware('authentic');
 Route::get('user/dashboard', 'UserController@profile')->name('user.dashboard')->middleware('authentic');
 Route::post('user/profile/update', 'UserController@updateProfile')->name('user.profile.update')->middleware('authentic');
 Route::post('user/proposal/submit', 'ProposalController@proposalSubmit')->name('user.proposal.submit')->middleware('authentic');
@@ -115,7 +115,8 @@ Route::get('user/{token}', 'Auth\RegisterController@activateUser')->name('user.a
 Route::get('user/proposal/{id}/view', 'ProposalController@view')->name('user.proposal.view')->middleware('authentic');
 Route::post('/user/profile/update-password', 'UserController@updatePassword')->name('user.profile.updatePassword')->middleware('authentic');
 
-
+Route::get('/auth/{provider}', 'AuthController@redirectToProvider');
+Route::get('/auth/{provider}/callback', 'AuthController@handleProviderCallback');
 
 // Common ROUTES
 Route::get('proposals/preview/{path}', function ($filename) {
@@ -146,5 +147,9 @@ Route::get('/about-us', 'HomeController@aboutUs');
 Route::get('/faq', 'HomeController@faq');
 Route::get('/contact-us', 'HomeController@contactUs');
 Route::get('/get-local-government-areas', 'ProposalController@getLocalGovernmentAreas');
-
+Route::get('/advisory-board-members', 'AdvisoryBoardMembersController@index')->name('board-member');
+Route::get('/advisory-board-application', 'AdvisoryBoardMembersController@advisoryBoardApplication')->name('join-board');
+Route::get('/join-advisory-board-application', 'AdvisoryBoardMembersController@joinBoardForm')->name('join-board-form');
+Route::post('/join-advisory-board-application-submit', 'AdvisoryBoardMembersController@joinBoardFormSubmit')->name('join-board-submit');
+Route::get('activity-summary', 'HomeController@activitySummary')->name('user.activitySummary');
 

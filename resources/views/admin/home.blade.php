@@ -26,6 +26,11 @@
             <div class="col-md-2">
                 <h1>Dashboard</h1>
             </div>
+            <!-- Facebook Share Button -->
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode('https://www.lettertoasorock.com') }}&quote={{ urlencode('I just registered on https://www.lettertoasorock.com to advise the president and help build Nigeria. You should register too.') }}" target="_blank">Share on Facebook</a>
+
+            <!-- Twitter Share Button -->
+            <a href="https://twitter.com/intent/tweet?url={{ urlencode('http://lettertoasorock.com/') }}" target="_blank">Share on Twitter</a>
             <div class="col-md-10">
                 <label class="switch switch-primary form-control-label float-right">
                     <input type="checkbox" id="activityToggle" class="switch-input form-check-input" value="on" {{$show_activity_summary ? 'checked' : ''}}><span class="switch-label"></span>

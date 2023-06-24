@@ -19,11 +19,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/faq">FAQs</a>
                     </li>
-                    <li class="nav-item d-none">
-                        <a class="nav-link" href="/contact-us">Our Advisory board members</a>
+                    @if($show_activity_summary)
+                        <li class="nav-item">
+                            <a target="_blank" class="nav-link" href="{{route('user.activitySummary')}}">Activity Summary</a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('board-member')}}">Our Advisory board members</a>
                     </li>
-                    <li class="nav-item d-none">
-                        <a class="nav-link" href="/faq">Apply to Join the Advisory board </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('join-board')}}">Apply to Join the Advisory board </a>
                     </li>
                     
                 </ul>
@@ -32,11 +37,7 @@
                     <li class="nav-item {{ request()->is('dashboard') ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('user.dashboard')}}">Dashboard</a>
                     </li>
-                    @if($show_activity_summary)
-                        <li class="nav-item {{ request()->is('activity-summary') ? 'active' : ''}}">
-                            <a target="_blank" class="nav-link" href="{{route('user.activitySummary')}}">Activity Summary</a>
-                        </li>
-                    @endif
+                    
                 </ul>
             @endguest
         </div>

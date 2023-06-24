@@ -43,6 +43,12 @@
                         <span class="nav-text">Email</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/board-members') ? 'active' : '' }}">
+                    <a class="sidenav-item-link" href="/admin/board-members">
+                    <i class="mdi mdi-account-multiple-outline"></i>
+                        <span class="nav-text">Board Members</span>
+                    </a>
+                </li>
                 @endif
                 <li class="{{ Request::is('admin/proposals*') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="/admin/proposals">

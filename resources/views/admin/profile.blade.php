@@ -67,9 +67,9 @@
                       <label class="custom-file-label" for="coverImage">Choose file...</label>
                       <div id="preview-div"  class="d-none mt-3 mb-3">
                         <img id="photo-preview" class="mt-3 mb-3" src="" alt="Photo Preview" style="max-width: 100%; height: auto;margin-bottom:15px;">
-						<div class="row text-center m-auto">
-                      		<button id="crop-button" class="btn btn-primary text-center mt-2" disabled>Crop</button>
-						</div>
+                          <div class="row text-center m-auto">
+                                        <button id="crop-button" class="btn btn-primary text-center mt-2" disabled>Crop</button>
+                          </div>
                       </div>
                     </div>
                   </div>

@@ -26,4 +26,14 @@ class Proposal extends Model
     {
         return $this->hasMany('App\Messages');
     }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class,'state_id');
+    }
+
+    public function local_government_area()
+    {
+        return $this->belongsTo(LocalGovernmentAreas::class,'local_government_area_id');
+    }
 }

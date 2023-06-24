@@ -8,7 +8,7 @@
     <meta name="description"
         content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Proposal Admin </title>
+    <title>Proposal</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
@@ -28,8 +28,8 @@
     <link id="sleek-css" rel="stylesheet" href="{{ asset('admin/assets/css/sleek.css') }}" />
     <!-- FAVICON -->
     <link href="{{ asset('admin/assets/img/favicon.png') }}" rel="shortcut icon" />
-    <!-- <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css"> -->
+    <link href="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="https://unpkg.com/sleek-dashboard/dist/assets/css/sleek.min.css">
     <!--
       HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
     -->
@@ -97,22 +97,6 @@
         <div class="navbar-right ">
             <ul class="nav navbar-nav">
                 <!-- User Account -->
-                <li class="dropdown user-menu">
-                    <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                    <img src="{{ auth()->user()->profile_photo ? asset(auth()->user()->profile_photo) : asset('storage/profiles/default_user.jpg') }}" class="user-image" alt="User Image">
-                        <span class="d-none d-lg-inline-block">{{auth()->user()->name}}</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <!-- User image -->
-                        <li class="dropdown-footer">
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </nav>
@@ -155,6 +139,13 @@
 
     <script src="{{ asset('admin/assets/plugins/jquery/jquery.min.js ') }}"></script>
     <script src="{{ asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/simplebar/simplebar.min.js') }}"></script>
+
+    <script src="{{ asset('admin/assets/js/vector-map.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/sleek.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/data-tables/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/data-tables/datatables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/charts/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/chart.js') }}"></script>
     @yield('script')

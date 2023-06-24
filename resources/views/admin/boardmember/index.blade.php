@@ -18,18 +18,20 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Biography</th>
+                            <th>Video</th>
                             <th>Registration Date</th>
                             <th>Action</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($members as $user)
                             <tr>
-
                                 <td> <img class="rounded-circle" src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $user->name }}" width="40" height="40"></td>
                                 <td>{{ $user->designation }} {{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{!!$user->biography!!}</td>
+                                <td>@if($user->video)<a href="javascript:void(0);" class="see-video" data-video="{{ asset($user->video) }}">View</a>@else - @endif</td>
                                 <td>{{ date('Y-m-d h:i:s A',strtotime($user->created_at->toDateTimeString())) }}</td>
                                 <td>
                                     <div class="col-md-10">
@@ -43,6 +45,26 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="userVideo" tabindex="-1" role="dialog" aria-labelledby="userVideoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userVideoLabel">Video Intro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="divVideo">
+                    <video width="100%" height="100%" controls>
+                        <source src="" id="source" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +90,7 @@
                 success: function(response) {
                     // Handle the response from the server
                     console.log(response);
-                    alert(response.message)
+                    toastr.success(response.message);
                 },
                 error: function(xhr, status, error) {
                     // Handle errors
@@ -76,6 +98,16 @@
                 }
             });
         });
+
+        $(document).on("click", ".see-video", function() {
+            var videosrc = $(this).data('video');
+            var $video = $('#divVideo video'),
+            videoSrc = $('source', $video).attr('src', videosrc);
+            $video[0].load();
+            $video[0].play();
+            $("#userVideo").modal('show');
+        });
+
     });
 </script>    
 @endsection

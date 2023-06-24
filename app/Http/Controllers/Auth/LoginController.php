@@ -40,6 +40,9 @@ class LoginController extends Controller
                     return redirect()->route('user.dashboard');
                 } elseif(auth()->user()->role_id == 2) {
                     return redirect()->route('admin.proposal.index');
+                }elseif(auth()->user()->role_id == 3) {
+                    auth()->logout();
+                    return redirect()->route('login')->with('error', 'Something went wrong!');
                 }
             } else {
                 auth()->logout();

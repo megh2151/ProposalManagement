@@ -22,7 +22,8 @@ class AdvisoryBoardMembersController extends Controller
         if($member){
             $member->is_active = $is_active;
             $member->save();
-            return response()->json(['message' => 'Status updated sucessfully.']);
+            $message = $is_active ? 'User activated successfully.' : 'User deactivated successfully.';
+            return response()->json(['message' => $message]);
         }
         return response()->json(['message' => 'Member not found.']);
     }

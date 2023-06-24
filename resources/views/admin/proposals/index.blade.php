@@ -33,10 +33,10 @@
     <form action="{{ route('admin.proposal.search') }}" method="GET" class="mb-3">
             <div class="row">
                 <div class="col-md-3">
-                    <input type="text" name="author_last_name" class="form-control" placeholder="Author Last Name">
+                    <input type="text" name="author_first_name" class="form-control" placeholder="Author First Name">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" name="author_first_name" class="form-control" placeholder="Author First Name">
+                    <input type="text" name="author_last_name" class="form-control" placeholder="Author Last Name">
                 </div>
                 <div class="col-md-3">
                     <input type="text" name="email" class="form-control" placeholder="Email Address">
@@ -241,7 +241,7 @@
                 method: 'POST',
                 data: data,
                 success: function(response) {
-                    alert('Follow up updated successfully');
+                    toastr.success('Follow up updated successfully');
                     console.log('Checkbox value updated successfully!');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -263,8 +263,7 @@
                     data: { rating: rating, _token: csrfToken },
                     success: function(response) {
                         // Handle success response if needed
-                        alert('Rating updated successfully');
-                        
+                        toastr.success('Rating updated successfully');   
                         // Update the star rating display
                         star.addClass('filled');
                         star.nextAll('.star').addClass('filled');

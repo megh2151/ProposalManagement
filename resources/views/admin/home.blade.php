@@ -305,7 +305,7 @@
       success: function(response) {
         // Handle the response from the server
         console.log(response);
-        alert(response.message)
+        toastr.success(response.message);
       },
       error: function(xhr, status, error) {
         // Handle errors

@@ -10,14 +10,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="/about-us">About US</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact-us">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/faq">FAQs</a>
                     </li>
                     @if($show_activity_summary)
                         <li class="nav-item">
@@ -30,11 +28,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('join-board')}}">Apply to Join the Advisory board </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/privacy-policy">Privacy Policy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/terms-of-use">Terms of Use</a>
+                    <li class="nav-item dropdown dmenu">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Legal
+                        </a>
+                        <div class="dropdown-menu sm-menu">
+                            <a class="dropdown-item" href="/faq">FAQs</a>
+                            <a class="dropdown-item" href="/privacy-policy">Privacy Policy</a>
+                            <a class="dropdown-item" href="/terms-of-use">Terms of Use</a>
+                        </div>
                     </li>
                 </ul>
             @else

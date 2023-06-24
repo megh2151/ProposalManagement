@@ -11,6 +11,8 @@ use App\SubCategory;
 use App\Messages;
 use App\State;
 use App\LocalGovernmentAreas;
+use App\Mail\ProposalNote;
+use Illuminate\Support\Facades\Mail;
 class ProposalController extends Controller
 {
     /**
@@ -71,7 +73,9 @@ class ProposalController extends Controller
 Please continue to improve on it.
 Thank you!";
         $proposal->save();
-       
+        
+        Mail::to($proposal->user->email)->send(new ProposalNote($proposal));
+
         if ($request->hasFile('proposal_file')) {
             $file = $request->file('proposal_file');
             $extension = $file->getClientOriginalExtension();

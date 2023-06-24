@@ -25,7 +25,7 @@ class UsersController extends Controller
     {
         $this->middleware(function ($request, $next) {
             
-            if (auth()->user() && auth()->user()->role_id ==2 && $request->route()->getName()!='admin.profile' && $request->route()->getName()!='admin.profile.update') {
+            if (auth()->user() && auth()->user()->role_id ==2 && auth()->user()->role_id ==3 && $request->route()->getName()!='admin.profile' && $request->route()->getName()!='admin.profile.update') {
                 return redirect()->route('admin.proposal.index')->with('error', 'You do not have permission to access this page.');
             }
             return $next($request);

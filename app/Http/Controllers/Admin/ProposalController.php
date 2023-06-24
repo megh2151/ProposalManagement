@@ -31,7 +31,8 @@ class ProposalController extends Controller
                 $proposal->note = $request->note;
             if(isset($request->is_followup))
                 $proposal->is_followup = $request->is_followup;
-                
+            if(isset($request->comment))
+                $proposal->comment = $request->comment;   
             $proposal->save();
             if ($request->isXmlHttpRequest()) {
                 // Return the same request in an AJAX response

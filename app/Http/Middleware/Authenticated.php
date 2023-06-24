@@ -12,6 +12,8 @@ class Authenticated
             return $next($request);
         } else if(auth()->user() && auth()->user()->role_id == 2){
             return $next($request);
+        }else if(auth()->user() && auth()->user()->role_id == 3){
+            return $next($request);
         }else if(auth()->user() && auth()->user()->role_id == 0){
             return $next($request);
         }

@@ -110,11 +110,26 @@
                                 @endif
                                 <td>
                                 @if(auth()->user() && (auth()->user()->role_id==2 && $proposal->is_gov_access) || auth()->user()->role_id==1)    
-                                <a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="mr-1"><button class="rounded-btn btn-info mb-2"><i class="mdi mdi-eye"></i></button></a> @if($proposal->file_path) <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download mr-1"><button class="rounded-btn btn-primary mb-2"><i class="mdi mdi-download"></i></button></a>@endif <a href="javascript:void(0);" class="update-status mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}"><button class="rounded-btn btn-success mb-2" title="Update Status"><i class="mdi mdi-account-check"></i></button></a> <a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}"><button class="rounded-btn btn-primary mb-2" title="Update Note"><i class="mdi mdi-table-edit"></i></button></a>  
-                                <a class="" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}"><button class="rounded-btn btn-warning mb-2" title="Send Message"><i class="mdi mdi-message-text"></i></button>
+                                    <a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="mr-1"><button class="rounded-btn btn-info mb-2"><i class="mdi mdi-eye"></i></button></a> @if($proposal->file_path) <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download mr-1"><button class="rounded-btn btn-primary mb-2"><i class="mdi mdi-download"></i></button></a>@endif <a href="javascript:void(0);" class="update-status mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}"><button class="rounded-btn btn-success mb-2" title="Update Status"><i class="mdi mdi-account-check"></i></button></a> <a href="javascript:void(0);" class="update-note mr-1" data-proposalId="{{$proposal->id}}" data-status="{{$proposal->status}}" data-note="{{$proposal->note}}"><button class="rounded-btn btn-primary mb-2" title="Update Note"><i class="mdi mdi-table-edit"></i></button></a>  
+                                    <a class="" href="{{ route('admin.proposal.chat', ['id' => $proposal->id]) }}"><button class="rounded-btn btn-warning mb-2" title="Send Message"><i class="mdi mdi-message-text"></i></button>
                                 </a>
                                 @else
-                                    <a href="javascript:void(0);" class="send-request" data-proposalId="{{$proposal->id}}">Send Access Request</a>
+                                    @if(auth()->user() && (auth()->user()->role_id==2))
+                                        <a href="javascript:void(0);" class="send-request" data-proposalId="{{$proposal->id}}">Send Access Request</a>
+                                    @endif
+                                @endif
+
+                                @if(auth()->user() && (auth()->user()->role_id==3))
+
+                                       <a href="{{route('admin.proposal.view',['id'=>$proposal->id])}}" class="mr-1"><button class="rounded-btn btn-info mb-2"><i class="mdi mdi-eye"></i></button></a> @if($proposal->file_path) <a href="/admin/proposals/download/{{$proposal->file_path}}" class="download mr-1"><button class="rounded-btn btn-primary mb-2"><i class="mdi mdi-download"></i></button></a>@endif 
+                                       
+                                       <a href="javascript:void(0);" class="show-access-denied mr-1"><button class="rounded-btn btn-success mb-2" title="Update Status"><i class="mdi mdi-account-check"></i></button></a> 
+                                       
+                                       
+                                    
+                                       <a class="show-access-denied" href="javascript:void(0);"><button class="rounded-btn btn-warning mb-2" title="Send Message"><i class="mdi mdi-message-text"></i></button>             
+
+                                        <a href="javascript:void(0);" class="update-comment mr-1" data-proposalId="{{$proposal->id}}" data-comment="{{$proposal->comment}}"><button class="rounded-btn btn-primary mb-2" title="Update Comment" ><i class="mdi mdi-table-edit"></i></button></a>  
                                 @endif
                             </td>
                             </tr>
@@ -183,6 +198,34 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Update Comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.proposal.update') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="proposalId" id="commentProposalId" value="">
+                        <div class="form-group">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" name="comment" rows="6"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-pill">Update</button>    
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -218,6 +261,17 @@
                 $("#status").hide();
                 $("#exampleModal").modal('show');
             });
+
+            $(document).on("click", ".update-comment", function() {
+                var proposalId = $(this).attr('data-proposalId');
+                var comment = $(this).attr('data-comment');
+                var thisObj = $(this);
+                $("#comment").val(comment)
+                $("#commentProposalId").val(proposalId);
+                $("#commentModal").modal('show');
+            });
+
+            
             
             $(document).on("click", ".send-request", function() {
                 var proposalId = $(this).attr('data-proposalId');
@@ -374,5 +428,9 @@
             tabledata +='</table>';
             return tabledata;
         }
+
+        $(".show-access-denied").on('click',function(){
+            toastr.error("Not available to advisors.");
+        })
     </script>
 @endsection

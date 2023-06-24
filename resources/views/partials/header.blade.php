@@ -30,7 +30,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('join-board')}}">Apply to Join the Advisory board </a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/privacy-policy">Privacy Policy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/terms-of-use">Terms of Use</a>
+                    </li>
                 </ul>
             @else
                 <ul class="navbar-nav">

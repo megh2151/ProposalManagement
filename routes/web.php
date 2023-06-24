@@ -152,4 +152,5 @@ Route::get('/advisory-board-application', 'AdvisoryBoardMembersController@adviso
 Route::get('/join-advisory-board-application', 'AdvisoryBoardMembersController@joinBoardForm')->name('join-board-form');
 Route::post('/join-advisory-board-application-submit', 'AdvisoryBoardMembersController@joinBoardFormSubmit')->name('join-board-submit');
 Route::get('activity-summary', 'HomeController@activitySummary')->name('user.activitySummary');
-
+Route::get('/privacy-policy', 'HomeController@privacyPolicy');
+Route::get('/terms-of-use', 'HomeController@termsOfUse');

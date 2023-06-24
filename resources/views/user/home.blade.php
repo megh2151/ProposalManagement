@@ -43,11 +43,20 @@
                                             <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" title="View Proposal Uploaded" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
                                         </div>
                                         <div class="col-8 text-right pr-0">
+<<<<<<< HEAD
                                             @if($proposal->is_access_request)
                                                 <a href="javascript:void(0);" title="Grant access to Government" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
                                             @endif            
                                             <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}"  title="Edit My Proposal" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                             <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" title="Delete My Proposal" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+=======
+                                        
+                                            @if($proposal->is_access_request)
+                                                <a href="javascript:void(0);" title="Gov User Request" data-proposalid="{{$proposal->id}}" class="btn btn-dark float-right mr-2 access_request" data-accessNote="{{$proposal->access_request_note}}"><i class="fa fa-universal-access"></i></a>
+                                            @endif            
+                                            <a href="{{route('user.proposal.edit',['id'=>$proposal->id])}}" class="btn btn-success mr-2"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0);" data-proposalid="{{$proposal->id}}" class="btn btn-danger mr-2 delete-proposal-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+>>>>>>> bhagyashri
                                             @if(count($proposal->messages))
                                                  <a class="mr-2 float-right" href="{{ route('user.proposal.chat', ['id' => $proposal->id]) }}" title="Make comments" >
                                                     <button class="btn btn-warning"><i class="mdi mdi-chat"></i></button>
@@ -117,8 +126,13 @@
                             @enderror
                         </div>
 
+<<<<<<< HEAD
                         <div class="form-group">
                              <label for="is_gov_access" class="col-form-label">Grant Government Full access?</label>
+=======
+                        <div class="form-group col-md-12 p-md-0">
+                             <label for="is_gov_access" class="col-form-label">Grant Government Full access</label>
+>>>>>>> bhagyashri
                             </br><small class="text-danger"><i>[Note: "Yes" means the government can download your proposal and contact you. "No" means Government cannot download your proposal until you change to "Yes"]</i></small>
                             <div class="input-group" >
                                 <div class="form-check mr-3">
@@ -140,6 +154,7 @@
                                 </span>
                             @enderror
                         </div>
+<<<<<<< HEAD
                         <div class="form-group">
                             <label for="estimate" class="col-form-label">{{ __('Enter the estimate of implementing this proposal:') }} (Don’t worry you can change this later)</label>
                             <div class="input-group">
@@ -219,6 +234,8 @@
                             </select>
                         </div>
 
+=======
+>>>>>>> bhagyashri
                         <div class="form-group">
                             <label for="description" class="col-form-label">{{ __('Description:') }}</label>
                             <textarea id="description" row="6" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" ></textarea>
@@ -404,6 +421,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+<<<<<<< HEAD
                 <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access </h5>
                 <a href="" id="edit-proposal-btn" title="Edit My Proposal" class="btn btn-success ml-2 btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -414,6 +432,15 @@
             <div class="modal-body">
                 <p id="request-note"></p>
                 <p>"To grant access to Government, click the green edit icon button above and change "No" to "Yes" on the edit page."</p>
+=======
+                <h5 class="modal-title" id="sendRequestLabel">Gov User Request For Proposal Access</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="request-note"></p>
+>>>>>>> bhagyashri
             </div>
         </div>
     </div>
@@ -532,9 +559,12 @@
 
             $(document).on('click', '.access_request', function(e) {
                 var accessNote = $(this).attr('data-accessNote');
+<<<<<<< HEAD
                 var proposalid = $(this).attr('data-proposalid');
                 var url = 'proposal/'+proposalid+'/edit';
                 $("#edit-proposal-btn").attr('href',url);
+=======
+>>>>>>> bhagyashri
                 $("#request-note").text(accessNote);
                 $("#sendRequest").modal('show');
             });

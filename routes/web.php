@@ -148,3 +148,5 @@ Route::delete('/proposals/{proposal}', 'ProposalController@destroy')->name('prop
 Route::get('/about-us', 'HomeController@aboutUs');
 Route::get('/faq', 'HomeController@faq');
 Route::get('/contact-us', 'HomeController@contactUs');
+Route::get('/privacy-policy', 'HomeController@privacyPolicy');
+Route::get('/terms-of-use', 'HomeController@termsOfUse');

@@ -129,6 +129,11 @@ footer .social-nav .nav-link{font-size: 1.2rem;color: #62A777;font-weight: 600;}
 .faq-card .btn-que i.mdi-chevron-up{display: none;}
 .faq-card .btn-que[aria-expanded="true"] i.mdi-chevron-up{display: inline;}
 .faq-card .btn-que[aria-expanded="true"] i.mdi-chevron-down{display: none;}
+.privacy-policy h2{text-align: center;color: #1C534C;font-weight: 600;margin: 0;}
+.privacy-policy h4{margin: 1.5rem 0 1rem;}
+.privacy-policy p{color: #565656;font-size: 15px;line-height: 1.5;}
+.privacy-policy ul li, .privacy-policy ol li{color: #565656;font-size: 15px;line-height: 1.5;margin-bottom: 10px;}
+
 @media all and (min-width: 991px) and (max-width: 1024px){
     header .navbar-toggler{display: none;}
     header .navbar-collapse{display: flex!important;flex-basis: auto;}

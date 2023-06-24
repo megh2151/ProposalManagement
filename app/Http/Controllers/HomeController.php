@@ -41,6 +41,16 @@ class HomeController extends Controller
         return view('contact-us');
     }
 
+    public function privacyPolicy()
+    {
+        return view('privacyPolicy');
+    }
+
+    public function termsOfUse()
+    {
+        return view('termsOfUse');
+    }
+
     public function getPhoneCode($id)
     {
         $country = Country::where('id', $id)->first();

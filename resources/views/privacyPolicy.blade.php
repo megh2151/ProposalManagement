@@ -1,6 +1,7 @@
 @extends('layouts.user.app')
 
 @section('content')
+@include('cookieConsent::index')
 <div class="container d-flex justify-content-center py-5">
     <div class="col-lg-9 privacy-policy">
         <h2>Privacy Policy</h2>

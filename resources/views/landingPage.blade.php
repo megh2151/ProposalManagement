@@ -1,6 +1,7 @@
 @extends('layouts.user.app')
 
 @section('content')
+@include('cookieConsent::index')
 <div class="container landing-page">
     <div class="card form-card">
         <div class="row justify-content-center">

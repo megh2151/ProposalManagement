@@ -1,6 +1,7 @@
 @extends('layouts.user.app')
 
 @section('content')
+@include('cookieConsent::index')
 <div class="container d-flex align-item-center justify-content-center py-5">
     <div class="faq-card col-lg-8">
         <h2>FAQs</h2>

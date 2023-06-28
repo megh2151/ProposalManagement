@@ -41,8 +41,8 @@
                                     <div class="row">
                                         <div class="col-4 pl-0">
                                             <a href="{{route('user.proposal.view',['id'=>$proposal->id])}}" title="View Proposal Uploaded" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i></a>
-                                            
-                                            <a href="javascript:void(0)" title="Advisory Comments" class="btn btn-primary"><i class="mdi mdi-table-edit" aria-hidden="true"></i></a>
+
+                                            <a href="javascript:void(0)" title="Advisory Comments" class="btn btn-primary advisory_comments" data-comment="{{$proposal->comment}}"><i class="mdi mdi-table-edit" aria-hidden="true"></i></a>
                                         </div>
                                         <div class="col-8 text-right pr-0">
                                             @if($proposal->is_access_request)
@@ -420,6 +420,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="advisoryComment" tabindex="-1" role="dialog" aria-labelledby="advisoryCommentLabel"
+        aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="advisoryCommentLabel">Advisory Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="advisory-comment"></p>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
@@ -572,6 +589,12 @@
                 // If all validations pass, submit the form
                 this.submit();
             });
+
+            $(document).on('click', '.advisory_comments', function(e) {
+                var comment = $(this).data('comment');    
+                $("#advisory-comment").text(comment);
+                $("#advisoryComment").modal('show');
+            });    
 
             const photoInput = $('#profile_photo');
             const photoPreview = $('#photo-preview');

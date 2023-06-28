@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Country;
+use App\Occupation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Mail\AdvisoryWelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 class AdvisoryBoardMembersController extends Controller
 {
     //
@@ -25,7 +29,8 @@ class AdvisoryBoardMembersController extends Controller
     public function joinBoardForm()
     {
         $countries = Country::get();
-        return view('boardmember.register', compact('countries'));
+        $occupations = Occupation::get();
+        return view('boardmember.register', compact('countries','occupations'));
     }
     
     public function joinBoardFormSubmit(Request $request)
@@ -37,13 +42,22 @@ class AdvisoryBoardMembersController extends Controller
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'location' => 'required',
+            'occupation' => 'required',
             'video' => 'nullable|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000', // Maximum size: 60MB
-            'biography' => 'nullable|string|min:100',
+            'biography' => 'required|string|min:100',
+        ], [
+            'email.unique' => 'The email has already been taken. Please use another email for advisory board registration.',
         ]);
+
+        $pattern = array('`(<strong)([^\w])`i');
+        $replacement = array("<b$2");
+        $subject = str_replace(array('</strong>'), array('</b>'), $request['biography']);
+        $biography = preg_replace($pattern, $replacement, $subject);
 
         $user = User::create([
             'designation' => $request['designation'],
             'name' => $request['name'],
+            'occupation_id' => $request['occupation'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'middle_name' => $request['middle_name'],
@@ -52,7 +66,7 @@ class AdvisoryBoardMembersController extends Controller
             'phone' => $request['phone'],
             'country_code' => $request['country_code'] ?? "+91",
             'role_id' => $request['role_id'],
-            'biography' => $request['biography'],
+            'biography' => $biography,
             'activation_token' => Str::random(60),
             'is_active'=>'0'
         ]);
@@ -101,6 +115,7 @@ class AdvisoryBoardMembersController extends Controller
             $user->save();
         }
 
+        Mail::to($user->email)->send(new AdvisoryWelcomeMail($user));
         // Handle if no video file is provided
         return redirect()->back()->with('success', 'Registered successfully!');
     }

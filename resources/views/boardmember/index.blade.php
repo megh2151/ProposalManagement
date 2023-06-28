@@ -122,7 +122,13 @@ section .section-title {
 .frontside .card .card-title,
 .backside .card .card-title {
     color: #007b5e !important;
+    margin-bottom:10px;
 }
+.frontside .card .card-subtitle{
+    color: #62A777 !important;
+    font-size: 12px;
+}
+
 
 .frontside .card .card-body img {
     width: 120px;
@@ -133,7 +139,7 @@ section .section-title {
 @endsection
 @section('content')
         <div class="row">
-            <h5 class="section-title h1">Advisory Board Memebers</h5>
+            <h5 class="section-title h1">Advisory Board Members</h5>
         </div>
         <div class="row">
             <!-- Team member -->
@@ -147,6 +153,7 @@ section .section-title {
                                     <div class="card-body text-center">
                                         <p><img class="img-fluid" src="{{ $member->profile_photo ? asset($member->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="card image"></p>
                                         <h4 class="card-title">{{$member->designation}} {{$member->name}}</h4>
+                                        <p class="card-subtitle">{{$member->occupation ? '('.$member->occupation->name.')' : ''}}</p>
                                         <p class="card-text">{!! substr($member->biography, 0, 100) !!}</p>
                                     </div>
                                 </div>

@@ -68,10 +68,9 @@ class ProposalController extends Controller
         $proposal->is_state = $is_state;
         $proposal->state_id = $state;
         $proposal->local_government_area_id = $localGovernment;
-        $proposal->note = "We are delighted to let you know that we have received your proposal, and we appreciate your effort. We kindly ask you to bear with us as the administration is just settling down and has yet to name cabinets. We are grateful for your enthusiasm to work with us, though.
+        $proposal->note = "We are delighted to inform you that we have received your proposal and appreciate your effort. Please continue to refine it while we attempt to forward it to the relevant agencies. One of the ways to accelerate visibility is to call the attention of the relevant government agencies to your proposal. You can tweet the title of your proposal and the targeted agency on Twitter and share it on Facebook. This method has proven to be effective instead of waiting.
 
-Please continue to improve on it.
-Thank you!";
+We wish you good luck!";
         $proposal->save();
         
         Mail::to($proposal->user->email)->send(new ProposalNote($proposal));

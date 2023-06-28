@@ -63,7 +63,7 @@
                   <div class="col-sm-8 col-lg-10">
                     <div class="custom-file mb-1">
                     <input type="hidden" name="cropped_photo" id="cropped_photo">
-                      <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo" required="">
+                      <input type="file" name="profile_photo" class="custom-file-input" id="profile_photo">
                       <label class="custom-file-label" for="coverImage">Choose file...</label>
                       <div id="preview-div"  class="d-none mt-3 mb-3">
                         <img id="photo-preview" class="mt-3 mb-3" src="" alt="Photo Preview" style="max-width: 100%; height: auto;margin-bottom:15px;">
@@ -74,9 +74,32 @@
                     </div>
                   </div>
                 </div>
+				@if($user->role_id==3)
+				<div class="form-group row">
+					<label for="video" class="col-sm-4 col-lg-2 col-form-label">Upload Video</label>
+					<div class="col-sm-8 col-lg-10">
+						<div class="custom-file mb-1">
+							<input type="file" name="video" class="custom-file-input" id="video" accept="video/*" >
+							<label class="custom-file-label" for="video">Choose file...</label>
+						</div>
+						<small class="form-text text-muted">Please upload a short speech video (30-60 seconds).</small>
+					</div>
+				</div>
+				<div class="form-group col-lg-12 p-lg-0">
+					<label for="email" class="col-form-label ">{{ __('Biography') }}</label>
+					<textarea id="biography" 
+						class="form-control @error('biography') is-invalid @enderror" rows="6" name="biography"
+						value="{{ old('biography') }}" autocomplete="biography" required minlength="100">{{$user->biography}}</textarea>
+					@error('biography')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+					@enderror
+				</div>
+				@endif
 				<div class="row mt-5 form-group justify-content-end mb-6">
 					<div class="row">
-					<button type="submit" class="btn btn-primary mb-2 btn-pill">Update Profile</button>
+						<button type="submit" class="btn btn-primary mb-2 btn-pill">Update Profile</button>
 					</div>
                 </div>
               </form>
@@ -118,14 +141,17 @@
 
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script>
  $(document).ready(function() {
+	CKEDITOR.replace('biography', { toolbarLocation : 'bottom' }); 
+
   const photoInput = $('#profile_photo');
   const photoPreview = $('#photo-preview');
   const cropButton = $('#crop-button');
   let cropper;
 
-  photoInput.on('change', function() {
+  	photoInput.on('change', function() {
     const file = this.files[0];
 	$("#preview-div").removeClass('d-none')
     if (file) {
@@ -145,39 +171,65 @@
 
       reader.readAsDataURL(file);
     }
-  });
+	});
 
-  cropButton.on('click', function(event) {
-    event.preventDefault(); // Prevent form submission
+	cropButton.on('click', function(event) {
+		event.preventDefault(); // Prevent form submission
 
-    const croppedCanvas = cropper.getCroppedCanvas({
-      width: 200, // Specify the desired cropped image width
-      height: 200, // Specify the desired cropped image height
-    });
+		const croppedCanvas = cropper.getCroppedCanvas({
+		width: 200, // Specify the desired cropped image width
+		height: 200, // Specify the desired cropped image height
+		});
 
-    // Convert the cropped canvas to a Blob object
-    croppedCanvas.toBlob(function(blob) {
-      // Preview the cropped image
-      const croppedImage = new Image();
-      croppedImage.src = URL.createObjectURL(blob);
-      croppedImage.alt = 'Cropped Image';
-      // Create a new hidden input element
-      // Replace the existing photo preview with the cropped image
-      photoPreview.replaceWith(croppedImage);
-	  $(".cropper-container").hide();
-	  cropButton.css('visibility', 'hidden');
-      // Convert the cropped image to a data URL
-      const croppedDataURL = croppedCanvas.toDataURL('image/jpeg');
-      // Set the data URL as the value of the hidden input field
-      $('#cropped_photo').val(croppedDataURL);
+		// Convert the cropped canvas to a Blob object
+		croppedCanvas.toBlob(function(blob) {
+		// Preview the cropped image
+		const croppedImage = new Image();
+		croppedImage.src = URL.createObjectURL(blob);
+		croppedImage.alt = 'Cropped Image';
+		// Create a new hidden input element
+		// Replace the existing photo preview with the cropped image
+		photoPreview.replaceWith(croppedImage);
+		$(".cropper-container").hide();
+		cropButton.css('visibility', 'hidden');
+		// Convert the cropped image to a data URL
+		const croppedDataURL = croppedCanvas.toDataURL('image/jpeg');
+		// Set the data URL as the value of the hidden input field
+		$('#cropped_photo').val(croppedDataURL);
 
-    }, 'image/jpeg'); // Specify the desired output image format
+		}, 'image/jpeg'); // Specify the desired output image format
 
-    // Reset the cropper instance and clear the preview image
-    cropper.reset();
-    photoPreview.attr('src', '');
-  });
+		// Reset the cropper instance and clear the preview image
+		cropper.reset();
+		photoPreview.attr('src', '');
+	});
 
+	// Video Upload
+	const videoInput = $('#video');
+	videoInput.on('change', function() {
+		const file = this.files[0];
+
+		if (file) {
+			const video = document.createElement('video');
+			video.preload = 'metadata';
+
+			video.onloadedmetadata = function() {
+				window.URL.revokeObjectURL(video.src);
+				const duration = video.duration;
+				const minDuration = 5; // Minimum duration in seconds
+				const maxDuration = 60; // Maximum duration in seconds
+
+				if (duration < minDuration || duration > maxDuration) {
+					// Reset the file input
+					videoInput.val('');
+					// Show an error message to the user
+					alert('Please upload a video between 30-60 seconds in duration.');
+				}
+			};
+
+			video.src = URL.createObjectURL(file);
+		}
+	});
 
     $('#changePasswordForm').submit(function(event) {
         event.preventDefault(); // Prevent form submission

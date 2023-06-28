@@ -7,7 +7,7 @@
         <p>Dear (Prospective Board Member's Name),</p>
         <p>I am writing to invite you to join the advisory board of Letter to AsoRock, an initiative to submit ideas and proposals to the new government of Nigeria.</p>
         <p>Letter to AsoRock was created in response to the president's call for mindset change and patriotism during his campaign. He urged us to ask what we can do for our country. The citizens have valuable ideas that can improve Nigeria but may not have access to government agencies that can implement them. That's why we built a portal that allows citizens to submit their ideas or proposals in a transparent and efficient way, bypassing the bureaucratic process. This way, we can connect with the government and bring positive change to our country.</p>
-        <p>As a professional heading an (industry/sector) in Nigeria, you have the experience and insight that we need to shape our initiative and make it more impactful. You are also a high achiever who has demonstrated excellence and leadership in your field. We are looking for people like you who are passionate about Nigeria and want to contribute to its development.</p>
+        <p>As a professional heading an (industry/sector) in Diaspora/Nigeria/, you have the experience and insight that we need to shape our initiative and make it more impactful. You are also a high achiever who has demonstrated excellence and leadership in your field. We are looking for people like you who are passionate about Nigeria and want to contribute to its development.</p>
         <div class="row">
         <p>By joining our advisory board, you will have the opportunity to:</p>
         <p></p>
@@ -18,7 +18,6 @@
                 <li>Network with other influential and like-minded professionals</li>
                 <li>Influence the direction and strategy of Letter to AsoRock</li>
                 <li>Help us reach out to more citizens and government officials</li>
-                <li>Enhance your reputation and visibility as a thought leader and a patriot</li>
                 <li>Enhance your reputation and visibility as a thought leader and a patriot</li>
             </ul>  
         </div>  

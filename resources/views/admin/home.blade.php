@@ -26,11 +26,6 @@
             <div class="col-md-2">
                 <h1>Dashboard</h1>
             </div>
-            <!-- Facebook Share Button -->
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode('https://www.lettertoasorock.com') }}&quote={{ urlencode('I just registered on https://www.lettertoasorock.com to advise the president and help build Nigeria. You should register too.') }}" target="_blank">Share on Facebook</a>
-
-            <!-- Twitter Share Button -->
-            <a href="https://twitter.com/intent/tweet?url={{ urlencode('http://lettertoasorock.com/') }}" target="_blank">Share on Twitter</a>
             <div class="col-md-10">
                 <label class="switch switch-primary form-control-label float-right">
                     <input type="checkbox" id="activityToggle" class="switch-input form-check-input" value="on" {{$show_activity_summary ? 'checked' : ''}}><span class="switch-label"></span>
@@ -174,6 +169,26 @@
             </div>
         </div>
     </div>
+    <!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to update the activity summary to the user?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmationModalYes">Yes</button>
+        <button type="button" class="btn btn-secondary" id="confirmationModalNo" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
  @endsection
  @section('script')
  <script>
@@ -288,31 +303,81 @@
     });
   }
 
-  $(document).ready(function() {
-  // Get the checkbox element
+$(document).ready(function() {
+ // Get the checkbox element
   var activityToggle = $('#activityToggle');
+  var previousToggleState = activityToggle.is(':checked'); // Store the previous toggle state
+
+  // Attach a click event listener to the toggle label
+  $('#activityToggleLabel').on('click', function() {
+    // Toggle the checkbox manually if it's enabled
+    if (!activityToggle.is(':disabled')) {
+      activityToggle.prop('checked', !activityToggle.is(':checked'));
+      activityToggle.trigger('change');
+    }
+  });
 
   // Attach a change event listener to the checkbox
   activityToggle.on('change', function() {
     // Get the new value of the checkbox
     var isChecked = $(this).is(':checked');
+
+    // Show confirmation modal
+    if (isChecked) {
+      showConfirmationModal(function() {
+        updateToggle(isChecked);
+      });
+    } else {
+      showConfirmationModal(function() {
+        updateToggle(isChecked);
+      });
+    }
+  });
+
+  // Function to show the confirmation modal
+  function showConfirmationModal(confirmCallback) {
+    $('#confirmationModal').modal('show');
+
+    $('#confirmationModalYes').on('click', function() {
+      confirmCallback();
+      $('#confirmationModal').modal('hide'); // Close the confirmation modal
+    });
+
+    $('#confirmationModalNo').on('click', function() {
+      $('#confirmationModal').modal('hide');
+      activityToggle.prop('checked', previousToggleState);
+    });
+
+    $('#confirmationModal').on('hidden.bs.modal', function() {
+      $('#confirmationModalYes').off('click');
+      $('#confirmationModalNo').off('click');
+    });
+  }
+
+  // Function to update toggle value
+  function updateToggle(isChecked) {
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
     // Make an AJAX call to update the value in the database
     $.ajax({
       url: 'update-setting',  // Replace with the actual URL to update the database
       method: 'POST',
-      data: { show_activity_summary	: isChecked,_token: csrfToken, },  // Pass the new value to the server
+      data: {
+        show_activity_summary: isChecked,
+        _token: csrfToken,
+      },  // Pass the new value to the server
       success: function(response) {
         // Handle the response from the server
         console.log(response);
         toastr.success(response.message);
+        previousToggleState = isChecked; // Update the previous toggle state
       },
       error: function(xhr, status, error) {
         // Handle errors
         console.log(error);
+        activityToggle.prop('checked', previousToggleState); // Revert toggle to the previous state on error
       }
     });
-  });
+  }
 });
 </script>
 @endsection

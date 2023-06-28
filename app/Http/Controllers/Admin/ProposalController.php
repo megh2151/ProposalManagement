@@ -182,7 +182,7 @@ class ProposalController extends Controller
             $query->whereDate('created_at', $dateSubmitted);
         }
 
-        $proposals = $query->get();
+        $proposals = $query->with('category','subcategory','user','state','local_government_area')->get();
 
         // Pass the $proposals variable to your view and update the table accordingly
         $categories = Category::where('is_active',1)->get();

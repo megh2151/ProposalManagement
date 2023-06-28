@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'middle_name', 'last_name', 'location', 'phone', 'country_code', 'role_id','activation_token','is_active','biography', 'designation'
+        'name', 'email', 'password', 'middle_name', 'last_name', 'location', 'phone', 'country_code', 'role_id','activation_token','is_active','biography', 'designation', 'occupation_id'
     ];
 
     /**
@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function occupation()
+    {
+        return $this->belongsTo(Occupation::class);
+    }
 }

@@ -12,7 +12,7 @@
     <div class="card user-card">
         <div class="card-body">
             <div class="basic-data-table">
-                <table id="basic-data-table" class="table nowrap" data-order='[[ 3, "desc" ]]'>
+                <table id="basic-data-table" class="table"  style="width:100%" data-order='[[ 3, "desc" ]]'>
                     <thead>
                         <tr>
                             <th>Image</th>
@@ -30,16 +30,18 @@
                                 <td> <img class="rounded-circle" src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('storage/profiles/default_user.jpg') }}" alt="{{ $user->name }}" width="40" height="40"></td>
                                 <td>{{ $user->designation }} {{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{!!$user->biography!!}</td>
+                                <td>@if($user->biography)<a href="javascript:void(0);" class="view-biography" data-biography="{!!$user->biography!!}">View</a>@else - @endif</td>
                                 <td>@if($user->video)<a href="javascript:void(0);" class="see-video" data-video="{{ asset($user->video) }}">View</a>@else - @endif</td>
                                 <td>{{ date('Y-m-d h:i:s A',strtotime($user->created_at->toDateTimeString())) }}</td>
                                 <td>
-                                    <div class="col-md-10">
-                                        <label class="switch switch-primary switch-pill form-control-label">
-                                            <input type="checkbox" id="activityToggle" data-user_id="{{$user->id}}" class="switch-input form-check-input activityToggle" value="on" {{$user->is_active ? 'checked' : ''}}><span class="switch-label"></span>
-                                            <span class="switch-handle"></span>
-                                        </label>
-                                    </div>
+                                    <label class="switch switch-primary switch-pill form-control-label mt-1">
+                                        <input type="checkbox" id="activityToggle" data-user_id="{{$user->id}}" class="switch-input form-check-input activityToggle" value="on" {{$user->is_active ? 'checked' : ''}}><span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    <a href="javascript:void(0);" class="delete-user"
+                                        data-userId="{{ $user->id }}">
+                                        <button class="rounded-btn btn-danger"><i class="mdi mdi-delete"></i></button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -64,6 +66,49 @@
                         <source src="" id="source" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="userBiography" tabindex="-1" role="dialog" aria-labelledby="userBiographyLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userBiographyLabel">User Biography</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="divBiography">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this user?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('admin.users.delete') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" id="user_id" value="">
+                        <button type="button" class="btn btn-primary btn-pill" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger btn-pill">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -106,6 +151,19 @@
             $video[0].load();
             $video[0].play();
             $("#userVideo").modal('show');
+        });
+
+        $(document).on("click", ".view-biography", function() {
+            var biography = $(this).data('biography');
+            $('#divBiography').html(biography);
+            $("#userBiography").modal('show');
+        });
+
+        $(document).on("click", ".delete-user", function() {
+            var userId = $(this).attr('data-userId');
+            var thisObj = $(this);
+            $("#user_id").val(userId);
+            $("#exampleModal").modal('show');
         });
 
     });

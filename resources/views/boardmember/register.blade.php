@@ -15,6 +15,7 @@
                             <div class="col-lg-2 pl-lg-0">
                                 <label for="name" class="col-form-label ">{{ __('Designation') }}</label>
                                 <select class="form-control @error('designation') is-invalid @enderror" name="designation" id="designation" required>
+                                    <option value="">Select Designation</option>
                                     <option value="Mr">Mr</option>
                                     <option value="Mrs.">Mrs.</option>
                                     <option value="Ms">Ms</option>
@@ -65,6 +66,23 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group col-lg-12 p-lg-0">
+                            <label for="email" class="col-form-label ">{{ __('Occupation') }}</label>
+                            <select class="form-control @error('occupation') is-invalid @enderror" name="occupation" id="occupation" required>
+                                    <option value="">Select occupation</option>
+                                    @foreach($occupations as $occupation)
+                                        <option value="{{$occupation->id}}">{{$occupation->name}}</option>
+                                    @endforeach
+                                </select>
+                            @error('occupation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        
+                        
                         <div class="form-group col-lg-12 p-lg-0">
                             <label for="email" class="col-form-label ">{{ __('E-Mail Address') }}</label>
 
@@ -158,7 +176,7 @@
                             <input id="country_code" type="hidden" class="form-control @error('country_code') is-invalid @enderror" name="country_code" value="" autocomplete="country_code">
                         </div>
                         <div class="form-group row mb-6">
-                            <label for="profile_photo" class="col-sm-4 col-lg-2 col-form-label">User Image</label>
+                            <label for="profile_photo" class="col-sm-4 col-lg-2 col-form-label">User Image (helps with faster review)</label>
                             <div class="col-sm-8 col-lg-10">
                                 <div class="custom-file mb-1">
                                     <input type="hidden" name="cropped_photo" id="cropped_photo">
@@ -174,7 +192,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="video" class="col-sm-4 col-lg-2 col-form-label">Upload Video</label>
+                            <label for="video" class="col-sm-4 col-lg-2 col-form-label">Upload Video (helps with faster review)</label>
                             <div class="col-sm-8 col-lg-10">
                                 <div class="custom-file mb-1">
                                     <input type="file" name="video" class="custom-file-input" id="video" accept="video/*" >

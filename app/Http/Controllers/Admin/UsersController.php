@@ -153,16 +153,31 @@ class UsersController extends Controller
             return redirect()->back()->with('success', 'Password updated successfully!');
         }
         
-        $request->validate([
+        $rules = [
             'name' => 'required',
             'last_name' => 'required',
-        ]);
+        ];
+
+        if ($user->role_id == 3) {
+            $rules['video'] = 'nullable|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000';
+            $rules['biography'] = 'required|string|min:100';
+
+            if($request['biography']){
+                $pattern = array('`(<strong)([^\w])`i');
+                $replacement = array("<b$2");
+                $subject = str_replace(array('</strong>'), array('</b>'), $request['biography']);
+                $biography = preg_replace($pattern, $replacement, $subject);
+                $user->biography = $biography;
+            }
+        }
+
+        $request->validate($rules);
 
         $user->name = $request->name;
         $user->last_name = $request->last_name;
         $user->save();
 
-        if ($request->has('cropped_photo')) {
+        if ($request->has('cropped_photo')  && $request->cropped_photo) {
             // Get the cropped photo data from the request
             $croppedPhotoData = $request->input('cropped_photo');
     
@@ -188,6 +203,29 @@ class UsersController extends Controller
     
             // Update the user's profile photo
             $user->profile_photo = 'storage/'.$storagePath;
+            $user->save();
+        }
+
+        if ($user->role_id==3 && $request->hasFile('video') && $request->video) {
+            $video = $request->file('video');
+            // Generate a unique filename for the video
+            $filename = uniqid() . '.' . $video->getClientOriginalExtension();
+
+            // Retrieve the existing photo path from the user's database record
+            $existingVideoPath = $user->video;
+            
+            // Delete the previous photo file if it exists
+            if ($existingVideoPath) {
+                Storage::delete('public/videos/' . basename($existingVideoPath));
+            }
+            // Define the storage path for the video
+            $storagePath = 'videos/' . $filename;
+
+            // Save the video to the storage location
+            Storage::disk('public')->put($storagePath, file_get_contents($video));
+
+            // Update the user record in the database with the video file path
+            $user->video = 'storage/'.$storagePath;
             $user->save();
         }
 
